@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Конус винтовой 75 мм L300 — ODROVA.RU</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #111;
+  --graphite: #1e1e1e;
+  --graphite-mid: #252525;
+  --graphite-light: #333;
+  --steel: #6b7280;
+  --steel-light: #9ca3af;
+  --white: #f5f5f5;
+  --white-pure: #fff;
+  --yellow: #f5c800;
+  --yellow-dark: #d4a800;
+  --green: #22c55e;
+  --red: #ef4444;
+  --border: rgba(255,255,255,0.07);
+  --border-light: rgba(0,0,0,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black); }
+
+/* ── HEADER ── */
+.header {
+  position:sticky; top:0; z-index:100;
+}
+.header-top {
+  background:var(--graphite);
+  padding:10px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.header-bottom {
+  background:var(--black); border-top:1px solid var(--border);
+  padding:6px 20px;
+  display:flex; align-items:center; gap:8px;
+}
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--white-pure); letter-spacing:.08em; text-decoration:none; }
+.logo span { color:var(--yellow); }
+.logo-accent { color:var(--white-pure); }
+.header-calc-btn {
+  display:flex; align-items:center; gap:5px;
+  background:var(--graphite-light); color:var(--steel-light);
+  border:1px solid var(--border); text-decoration:none;
+  padding:5px 10px; font-size:11px; font-weight:700;
+  font-family:'Fira Mono',monospace; white-space:nowrap; letter-spacing:.05em;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
+  transition:color .2s, border-color .2s;
+}
+.header-calc-btn:hover { color:var(--yellow); border-color:var(--yellow); }
+.header-phone-btn {
+  display:flex; align-items:center; gap:8px;
+  background:var(--yellow); color:var(--black);
+  text-decoration:none; padding:6px 16px 6px 12px;
+  clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));
+  transition:background .15s; margin-left:auto;
+}
+.header-phone-btn:hover { background:var(--yellow-dark); }
+.header-phone-icon { font-size:16px; line-height:1; }
+.header-phone-num { font-size:14px; font-weight:700; white-space:nowrap; }
+.header-since {
+  font-family:'Fira Mono',monospace; font-size:10px;
+  color:var(--steel); letter-spacing:.08em; white-space:nowrap;
+  flex:1; text-align:center;
+}
+@media(max-width:600px) {
+  .header-since { display:none; }
+  .header-phone-num { font-size:13px; }
+  .header-bottom { gap:6px; padding:6px 12px; }
+  .header-calc-btn { padding:5px 8px; font-size:10px; }
+  .header-phone-btn { padding:6px 10px; }
+}
+.cart-btn {
+  display:flex; align-items:center; gap:6px; background:var(--graphite-light);
+  border:1px solid var(--border); color:var(--white-pure); padding:6px 12px;
+  font-size:13px; cursor:pointer; font-family:'PT Sans',sans-serif;
+}
+.cart-count {
+  background:var(--yellow); color:var(--black); width:16px; height:16px;
+  border-radius:50%; font-size:10px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ── BREADCRUMB ── */
+.breadcrumb {
+  background:var(--graphite-mid); padding:12px 24px;
+  font-family:'PT Sans',sans-serif; font-size:13px; color:var(--steel);
+}
+.breadcrumb a { color:var(--steel); text-decoration:none; }
+.breadcrumb a:hover { color:var(--steel-light); }
+.breadcrumb span { color:var(--steel); margin:0 8px; font-weight:700; }
+
+/* ── MAIN GRID ── */
+.product-wrap { max-width:1200px; margin:0 auto; padding:36px 24px; }
+.product-grid {
+  display:grid; grid-template-columns:1fr 420px; gap:48px; align-items:start;
+}
+
+/* ── GALLERY ── */
+.gallery { position:sticky; top:72px; }
+.gallery-main {
+  background:var(--graphite);
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+  aspect-ratio:1; display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden; margin-bottom:12px; cursor:zoom-in;
+}
+.gallery-main-inner {
+  width:100%; height:100%;
+  background:linear-gradient(135deg,#1e1e1e 0%,#2a2a2a 50%,#1e1e1e 100%);
+  display:flex; align-items:center; justify-content:center;
+}
+.gallery-svg { width:60%; height:60%; }
+.gallery-badge {
+  position:absolute; top:16px; left:0;
+  background:var(--yellow); color:var(--black);
+  font-family:'Fira Mono',monospace; font-size:11px; font-weight:700;
+  padding:6px 14px; letter-spacing:.1em;
+}
+.gallery-badge-hit {
+  position:absolute; top:52px; left:0;
+  background:var(--graphite-light); color:var(--steel-light);
+  font-family:'Fira Mono',monospace; font-size:10px;
+  padding:5px 14px; letter-spacing:.1em; border-left:3px solid var(--green);
+}
+.gallery-thumbs { display:flex; gap:8px; }
+.gallery-thumb {
+  flex:1; aspect-ratio:1; background:var(--graphite);
+  border:1.5px solid var(--border); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; opacity:.6; transition:all .2s;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+}
+.gallery-thumb:hover,.gallery-thumb.active { opacity:1; border-color:var(--yellow); }
+
+/* ── BUY PANEL ── */
+.buy-panel { display:flex; flex-direction:column; gap:0; }
+
+.product-eyebrow {
+  font-family:'Fira Mono',monospace; font-size:11px; color:var(--yellow);
+  letter-spacing:.15em; margin-bottom:8px;
+}
+.product-title {
+  font-family:'Russo One',sans-serif; font-size:clamp(22px,3vw,30px);
+  color:var(--black); line-height:1.1; margin-bottom:10px;
+}
+.product-rating { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.stars { color:var(--yellow); font-size:16px; }
+.rating-num { font-size:13px; font-weight:700; }
+.rating-count { font-size:12px; color:var(--steel); }
+.rating-sep { color:var(--border-light); }
+
+/* quick specs strip */
+.quick-specs {
+  display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px;
+  padding-bottom:20px; border-bottom:1px solid var(--border-light);
+}
+.qs {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  border:1px solid var(--border-light); padding:5px 10px;
+  display:flex; align-items:center; gap:5px; color:var(--steel);
+}
+.qs b { color:var(--black); font-weight:700; }
+
+/* price */
+.price-row { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+.price-main { font-family:'Bebas Neue',sans-serif; font-size:48px; color:var(--black); line-height:1; }
+.price-old { font-size:18px; color:var(--steel); text-decoration:line-through; }
+.price-discount {
+  background:var(--red); color:#fff;
+  font-size:12px; font-weight:700; padding:3px 8px;
+  font-family:'Fira Mono',monospace;
+}
+.price-note { font-size:12px; color:var(--steel); margin-bottom:20px; }
+.online-discount-row { margin:8px 0 6px; }
+.online-discount-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(245,200,0,0.12); border:1.5px solid var(--yellow);
+  padding:8px 14px; font-size:13px; color:var(--black);
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.online-discount-badge b { font-size:15px; color:var(--black); }
+.stock { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--green); margin-bottom:20px; }
+.stock-dot { width:8px; height:8px; background:var(--green); border-radius:50%; }
+
+/* shaft selector */
+.selector-label {
+  font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel);
+  letter-spacing:.1em; margin-bottom:10px;
+}
+.shaft-grid { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
+.shaft-btn {
+  padding:8px 12px; border:1.5px solid var(--border-light);
+  font-size:13px; font-weight:700; cursor:pointer; background:#fff;
+  font-family:'PT Sans',sans-serif; transition:all .15s;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
+}
+.shaft-btn:hover { border-color:var(--black); }
+.shaft-btn.active {
+  background:var(--black); color:var(--yellow); border-color:var(--black);
+}
+.shaft-btn.shaft-fire {
+  box-shadow:0 0 10px 2px #ff6a00, 0 0 22px 5px #ff4500;
+  animation:shaftFire 1.6s ease-in-out infinite;
+}
+
+@keyframes shaftFire {
+  0%   { box-shadow:0 0 8px 2px #f5c800, 0 0 18px 4px #ff6a00; }
+  40%  { box-shadow:0 0 14px 4px #ff4500, 0 0 28px 7px #ff2200; }
+  70%  { box-shadow:0 0 10px 3px #f5c800, 0 0 22px 5px #ff6a00; }
+  100% { box-shadow:0 0 8px 2px #f5c800, 0 0 18px 4px #ff6a00; }
+}
+
+@keyframes shaftPop {
+  0%{transform:scale(1)} 35%{transform:scale(1.18)} 70%{transform:scale(.96)} 100%{transform:scale(1)}
+}
+.shaft-pop { animation:shaftPop .35s ease both; }
+
+@keyframes fireGlow {
+  0%   { box-shadow:0 0 8px 2px #f5c800, 0 0 20px 4px #ff6a00; }
+  25%  { box-shadow:0 0 14px 4px #ff4500, 0 0 32px 8px #ff6a00; }
+  50%  { box-shadow:0 0 20px 6px #f5c800, 0 0 40px 12px #ff2200; }
+  75%  { box-shadow:0 0 12px 3px #ff6a00, 0 0 28px 6px #ff4500; }
+  100% { box-shadow:0 0 8px 2px #f5c800, 0 0 20px 4px #ff6a00; }
+}
+@keyframes shakeBuy {
+  0%,100%{transform:translateX(0)}
+  15%{transform:translateX(-5px) rotate(-.5deg)}
+  30%{transform:translateX(5px) rotate(.5deg)}
+  45%{transform:translateX(-4px)}
+  60%{transform:translateX(4px)}
+  75%{transform:translateX(-2px)}
+  90%{transform:translateX(2px)}
+}
+.btn-buy.ready { animation:fireGlow 1.8s ease-in-out infinite; }
+.btn-buy.shake { animation:shakeBuy .5s ease both, fireGlow 1.8s ease-in-out infinite; }
+.shaft-note { font-size:11px; color:var(--steel); font-family:'Fira Mono',monospace; margin-bottom:6px; }
+.thread-row { display:flex; gap:8px; margin-bottom:20px; }
+.thread-opt {
+  flex:1; padding:10px; border:1.5px solid var(--border-light);
+  font-size:13px; font-weight:700; cursor:pointer; background:#fff;
+  font-family:'PT Sans',sans-serif; text-align:center; transition:all .15s;
+}
+.thread-opt.active { background:var(--black); color:var(--yellow); border-color:var(--black); }
+.thread-opt.order { border-color:rgba(245,200,0,.3); color:var(--steel); }
+.thread-opt.order.active { background:var(--graphite); color:var(--yellow); }
+.thread-tag {
+  font-size:10px; font-family:'Fira Mono',monospace;
+  display:block; margin-top:2px; font-weight:400;
+}
+
+/* buy buttons */
+.btn-buy {
+  width:100%; padding:18px; font-size:17px; font-weight:700;
+  background:var(--yellow); color:var(--black); border:none; cursor:pointer;
+  font-family:'PT Sans',sans-serif; margin-bottom:10px;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition:background .2s, transform .15s;
+  position:relative; overflow:hidden;
+}
+.btn-buy:hover { background:var(--yellow-dark); transform:translateY(-1px); }
+.btn-buy.locked { opacity:.5; cursor:default; transform:none; }
+.btn-buy .btn-sub { font-size:11px; font-weight:400; display:block; margin-top:2px; font-family:'Fira Mono',monospace; }
+.btn-ask {
+  width:100%; padding:14px; font-size:14px; font-weight:700;
+  background:transparent; color:var(--black);
+  border:1.5px solid rgba(0,0,0,.2); cursor:pointer;
+  font-family:'PT Sans',sans-serif; margin-bottom:20px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:border-color .2s;
+}
+.btn-ask:hover { border-color:var(--black); }
+
+/* messengers */
+.messenger-strip {
+  display:flex; gap:8px; padding-top:16px;
+  border-top:1px solid var(--border-light); margin-bottom:20px;
+}
+.ms-btn {
+  flex:1; padding:10px; font-size:13px; font-weight:700;
+  border:none; cursor:pointer; font-family:'PT Sans',sans-serif;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+.ms-wa { background:#2563eb; color:#fff; }
+.ms-tg { background:#229ed9; color:#fff; }
+.ms-max { background:#8b5cf6; color:#fff; }
+.ms-hint { font-size:11px; color:var(--steel); text-align:center; font-family:'Fira Mono',monospace; margin-bottom:20px; }
+
+/* delivery */
+.delivery-strip {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:8px;
+  padding:16px; background:#f9f9f9; border:1px solid var(--border-light);
+  margin-bottom:20px;
+}
+.del-item { display:flex; align-items:flex-start; gap:8px; }
+.del-icon { font-size:18px; flex-shrink:0; margin-top:1px; }
+.del-title { font-size:12px; font-weight:700; color:var(--black); }
+.del-sub { font-size:11px; color:var(--steel); }
+
+/* trust strip */
+.trust-strip { display:flex; gap:6px; flex-wrap:wrap; }
+.trust-item {
+  flex:1; min-width:100px; padding:10px 8px; text-align:center;
+  background:var(--graphite); border:1px solid var(--border);
+}
+.trust-icon { font-size:20px; display:block; margin-bottom:4px; }
+.trust-text { font-size:10px; color:var(--steel-light); font-family:'Fira Mono',monospace; letter-spacing:.05em; line-height:1.4; }
+
+/* ── TABS SECTION ── */
+.tabs-section { margin-top:48px; }
+.tabs-nav-wrap {
+  position:relative;
+  border-bottom:2px solid rgba(0,0,0,.1);
+}
+.tabs-nav-wrap::after {
+  content:'›';
+  position:absolute; top:0; right:0; bottom:2px;
+  width:40px;
+  background:linear-gradient(to right, transparent, var(--white) 60%);
+  pointer-events:none;
+  opacity:var(--fade, 1);
+  transition:opacity .2s;
+  display:flex; align-items:center; justify-content:flex-end;
+  padding-right:8px;
+  font-size:20px; color:var(--steel); font-weight:700;
+}
+.tabs-nav {
+  display:flex; margin-bottom:0;
+  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.tabs-nav::-webkit-scrollbar { display:none; }
+.tab-btn {
+  padding:14px 20px; font-size:14px; font-weight:700;
+  background:transparent; border:none; cursor:pointer;
+  font-family:'PT Sans',sans-serif; color:var(--steel);
+  border-bottom:2px solid transparent; margin-bottom:-2px;
+  transition:color .2s; white-space:nowrap; flex-shrink:0;
+}
+.tab-btn.active { color:var(--black); border-bottom-color:var(--yellow); }
+.tab-content { display:none; padding:28px 0; }
+.tab-content.active { display:block; }
+
+/* specs table */
+.specs-table { width:100%; border-collapse:collapse; }
+.specs-table tr { border-bottom:1px solid var(--border-light); }
+.specs-table tr:last-child { border-bottom:none; }
+.specs-table td { padding:12px 16px; font-size:14px; }
+.specs-table td:first-child {
+  font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel);
+  letter-spacing:.08em; width:45%; background:#f9f9f9;
+}
+.specs-table td:last-child { font-weight:700; color:var(--black); }
+.specs-table tr:nth-child(even) td:last-child { background:#fafafa; }
+
+/* fit block */
+.fit-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+.fit-yes { background:rgba(34,197,94,.06); border:1px solid rgba(34,197,94,.2); padding:20px; }
+.fit-no { background:rgba(239,68,68,.05); border:1px solid rgba(239,68,68,.15); padding:20px; }
+.fit-title { font-size:13px; font-weight:700; margin-bottom:10px; }
+.fit-yes .fit-title { color:var(--green); }
+.fit-no .fit-title { color:var(--red); }
+.fit-list { list-style:none; }
+.fit-list li { font-size:13px; color:#444; line-height:1.6; padding:3px 0; padding-left:14px; position:relative; }
+.fit-list li::before { content:'—'; position:absolute; left:0; color:var(--steel); }
+
+/* description */
+.desc-body { font-size:15px; line-height:1.75; color:#333; }
+.desc-body h3 { font-family:'Russo One',sans-serif; font-size:16px; color:var(--black); margin:20px 0 8px; }
+.desc-body p { margin-bottom:12px; }
+.desc-body ul { padding-left:20px; margin-bottom:12px; }
+.desc-body ul li { margin-bottom:6px; }
+.desc-highlight {
+  background:var(--graphite); color:var(--white-pure); padding:20px 24px;
+  margin:20px 0; border-left:4px solid var(--yellow);
+  font-style:italic; font-size:15px; line-height:1.6;
+}
+
+/* reviews */
+.reviews-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.review-card {
+  border:1px solid var(--border-light); padding:20px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.review-head { display:flex; justify-content:space-between; margin-bottom:8px; }
+.review-author { font-size:13px; font-weight:700; }
+.review-city { font-size:11px; color:var(--steel); font-family:'Fira Mono',monospace; }
+.review-source { font-size:10px; color:var(--steel); border:1px solid var(--border-light); padding:2px 8px; font-family:'Fira Mono',monospace; }
+.review-stars { color:var(--yellow); font-size:14px; margin-bottom:8px; }
+.review-text { font-size:13px; color:#444; line-height:1.6; font-style:italic; }
+
+/* related */
+.related-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.related-card {
+  border:1.5px solid var(--border-light); background:#fff;
+  transition:border-color .2s, transform .2s; cursor:pointer;
+}
+.related-card:hover { border-color:var(--yellow); transform:translateY(-2px); }
+.related-img {
+  aspect-ratio:1; background:var(--graphite);
+  display:flex; align-items:center; justify-content:center; font-size:36px;
+}
+.related-body { padding:12px; }
+.related-name { font-size:13px; font-weight:700; margin-bottom:4px; color:var(--black); line-height:1.3; }
+.related-price { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--black); }
+.related-btn {
+  width:100%; padding:8px; background:var(--yellow); color:var(--black);
+  border:none; font-size:12px; font-weight:700; cursor:pointer;
+  font-family:'PT Sans',sans-serif; margin-top:8px;
+}
+
+/* contact cta */
+.contact-cta {
+  background:var(--graphite); padding:28px; margin-top:32px;
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:20px; flex-wrap:wrap;
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+}
+.contact-cta-text h3 { font-family:'Russo One',sans-serif; font-size:17px; color:var(--white-pure); margin-bottom:6px; }
+.contact-cta-text p { font-size:13px; color:var(--steel); line-height:1.5; }
+.contact-cta-btns {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  width:100%;
+}
+.cta-btn {
+  padding:13px 8px; font-size:13px; font-weight:700;
+  border:none; cursor:pointer; font-family:'PT Sans',sans-serif;
+  text-align:center; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.cta-wa { background:#2563eb; color:#fff; }
+.cta-tg { background:#229ed9; color:#fff; }
+.cta-max { background:#8b5cf6; color:#fff; }
+.cta-call { background:var(--yellow); color:var(--black); }
+
+/* sticky mobile buy */
+.mobile-buy {
+  display:none; position:fixed; bottom:0; left:0; right:0;
+  background:var(--graphite); border-top:2px solid var(--yellow);
+  padding:12px 16px; z-index:200; gap:10px;
+}
+.mobile-buy-price { font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--white-pure); line-height:1; }
+.mobile-buy-sub { font-size:10px; color:var(--steel); font-family:'Fira Mono',monospace; }
+.mobile-buy-btn {
+  flex:1; padding:14px; background:var(--yellow); color:var(--black);
+  border:none; font-size:15px; font-weight:700; cursor:pointer;
+  font-family:'PT Sans',sans-serif;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+
+/* animations */
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.buy-panel > * { animation:fadeUp .5s ease both; }
+.buy-panel > *:nth-child(1){animation-delay:.05s}
+.buy-panel > *:nth-child(2){animation-delay:.1s}
+.buy-panel > *:nth-child(3){animation-delay:.15s}
+.buy-panel > *:nth-child(4){animation-delay:.2s}
+
+@keyframes shaftPop {
+  0%{transform:scale(1)} 35%{transform:scale(1.15)} 70%{transform:scale(.97)} 100%{transform:scale(1)}
+}
+.shaft-pop { animation:shaftPop .3s ease both; }
+
+/* responsive */
+@media(max-width:900px) {
+  .product-grid { grid-template-columns:1fr; }
+  .gallery { position:static; }
+  .reviews-grid { grid-template-columns:1fr; }
+  .related-grid { grid-template-columns:1fr 1fr; }
+  .fit-grid { grid-template-columns:1fr; }
+  .mobile-buy { display:flex; align-items:center; }
+  body { padding-bottom:72px; }
+}
+@media(max-width:600px) {
+  .related-grid { grid-template-columns:1fr 1fr; }
+  .delivery-strip { grid-template-columns:1fr 1fr; }
+  .contact-cta { flex-direction:column; }
+  .header-right .msg-btn { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <a href="#" class="logo">o<span class="logo-accent">DROVA</span><span>.RU</span></a>
+      <span style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap">точим с <span style="color:var(--yellow)">2014</span> г.</span>
+    </div>
+    <button class="cart-btn">🛒 <span class="cart-count" id="cartCount">🔥</span></button>
+  </div>
+  <div class="header-bottom">
+    <a href="odrova_calculator.html" class="header-calc-btn">⚙️ <span>Калькуляторы</span></a>
+    <a href="tel:+79220352887" class="header-phone-btn">
+      <span class="header-phone-icon">📞</span>
+      <span class="header-phone-num">8 (922) 035-28-87</span>
+    </a>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="#">Главная</a><span>›</span>
+  <a href="#">Конусы</a><span>›</span>
+  Конус 75 мм L300
+</div>
+
+<!-- PRODUCT -->
+<div class="product-wrap">
+  <div class="product-grid">
+
+    <!-- GALLERY -->
+    <div class="gallery">
+      <div class="gallery-main">
+        <div class="gallery-main-inner" id="galleryMain">
+          <svg class="gallery-svg" viewBox="0 0 200 300" fill="none">
+            <defs>
+              <linearGradient id="coneGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#2a2a2a"/>
+                <stop offset="40%" stop-color="#444"/>
+                <stop offset="60%" stop-color="#555"/>
+                <stop offset="100%" stop-color="#2a2a2a"/>
+              </linearGradient>
+              <linearGradient id="threadGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f5c800" stop-opacity=".6"/>
+                <stop offset="100%" stop-color="#f5c800" stop-opacity=".15"/>
+              </linearGradient>
+            </defs>
+            <!-- cone body -->
+            <polygon points="100,10 155,290 45,290" fill="url(#coneGrad)" stroke="#555" stroke-width="1"/>
+            <!-- thread lines -->
+            <line x1="55" y1="80" x2="145" y2="80" stroke="url(#threadGrad)" stroke-width="2.5"/>
+            <line x1="50" y1="110" x2="150" y2="110" stroke="url(#threadGrad)" stroke-width="2.5"/>
+            <line x1="47" y1="140" x2="153" y2="140" stroke="url(#threadGrad)" stroke-width="2.5"/>
+            <line x1="44" y1="170" x2="156" y2="170" stroke="url(#threadGrad)" stroke-width="2.5"/>
+            <line x1="41" y1="200" x2="159" y2="200" stroke="url(#threadGrad)" stroke-width="2.5"/>
+            <line x1="47" y1="230" x2="153" y2="230" stroke="url(#threadGrad)" stroke-width="1.5" stroke-opacity=".4"/>
+            <line x1="50" y1="260" x2="150" y2="260" stroke="url(#threadGrad)" stroke-width="1.5" stroke-opacity=".25"/>
+            <!-- base -->
+            <ellipse cx="100" cy="290" rx="55" ry="8" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+            <!-- tip glow -->
+            <circle cx="100" cy="14" r="6" fill="#f5c800" opacity=".4"/>
+            <circle cx="100" cy="14" r="3" fill="#f5c800" opacity=".8"/>
+            <!-- shaft hole -->
+            <circle cx="100" cy="290" r="18" fill="#111" stroke="#333" stroke-width="1.5"/>
+            <circle cx="100" cy="290" r="10" fill="#0a0a0a"/>
+            <!-- dimension lines -->
+            <line x1="170" y1="10" x2="170" y2="290" stroke="#f5c800" stroke-width=".8" stroke-dasharray="4,3" opacity=".35"/>
+            <text x="175" y="155" font-family="monospace" font-size="10" fill="#f5c800" opacity=".5">L 300</text>
+            <line x1="45" y1="305" x2="155" y2="305" stroke="#f5c800" stroke-width=".8" stroke-dasharray="4,3" opacity=".35"/>
+            <text x="82" y="318" font-family="monospace" font-size="10" fill="#f5c800" opacity=".5">Ø 75</text>
+          </svg>
+        </div>
+        <div class="gallery-badge">ХИТ ПРОДАЖ</div>
+        <div class="gallery-badge-hit">2-ЗАХОДНАЯ РЕЗЬБА</div>
+      </div>
+      <div class="gallery-thumbs">
+        <div class="gallery-thumb active" onclick="setThumb(this,'cone')">🔩</div>
+        <div class="gallery-thumb" onclick="setThumb(this,'thread')">⚙️</div>
+        <div class="gallery-thumb" onclick="setThumb(this,'tip')">🔥</div>
+        <div class="gallery-thumb" onclick="setThumb(this,'box')">📦</div>
+        <div class="gallery-thumb" onclick="setThumb(this,'video')">▶</div>
+      </div>
+    </div>
+
+    <!-- BUY PANEL -->
+    <div class="buy-panel">
+
+      <div>
+        <div class="product-eyebrow">КОНУС ВИНТОВОГО ДРОВОКОЛА · ODROVA.RU</div>
+        <h1 class="product-title">Конус винтовой 75 мм L300</h1>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-num">4.9</span>
+          <span class="rating-sep">·</span>
+          <span class="rating-count">128 отзывов</span>
+          <span class="rating-sep">·</span>
+          <a href="#reviews" style="font-size:12px;color:var(--steel);text-decoration:underline">читать</a>
+        </div>
+      </div>
+
+      <div class="quick-specs">
+        <div class="qs"><b>Ø 75</b> мм</div>
+        <div class="qs"><b>L 300</b> мм</div>
+        <div class="qs"><b>2</b> захода</div>
+        <div class="qs"><b>17.5°</b> угол</div>
+        <div class="qs"><b>Ст45</b> + ТВЧ</div>
+        <div class="qs"><b>24–28</b> HRC</div>
+        <div class="qs"><b>4.9</b> кг</div>
+        <div class="qs">от <b>2.2</b> кВт</div>
+      </div>
+
+      <div>
+        <div class="price-row">
+          <span class="price-main" id="priceMain">3 771 ₽</span>
+          <span class="price-old">5 450 ₽</span>
+          <span class="price-discount">−31%</span>
+        </div>
+        <div class="online-discount-row">
+          <div class="online-discount-badge">🔥 При онлайн-оплате — <b>3 394 ₽</b> (ещё −10%)</div>
+        </div>
+        <div class="price-note">Обычная цена: 3 771 ₽ · При получении — без скидки</div>
+        <div class="stock"><span class="stock-dot"></span> В наличии · отправка сегодня до 16:00</div>
+      </div>
+
+      <!-- shaft selector -->
+      <div>
+        <div class="selector-label">ДИАМЕТР ВАЛА (ПОСАДОЧНОЕ ОТВЕРСТИЕ)</div>
+        <div class="shaft-grid" id="shaftGrid">
+          <button class="shaft-btn" onclick="selectShaft(this,19)">19 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,20)">20 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,22)">22 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,24)">24 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,25)">25 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,28)">28 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,30)">30 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,32)">32 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,34)">34 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,35)">35 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,38)">38 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,40)">40 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,42)">42 мм</button>
+          <button class="shaft-btn" onclick="selectShaft(this,45)">45 мм</button>
+        </div>
+        <div class="shaft-note" id="shaftNote">Выберите диаметр вала вашего дровокола</div>
+      </div>
+
+      <!-- thread direction -->
+      <div>
+        <div class="selector-label">НАПРАВЛЕНИЕ РЕЗЬБЫ</div>
+        <div class="thread-row">
+          <div class="thread-opt active" onclick="selectThread(this,'left')">
+            Левая
+            <span class="thread-tag">В наличии</span>
+          </div>
+          <div class="thread-opt order" onclick="selectThread(this,'right')">
+            Правая
+            <span class="thread-tag">Под заказ 3–7 дн.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- buy buttons -->
+      <div>
+        <button class="btn-buy locked" id="btnBuy" onclick="handleBuy()">
+          <span id="btnBuyText">Выберите диаметр вала ↑</span>
+          <span class="btn-sub" id="btnBuySub"></span>
+        </button>
+        <button class="btn-ask">Не уверены, что подойдёт? Спросить →</button>
+      </div>
+
+      <!-- messengers -->
+      <div>
+        <div class="messenger-strip">
+          <button class="ms-btn ms-wa">💬 SMS</button>
+          <button class="ms-btn ms-tg">✈️ Telegram</button>
+          <button class="ms-btn ms-max">💜 MAX</button>
+        </div>
+        <div class="ms-hint">Пришлите фото вала — подберём посадку за 5 минут</div>
+      </div>
+
+      <!-- delivery -->
+      <div class="delivery-strip">
+        <div class="del-item">
+          <span class="del-icon">🚚</span>
+          <div>
+            <div class="del-title">СДЭК / DPD</div>
+            <div class="del-sub">По всей России и СНГ</div>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-icon">🔵</span>
+          <div>
+            <div class="del-title">Ozon Rocket</div>
+            <div class="del-sub">Быстрая доставка Ozon</div>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-icon">📬</span>
+          <div>
+            <div class="del-title">Почта России</div>
+            <div class="del-sub">В любой населённый пункт</div>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-icon">💳</span>
+          <div>
+            <div class="del-title">Оплата при получении</div>
+            <div class="del-sub">После осмотра в пункте выдачи</div>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-icon">🛡️</span>
+          <div>
+            <div class="del-title">Гарантия 12 мес.</div>
+            <div class="del-sub">На весь конус</div>
+          </div>
+        </div>
+        <div class="del-item">
+          <span class="del-icon">🏭</span>
+          <div>
+            <div class="del-title">🇷🇺 Урал, Екб</div>
+            <div class="del-sub">Верхняя Пышма</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- trust -->
+      <div class="trust-strip">
+        <div class="trust-item"><span class="trust-icon">⚙️</span><span class="trust-text">ЧПУ<br>обработка</span></div>
+        <div class="trust-item"><span class="trust-icon">💎</span><span class="trust-text">Сталь 45<br>+ ТВЧ</span></div>
+        <div class="trust-item"><span class="trust-icon">🔩</span><span class="trust-text">2 захода<br>резьбы</span></div>
+        <div class="trust-item"><span class="trust-icon">📦</span><span class="trust-text">Отправка<br>сегодня</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-section">
+  <div class="tabs-nav-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab(this,'specs')">Характеристики</button>
+      <button class="tab-btn" onclick="switchTab(this,'fit')">Подойдёт ли мне?</button>
+      <button class="tab-btn" onclick="switchTab(this,'desc')">Описание</button>
+      <button class="tab-btn" onclick="switchTab(this,'reviews')" id="tabReviews">Отзывы (128)</button>
+    </div>
+  </div>
+
+    <!-- SPECS -->
+    <div class="tab-content active" id="tab-specs">
+      <table class="specs-table">
+        <tr><td>Наружный диаметр</td><td>72–74.9 мм</td></tr>
+        <tr><td>Длина конуса</td><td>300 мм ± 3 мм</td></tr>
+        <tr><td>Тип резьбы</td><td>Упорная двухзаходная</td></tr>
+        <tr><td>Шаг резьбы</td><td>6 мм</td></tr>
+        <tr><td>Глубина резьбы</td><td>3 мм</td></tr>
+        <tr><td>Длина резьбовой части</td><td>200 мм</td></tr>
+        <tr><td>Угол наклона резьбы</td><td>17.5°</td></tr>
+        <tr><td>Диаметр посадочного отверстия</td><td>19–45 мм (на выбор)</td></tr>
+        <tr><td>Глубина посадочного отверстия</td><td>70 мм</td></tr>
+        <tr><td>Крепление на вал</td><td>4 установочных винта М10×16</td></tr>
+        <tr><td>Закалка кончика ТВЧ</td><td>24–28 HRC по Роквеллу</td></tr>
+        <tr><td>Марка стали</td><td>Ст45</td></tr>
+        <tr><td>Вес</td><td>от 4.9 кг</td></tr>
+        <tr><td>Рек. мощность двигателя</td><td>от 2.2 кВт</td></tr>
+        <tr><td>Рек. диаметр чурбаков</td><td>до 40 см</td></tr>
+        <tr><td>Направление резьбы</td><td>Левая (правая — под заказ)</td></tr>
+        <tr><td>Производитель</td><td>ODROVA.RU, г. Верхняя Пышма</td></tr>
+        <tr><td>Гарантия</td><td>12 месяцев</td></tr>
+      </table>
+    </div>
+
+    <!-- FIT -->
+    <div class="tab-content" id="tab-fit">
+      <div class="fit-grid">
+        <div class="fit-yes">
+          <div class="fit-title">✅ Подойдёт, если:</div>
+          <ul class="fit-list">
+            <li>Двигатель от 2.2 кВт</li>
+            <li>Дрова до 40 см в диаметре</li>
+            <li>Берёза, осина, ель, сосна</li>
+            <li>Дом, дача, баня — бытовой объём</li>
+            <li>Привод 220В, мотоблок или бензин</li>
+            <li>Хотите собрать дровокол сами</li>
+            <li>Вал 19–45 мм</li>
+          </ul>
+        </div>
+        <div class="fit-no">
+          <div class="fit-title">❌ Лучше взять другой, если:</div>
+          <ul class="fit-list">
+            <li>Трактор ВОМ — возьмите конус 100 мм</li>
+            <li>Дуб, акация, вяз толще 40 см</li>
+            <li>Нужен готовый станок — смотрите Бураво-Дров</li>
+            <li>Двигатель слабее 1.5 кВт — возьмите конус 60 мм</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <div class="contact-cta-text">
+          <h3>Не уверены, что конус 75 мм подойдёт?</h3>
+          <p>Пришлите фото двигателя, трактора или вала — подскажем какой конус и комплект выбрать.</p>
+        </div>
+        <div class="contact-cta-btns">
+          <button class="cta-btn cta-wa">SMS</button>
+          <button class="cta-btn cta-tg">Telegram</button>
+          <button class="cta-btn cta-max">MAX</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESCRIPTION -->
+    <div class="tab-content" id="tab-desc">
+      <div class="desc-body">
+        <h3>Самый популярный конус ODROVA</h3>
+        <p>Конус 75 мм — золотая середина линейки. Подходит для большинства домашних и дачных задач: берёза, осина, ель до 40 см в диаметре раскалываются за 3–5 секунд.</p>
+
+        <div class="desc-highlight">«Двухзаходная упорная резьба сама захватывает чурбак и тянет на себя — без лишнего давления руками. Один оборот = двойной захват.»</div>
+
+        <h3>Принцип работы</h3>
+        <p>Вращающийся конус с упорной резьбой втягивает полено. За счёт постепенного увеличения диаметра разрывает древесину вдоль волокон на 2–4 части. Никакого удара — только плавное расклинивание.</p>
+
+        <h3>Материал и обработка</h3>
+        <p>Сталь 45 — высокопрочная конструкционная. Рабочая часть (кончик) закалена методом ТВЧ до 24–28 единиц по Роквеллу. Нарезка резьбы на ЧПУ — точность геометрии под контролем.</p>
+
+        <h3>Крепление на вал</h3>
+        <p>4 установочных винта М10×16, расположенных парами под углом 120° — принцип токарных кулачков. Надёжная фиксация без люфта. Посадочное отверстие изготавливается под ваш вал: от 19 до 45 мм.</p>
+
+        <h3>Совместимость</h3>
+        <ul>
+          <li>Электродвигатели 220В и 380В</li>
+          <li>Бензиновые двигатели</li>
+          <li>Мотоблоки и культиваторы</li>
+          <li>ВОМ трактора (рекомендуем конус 100 мм для ВОМ)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="tab-content" id="tab-reviews">
+      <div class="reviews-grid" id="reviews">
+        <div class="review-card">
+          <div class="review-head">
+            <div><div class="review-author">Алексей М.</div><div class="review-city">Пермь</div></div>
+            <div class="review-source">Ozon</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«Собрал за вечер, колет уверенно. Конус заходит быстро, комплект полный. Берёза 35 см идёт как по маслу. Брал посадку 30 мм под свой вал — всё подошло точно.»</div>
+        </div>
+        <div class="review-card">
+          <div class="review-head">
+            <div><div class="review-author">Сергей К.</div><div class="review-city">Новосибирск</div></div>
+            <div class="review-source">Avito</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«Качество отличное, резьба ровная. Видно что ЧПУ — посадка идеальная, никакого люфта. Уже второй заказываю, первый у соседа стоит. Рекомендую.»</div>
+        </div>
+        <div class="review-card">
+          <div class="review-head">
+            <div><div class="review-author">Виктор Р.</div><div class="review-city">Екатеринбург</div></div>
+            <div class="review-source">Сайт</div>
+          </div>
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">«За выходные перекололи 6 кубов берёзы. Конус работает без нареканий, вибрации нет. Двухзаходная резьба реально цепляет лучше однозаходного китайца.»</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  <div style="margin-top:48px">
+    <div style="font-family:'Russo One',sans-serif;font-size:22px;margin-bottom:20px">Обычно берут вместе</div>
+    <div class="related-grid">
+      <div class="related-card">
+        <div class="related-img">⚙️</div>
+        <div class="related-body">
+          <div class="related-name">Вал 30 мм для дровокола</div>
+          <div class="related-price">1 947 ₽</div>
+          <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">🔘</div>
+        <div class="related-body">
+          <div class="related-name">Подшипник UCP 206</div>
+          <div class="related-price">1 473 ₽</div>
+          <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">⭕</div>
+        <div class="related-body">
+          <div class="related-name">Шкив маховик D240 мм профиль А</div>
+          <div class="related-price">6 623 ₽</div>
+          <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-img">〰️</div>
+        <div class="related-body">
+          <div class="related-name">Ремень профиль А L1700</div>
+          <div class="related-price">402 ₽</div>
+          <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT CTA -->
+  <div class="contact-cta" style="margin-top:32px">
+    <div class="contact-cta-text">
+      <h3>Свяжитесь с ODROVA</h3>
+      <p>Подберём конус, вал, шкивы и ремни под ваш двигатель. Объясним по сборке.</p>
+    </div>
+    <div class="contact-cta-btns">
+      <button class="cta-btn cta-call">Позвонить</button>
+      <button class="cta-btn cta-max">MAX</button>
+      <button class="cta-btn cta-tg">Telegram</button>
+      <button class="cta-btn cta-wa">SMS</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- MOBILE STICKY BUY -->
+<div class="mobile-buy" id="mobileBuy">
+  <div>
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <div class="mobile-buy-price">3 394 ₽</div>
+      <div style="font-size:15px;color:var(--steel);text-decoration:line-through">3 771 ₽</div>
+    </div>
+    <div class="mobile-buy-sub" id="mobileSub">При онлайн-оплате</div>
+  </div>
+  <button class="mobile-buy-btn" onclick="document.getElementById('shaftGrid').scrollIntoView({behavior:'smooth'})">
+    Купить
+  </button>
+</div>
+
+<script>
+let cartItems = 0;
+function updateCart(n) {
+  cartItems = n;
+  const el = document.getElementById('cartCount');
+  if (el) el.textContent = cartItems === 0 ? '🔥' : cartItems;
+}
+let selectedThread = 'left';
+
+const shafts = [19,20,22,24,25,28,30,32,34,35,38,40,42,45];
+
+function selectShaft(btn, mm) {
+  document.querySelectorAll('.shaft-btn').forEach(b => b.classList.remove('active','shaft-pop','shaft-fire'));
+  btn.classList.add('active');
+  void btn.offsetWidth;
+  btn.classList.add('shaft-pop');
+  setTimeout(() => btn.classList.add('shaft-fire'), 350);
+  selectedShaft = mm;
+  updateBuyBtn();
+}
+
+function selectThread(el, dir) {
+  document.querySelectorAll('.thread-opt').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  selectedThread = dir;
+  updateBuyBtn();
+}
+
+function updateBuyBtn() {
+  const btn = document.getElementById('btnBuy');
+  const txt = document.getElementById('btnBuyText');
+  const sub = document.getElementById('btnBuySub');
+  const mob = document.getElementById('mobileSub');
+  if (!selectedShaft) return;
+  const threadLabel = selectedThread === 'left' ? 'Левая резьба' : 'Правая резьба — под заказ';
+  btn.classList.remove('locked');
+  btn.classList.add('ready');
+  btn.classList.remove('shake');
+  void btn.offsetWidth;
+  btn.classList.add('shake');
+  txt.textContent = `Купить / Ø75 мм / L300 мм / посадка ${selectedShaft} мм / 3 771 ₽`;
+  sub.textContent = threadLabel;
+  if (mob) mob.textContent = `посадка ${selectedShaft} мм · ${threadLabel}`;
+}
+
+function handleBuy() {
+  if (!selectedShaft) {
+    document.getElementById('shaftGrid').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  updateCart(cartItems + 1);
+  alert(`Добавлено в корзину:\nКонус 75 мм L300 / посадка ${selectedShaft} мм / ${selectedThread === 'left' ? 'Левая' : 'Правая'} резьба`);
+}
+
+function switchTab(btn, id) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+function setThumb(el, type) {
+  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// hide tab scroll hint when scrolled to end
+const tabsNav = document.querySelector('.tabs-nav');
+const tabsWrap = document.querySelector('.tabs-nav-wrap');
+if (tabsNav && tabsWrap) {
+  tabsNav.addEventListener('scroll', () => {
+    const atEnd = tabsNav.scrollLeft + tabsNav.clientWidth >= tabsNav.scrollWidth - 4;
+    tabsWrap.style.setProperty('--fade', atEnd ? '0' : '1');
+  });
+}
+tabsWrap && tabsWrap.style.setProperty('--fade','1');
+
+// ── TABS AUTO-SCROLL ──
+(function(){
+  const nav = document.querySelector('.tabs-nav');
+  if (!nav) return;
+  let triggered = false;
+
+  function animateScroll(from, to, duration, onDone) {
+    let startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      const ease = p < 0.5 ? 2*p*p : -1+(4-2*p)*p;
+      nav.scrollLeft = from + (to - from) * ease;
+      if (p < 1) requestAnimationFrame(step);
+      else onDone && onDone();
+    }
+    requestAnimationFrame(step);
+  }
+
+  function doScroll() {
+    if (triggered) return;
+    const end = nav.scrollWidth - nav.clientWidth;
+    if (end <= 0) return;
+    triggered = true;
+    setTimeout(() => {
+      animateScroll(0, end, 2000, () => {
+        // pause 600ms then scroll back
+        setTimeout(() => animateScroll(end, 0, 1600, null), 600);
+      });
+    }, 600);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { doScroll(); obs.disconnect(); }
+    }, { threshold: 0.5 });
+    obs.observe(nav);
+  } else {
+    setTimeout(doScroll, 2000);
+  }
+
+  nav.addEventListener('touchstart', () => { triggered = true; }, {once:true});
+  nav.addEventListener('mousedown', () => { triggered = true; }, {once:true});
+})();
+</script>
+</body>
+</html>

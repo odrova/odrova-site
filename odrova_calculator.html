@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Инструменты ODROVA — Калькуляторы для дровокола</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #111;
+  --graphite: #1e1e1e;
+  --graphite-mid: #2a2a2a;
+  --graphite-light: #333;
+  --steel: #6b7280;
+  --steel-light: #9ca3af;
+  --white: #f5f5f5;
+  --white-pure: #fff;
+  --yellow: #f5c800;
+  --yellow-dark: #d4a800;
+  --green: #22c55e;
+  --red: #ef4444;
+  --border: rgba(255,255,255,0.08);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black); }
+
+/* HEADER */
+.header {
+  background:var(--black); padding:16px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:2px solid var(--yellow);
+}
+.logo { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--white-pure); letter-spacing:0.08em; }
+.logo span { color:var(--yellow); }
+.header-tag { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; }
+
+/* TABS */
+.tabs-wrap { background:var(--graphite); border-bottom:1px solid var(--border); }
+.tabs { display:flex; max-width:900px; margin:0 auto; }
+.tab {
+  flex:1; padding:18px 16px; text-align:center; cursor:pointer;
+  font-family:'PT Sans',sans-serif; font-weight:700; font-size:14px;
+  color:var(--steel); border-right:1px solid var(--border);
+  transition:all .2s; position:relative;
+}
+.tab:last-child { border-right:none; }
+.tab:hover { color:var(--white-pure); background:var(--graphite-light); }
+.tab.active { color:var(--yellow); background:var(--graphite-mid); }
+.tab.active::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:3px; background:var(--yellow);
+}
+.tab-icon { font-size:20px; display:block; margin-bottom:4px; }
+
+/* PANELS */
+.panel { display:none; max-width:900px; margin:0 auto; padding:40px 24px 60px; }
+.panel.active { display:block; }
+
+/* CARD */
+.calc-card {
+  background:var(--graphite);
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+  padding:36px; margin-bottom:24px;
+}
+.calc-title {
+  font-family:'Russo One',sans-serif; font-size:22px;
+  color:var(--white-pure); margin-bottom:6px;
+}
+.calc-sub { font-size:14px; color:var(--steel); margin-bottom:28px; line-height:1.6; }
+
+/* FORM */
+.fields { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
+.fields.three { grid-template-columns:1fr 1fr 1fr; }
+.field { display:flex; flex-direction:column; gap:8px; }
+.field label {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  color:var(--steel); letter-spacing:0.12em; text-transform:uppercase;
+}
+.field label span { color:var(--yellow); }
+.field input, .field select {
+  background:var(--graphite-light); border:1.5px solid rgba(255,255,255,0.1);
+  color:var(--white-pure); padding:12px 16px; font-size:16px;
+  font-family:'PT Sans',sans-serif; outline:none;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:border-color .2s;
+}
+.field input:focus, .field select:focus { border-color:var(--yellow); }
+.field input::placeholder { color:var(--steel); }
+.field input.error { border-color:var(--red); }
+.field-hint { font-size:12px; color:var(--steel); margin-top:4px; font-family:'Fira Mono',monospace; }
+
+/* BUTTON */
+.calc-btn {
+  background:var(--yellow); color:var(--black);
+  border:none; padding:16px 36px; font-size:16px; font-weight:700;
+  font-family:'PT Sans',sans-serif; cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:background .2s; width:100%;
+}
+.calc-btn:hover { background:var(--yellow-dark); }
+
+/* RESULT */
+.result-box {
+  background:rgba(245,200,0,0.06); border:1.5px solid var(--yellow);
+  padding:28px; margin-top:24px; display:none;
+  clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,14px 100%,0 calc(100% - 14px));
+}
+.result-box.show { display:block; }
+.result-label {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  color:var(--yellow); letter-spacing:0.15em; margin-bottom:8px;
+}
+.result-value {
+  font-family:'Bebas Neue',sans-serif; font-size:52px;
+  color:var(--white-pure); line-height:1; margin-bottom:4px;
+}
+.result-unit { font-size:14px; color:var(--steel); margin-bottom:16px; }
+.result-note { font-size:13px; color:var(--steel-light); line-height:1.6; }
+
+/* PRODUCTS BLOCK */
+.products-label {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  color:var(--steel); letter-spacing:0.15em; margin:24px 0 12px;
+  padding-top:24px; border-top:1px solid var(--border);
+}
+.product-matches { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.prod-match {
+  background:var(--graphite-light); border:1px solid var(--border);
+  padding:16px; transition:border-color .2s; cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.prod-match:hover { border-color:var(--yellow); }
+.prod-match.recommended { border-color:var(--yellow); background:rgba(245,200,0,0.05); }
+.prod-match-badge {
+  font-family:'Fira Mono',monospace; font-size:10px;
+  color:var(--yellow); margin-bottom:6px;
+}
+.prod-match-name { font-size:13px; font-weight:700; color:var(--white-pure); margin-bottom:4px; }
+.prod-match-size { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); margin-bottom:10px; }
+.prod-match-price { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--yellow); }
+.prod-match-btn {
+  display:block; width:100%; background:var(--yellow); color:var(--black);
+  border:none; padding:8px; font-size:12px; font-weight:700;
+  font-family:'PT Sans',sans-serif; cursor:pointer; margin-top:8px;
+  transition:background .2s;
+}
+.prod-match-btn:hover { background:var(--yellow-dark); }
+
+/* DIAGRAM */
+.diagram-wrap { margin:24px 0; text-align:center; }
+.diagram-svg { max-width:100%; height:auto; }
+
+/* CONE SELECTOR */
+.cone-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:28px; }
+.cone-card {
+  background:var(--graphite-light); border:1.5px solid rgba(255,255,255,0.08);
+  padding:20px 14px; text-align:center; cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:all .2s;
+  display:flex; flex-direction:column; align-items:center;
+}
+.cone-card:hover, .cone-card.active {
+  border-color:var(--yellow); background:rgba(245,200,0,0.06);
+}
+.cone-size {
+  font-family:'Bebas Neue',sans-serif; font-size:36px;
+  color:var(--yellow); line-height:1;
+}
+.cone-mm { font-family:'Fira Mono',monospace; font-size:10px; color:var(--steel); margin-top:2px; }
+.cone-svg-wrap { margin:8px 0; display:flex; align-items:center; justify-content:center; height:56px; }
+.cone-tag { font-size:11px; color:var(--steel-light); margin-top:6px; font-family:'Fira Mono',monospace; }
+.cone-params {
+  display:flex; align-items:center; justify-content:center;
+  gap:4px; margin-top:6px; flex-wrap:wrap;
+}
+.cone-param {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  color:var(--yellow); background:rgba(245,200,0,0.08);
+  border:1px solid rgba(245,200,0,0.2); padding:2px 7px;
+}
+.cone-param-sep { color:var(--steel); font-size:10px; }
+
+.cone-result { display:none; }
+.cone-result.show { display:block; }
+.cone-detail {
+  background:var(--graphite); border:1.5px solid var(--yellow);
+  padding:28px; margin-bottom:20px;
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+}
+.cone-detail-header { display:grid; grid-template-columns:auto 1fr; gap:24px; align-items:center; margin-bottom:20px; }
+.cone-detail-img {
+  width:80px; height:80px; background:var(--graphite-light);
+  display:flex; align-items:center; justify-content:center;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.cone-detail-title { font-family:'Russo One',sans-serif; font-size:20px; color:var(--white-pure); margin-bottom:4px; }
+.cone-detail-sub { font-size:13px; color:var(--steel); }
+.cone-specs-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:20px; }
+.cone-spec-item { background:var(--graphite-mid); padding:12px 14px; }
+.cone-spec-key { font-family:'Fira Mono',monospace; font-size:10px; color:var(--steel); margin-bottom:4px; letter-spacing:0.1em; }
+.cone-spec-val { font-size:15px; font-weight:700; color:var(--white-pure); }
+.fit-section { }
+.fit-title { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; margin-bottom:10px; }
+.fit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fit-yes, .fit-no {
+  padding:14px 16px; font-size:13px; line-height:1.6;
+}
+.fit-yes { background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.25); color:#86efac; }
+.fit-no { background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.2); color:#fca5a5; }
+.fit-yes li, .fit-no li { margin-left:16px; margin-bottom:4px; }
+.fit-yes-title { font-weight:700; margin-bottom:8px; color:var(--green); }
+.fit-no-title { font-weight:700; margin-bottom:8px; color:var(--red); }
+
+.cone-buy-btn {
+  display:block; width:100%; background:var(--yellow); color:var(--black);
+  border:none; padding:16px; font-size:15px; font-weight:700;
+  font-family:'PT Sans',sans-serif; cursor:default; margin-top:16px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:background .2s, box-shadow .3s;
+}
+.cone-buy-btn.ready {
+  cursor:pointer;
+  animation: fireGlow 1.8s ease-in-out infinite;
+}
+.cone-buy-btn.ready:hover { background:var(--yellow-dark); }
+
+@keyframes fireGlow {
+  0%   { box-shadow: 0 0 8px 2px #f5c800, 0 0 20px 4px #ff6a00; }
+  25%  { box-shadow: 0 0 14px 4px #ff4500, 0 0 32px 8px #ff6a00; }
+  50%  { box-shadow: 0 0 20px 6px #f5c800, 0 0 40px 12px #ff2200; }
+  75%  { box-shadow: 0 0 12px 3px #ff6a00, 0 0 28px 6px #ff4500; }
+  100% { box-shadow: 0 0 8px 2px #f5c800, 0 0 20px 4px #ff6a00; }
+}
+
+@keyframes shakeBtn {
+  0%,100% { transform: translateX(0); }
+  15%     { transform: translateX(-5px) rotate(-1deg); }
+  30%     { transform: translateX(5px) rotate(1deg); }
+  45%     { transform: translateX(-4px) rotate(-0.5deg); }
+  60%     { transform: translateX(4px) rotate(0.5deg); }
+  75%     { transform: translateX(-2px); }
+  90%     { transform: translateX(2px); }
+}
+.shake { animation: shakeBtn 0.5s ease both; }
+
+@keyframes shaftPop {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.18); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.shaft-fire {
+  background: var(--black) !important;
+  color: var(--yellow) !important;
+  border-color: var(--yellow) !important;
+  box-shadow: 0 0 10px 2px #ff6a00, 0 0 22px 5px #ff4500;
+  animation: shaftPop 0.35s ease both;
+}
+
+
+/* INFO BOXES */
+.info-boxes { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:24px; }
+.info-box { background:var(--graphite-mid); border:1px solid var(--border); padding:20px; }
+.info-box-title { font-size:13px; font-weight:700; color:var(--white-pure); margin-bottom:8px; display:flex; align-items:center; gap:8px; }
+.info-box-text { font-size:13px; color:var(--steel); line-height:1.65; }
+
+/* RPM visual */
+.rpm-bars { display:flex; align-items:flex-end; gap:8px; height:80px; margin:16px 0; }
+.rpm-bar { flex:1; background:var(--graphite-light); position:relative; transition:height .5s ease; min-height:4px; }
+.rpm-bar.motor { background:var(--steel); }
+.rpm-bar.cone { background:var(--yellow); }
+.rpm-bar-label { position:absolute; bottom:-22px; left:0; right:0; text-align:center; font-family:'Fira Mono',monospace; font-size:10px; color:var(--steel); }
+.rpm-val-label { position:absolute; top:-20px; left:0; right:0; text-align:center; font-size:11px; font-weight:700; }
+.rpm-bar.motor .rpm-val-label { color:var(--steel-light); }
+.rpm-bar.cone .rpm-val-label { color:var(--yellow); }
+
+/* ERROR MSG */
+.error-msg { color:var(--red); font-size:12px; font-family:'Fira Mono',monospace; margin-top:4px; display:none; }
+.error-msg.show { display:block; }
+
+/* MOBILE */
+@media(max-width:600px) {
+  .fields, .fields.three { grid-template-columns:1fr; }
+  .cone-grid { grid-template-columns:repeat(2,1fr); }
+  .product-matches { grid-template-columns:1fr 1fr; }
+  .cone-specs-grid { grid-template-columns:1fr 1fr; }
+  .fit-grid { grid-template-columns:1fr; }
+  .info-boxes { grid-template-columns:1fr; }
+  .cone-detail-header { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">ODROVA<span>.RU</span></div>
+  <div class="header-tag">ИНСТРУМЕНТЫ ДЛЯ СБОРКИ ДРОВОКОЛА</div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab(0)">
+      <span class="tab-icon">📐</span>Длина ремня
+    </div>
+    <div class="tab" onclick="switchTab(1)">
+      <span class="tab-icon">⚙️</span>Обороты шкивов
+    </div>
+    <div class="tab" onclick="switchTab(2)">
+      <span class="tab-icon">🔩</span>Подбор конуса
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PANEL 1: РЕМЕНЬ ═══ -->
+<div class="panel active" id="panel0">
+
+  <div class="calc-card">
+    <div class="calc-title">Калькулятор длины ремня</div>
+    <div class="calc-sub">Введите межосевое расстояние и диаметры шкивов — получите нужную длину ремня и список подходящих позиций из каталога ODROVA.</div>
+
+    <!-- SVG DIAGRAM -->
+    <div class="diagram-wrap">
+      <svg class="diagram-svg" width="500" height="140" viewBox="0 0 500 140">
+        <defs>
+          <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0,8 3,0 6" fill="#f5c800"/>
+          </marker>
+        </defs>
+        <!-- belt outline -->
+        <ellipse cx="130" cy="70" rx="55" ry="55" fill="none" stroke="#333" stroke-width="2"/>
+        <ellipse cx="370" cy="70" rx="35" ry="35" fill="none" stroke="#333" stroke-width="2"/>
+        <!-- belt lines -->
+        <line x1="130" y1="15" x2="370" y2="35" stroke="#f5c800" stroke-width="2" stroke-dasharray="6,3" opacity="0.5"/>
+        <line x1="130" y1="125" x2="370" y2="105" stroke="#f5c800" stroke-width="2" stroke-dasharray="6,3" opacity="0.5"/>
+        <!-- D1 arrow -->
+        <line x1="80" y1="70" x2="130" y2="70" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="60" y="66" font-family="Fira Mono,monospace" font-size="12" fill="#9ca3af">D1</text>
+        <!-- D2 arrow -->
+        <line x1="415" y1="70" x2="370" y2="70" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text x="418" y="74" font-family="Fira Mono,monospace" font-size="12" fill="#9ca3af">D2</text>
+        <!-- L arrow -->
+        <line x1="130" y1="70" x2="370" y2="70" stroke="#f5c800" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.4"/>
+        <text x="235" y="65" font-family="Fira Mono,monospace" font-size="12" fill="#f5c800">L</text>
+        <!-- labels -->
+        <text x="110" y="130" font-family="Fira Mono,monospace" font-size="11" fill="#6b7280">Ведущий шкив</text>
+        <text x="330" y="120" font-family="Fira Mono,monospace" font-size="11" fill="#6b7280">Конус/вал</text>
+      </svg>
+    </div>
+
+    <div class="fields three">
+      <div class="field">
+        <label>Межосевое расстояние <span>L</span>, мм</label>
+        <input type="number" id="belt_L" placeholder="напр. 400" min="1">
+        <div class="field-hint">Расстояние между центрами шкивов</div>
+        <div class="error-msg" id="err_L">Введите значение больше 0</div>
+      </div>
+      <div class="field">
+        <label>Диаметр большого шкива <span>D1</span>, мм</label>
+        <input type="number" id="belt_D1" placeholder="напр. 240" min="1">
+        <div class="field-hint">Шкив на двигателе или маховике</div>
+        <div class="error-msg" id="err_D1">Введите значение больше 0</div>
+      </div>
+      <div class="field">
+        <label>Диаметр малого шкива <span>D2</span>, мм</label>
+        <input type="number" id="belt_D2" placeholder="напр. 100" min="1">
+        <div class="field-hint">Шкив на валу дровокола</div>
+        <div class="error-msg" id="err_D2">Введите значение больше 0</div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcBelt()">Рассчитать длину ремня →</button>
+
+    <div class="result-box" id="beltResult">
+      <div class="result-label">РАСЧЁТНАЯ ДЛИНА РЕМНЯ</div>
+      <div class="result-value" id="beltVal">—</div>
+      <div class="result-unit">мм (по нейтральной линии)</div>
+      <div class="result-note" id="beltNote"></div>
+      <div class="products-label">ПОДХОДЯЩИЕ РЕМНИ ИЗ КАТАЛОГА ODROVA</div>
+      <div class="product-matches" id="beltProducts"></div>
+    </div>
+  </div>
+
+  <div class="info-boxes">
+    <div class="info-box">
+      <div class="info-box-title">📌 Формула расчёта</div>
+      <div class="info-box-text">L_ремня = 2×L + π×(D1+D2)/2 + (D1−D2)²/(4×L)<br><br>Результат — длина по нейтральной линии ремня. Для ремней типа B добавьте 25–40 мм к внешней длине.</div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">💡 Совет по выбору</div>
+      <div class="info-box-text">Для дровокола рекомендуем ремни типа B (сечение 17×11 мм). Лучше взять ремень немного длиннее расчётного — натяжение регулируется смещением двигателя.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PANEL 2: ОБОРОТЫ ═══ -->
+<div class="panel" id="panel1">
+
+  <div class="calc-card">
+    <div class="calc-title">Калькулятор оборотов шкивной передачи</div>
+    <div class="calc-sub">Рассчитайте обороты на выходном валу дровокола по оборотам двигателя и диаметрам шкивов. Оптимальная скорость конуса: 400–600 об/мин.</div>
+
+    <div class="fields">
+      <div class="field">
+        <label>Обороты двигателя <span>n1</span>, об/мин</label>
+        <input type="number" id="rpm_n1" placeholder="напр. 1450" min="1">
+        <div class="field-hint">Обычно 1450 или 2800 об/мин для 220В</div>
+        <div class="error-msg" id="err_n1">Введите обороты двигателя</div>
+      </div>
+      <div class="field">
+        <label>Диаметр шкива двигателя <span>D1</span>, мм</label>
+        <input type="number" id="rpm_D1" placeholder="напр. 240" min="1">
+        <div class="field-hint">Ведущий шкив на валу мотора</div>
+        <div class="error-msg" id="err_rD1">Введите диаметр шкива</div>
+      </div>
+      <div class="field">
+        <label>Диаметр шкива вала <span>D2</span>, мм</label>
+        <input type="number" id="rpm_D2" placeholder="напр. 100" min="1">
+        <div class="field-hint">Ведомый шкив на валу конуса</div>
+        <div class="error-msg" id="err_rD2">Введите диаметр шкива</div>
+      </div>
+      <div class="field">
+        <label>КПД передачи, %</label>
+        <input type="number" id="rpm_kpd" placeholder="95" min="50" max="100" value="95">
+        <div class="field-hint">Клиновой ремень ≈ 95–97%</div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="calcRPM()">Рассчитать обороты на конусе →</button>
+
+    <div class="result-box" id="rpmResult">
+      <div class="result-label">ОБОРОТЫ НА КОНУСЕ</div>
+      <div class="result-value" id="rpmVal">—</div>
+      <div class="result-unit">об/мин на выходном валу</div>
+      <div style="margin:16px 0 8px">
+        <div class="rpm-bars" id="rpmBars">
+          <div class="rpm-bar motor" id="barMotor" style="height:60px">
+            <div class="rpm-val-label" id="barMotorVal">—</div>
+            <div class="rpm-bar-label">Двигатель</div>
+          </div>
+          <div class="rpm-bar cone" id="barCone" style="height:40px">
+            <div class="rpm-val-label" id="barConeVal">—</div>
+            <div class="rpm-bar-label">Конус</div>
+          </div>
+        </div>
+        <div style="height:30px"></div>
+      </div>
+      <div class="result-note" id="rpmNote"></div>
+
+      <div class="products-label">ШКИВЫ ДЛЯ ЭТОЙ ПЕРЕДАЧИ</div>
+      <div class="product-matches" id="rpmProducts"></div>
+    </div>
+  </div>
+
+  <div class="info-boxes">
+    <div class="info-box">
+      <div class="info-box-title">⚡ Оптимальные обороты конуса</div>
+      <div class="info-box-text">
+        <b style="color:#f5c800">400–600 об/мин</b> — рабочий диапазон для большинства конусов ODROVA.<br><br>
+        Меньше 300 — конус плохо захватывает дерево.<br>
+        Больше 700 — повышенный износ, возможен перегрев.
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">🔧 Как подобрать передачу</div>
+      <div class="info-box-text">
+        Двигатель 1450 об/мин → передаточное отношение 2.5–3.5×<br>
+        Шкив мотора 240 мм + шкив вала 80–100 мм = ~480–580 об/мин.<br><br>
+        Двигатель 2800 об/мин → отношение 5–6×.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PANEL 3: КОНУС ═══ -->
+<div class="panel" id="panel2">
+
+  <div class="calc-card">
+    <div class="calc-title">Подбор конуса по задаче</div>
+    <div class="calc-sub">Выберите диаметр конуса — покажем полные характеристики, под какой двигатель подходит и что берут вместе с ним.</div>
+
+    <div class="cone-grid">
+      <div class="cone-card" onclick="selectCone(60, this)">
+        <div class="cone-size">60</div>
+        <div class="cone-mm">мм</div>
+        <svg width="50" height="56" viewBox="0 0 50 80" class="cone-svg-wrap">
+          <polygon points="25,4 40,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="40" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Лёгкий</div>
+        <div class="cone-params">
+          <span class="cone-param">L 165 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">15°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(75, this)">
+        <div class="cone-size">75</div>
+        <div class="cone-mm">мм</div>
+        <svg width="60" height="56" viewBox="0 0 60 80" class="cone-svg-wrap">
+          <polygon points="30,4 50,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="50" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Хит продаж</div>
+        <div class="cone-params">
+          <span class="cone-param">L 300 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">17.5°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(90, this)">
+        <div class="cone-size">72</div>
+        <div class="cone-mm">мм</div>
+        <svg width="64" height="56" viewBox="0 0 64 80" class="cone-svg-wrap">
+          <polygon points="32,4 54,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="54" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Средний</div>
+        <div class="cone-params">
+          <span class="cone-param">L 230 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">17°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(100, this)">
+        <div class="cone-size">100</div>
+        <div class="cone-mm">мм</div>
+        <svg width="68" height="56" viewBox="0 0 68 80" class="cone-svg-wrap">
+          <polygon points="34,4 58,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="58" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Мощный</div>
+        <div class="cone-params">
+          <span class="cone-param">L 300 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">23.5°</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cone-result" id="coneResult">
+      <div class="cone-detail" id="coneDetail"></div>
+    </div>
+  </div>
+
+  <div class="info-boxes">
+    <div class="info-box">
+      <div class="info-box-title">🔩 2 захода — что это значит?</div>
+      <div class="info-box-text">Все конусы ODROVA имеют двухзаходную упорную резьбу. Это значит, что за один оборот конус входит в дерево вдвое быстрее, чем однозаходный. Берёза 35 см раскалывается за 3–5 секунд.</div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">💎 Сталь 45 + ТВЧ</div>
+      <div class="info-box-text">Конусы точатся из стали 45 и проходят закалку ТВЧ на рабочей части. Это увеличивает твёрдость резьбы и продлевает срок службы при интенсивной работе.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──── ДАННЫЕ ────
+const belts = [
+  { name:'Ремень PJ559 8 ручьёв', length:559, price:'890 ₽', match:[520,600] },
+  { name:'Ремень B-1000', length:1000, price:'320 ₽', match:[950,1060] },
+  { name:'Ремень B-1200', length:1200, price:'360 ₽', match:[1140,1270] },
+  { name:'Ремень B-1300', length:1300, price:'390 ₽', match:[1240,1370] },
+  { name:'Ремень B-1400', length:1400, price:'420 ₽', match:[1330,1470] },
+  { name:'Ремень B-1500', length:1500, price:'450 ₽', match:[1430,1580] },
+  { name:'Ремень B-1600', length:1600, price:'480 ₽', match:[1530,1680] },
+  { name:'Ремень B-1700', length:1700, price:'510 ₽', match:[1630,1780] },
+  { name:'Ремень B-1800', length:1800, price:'540 ₽', match:[1720,1890] },
+  { name:'Ремень B-2000', length:2000, price:'600 ₽', match:[1910,2100] },
+];
+
+const pulleys = [
+  { name:'Шкив 60 мм', d:60, price:'480 ₽' },
+  { name:'Шкив 80 мм', d:80, price:'520 ₽' },
+  { name:'Шкив 100 мм', d:100, price:'560 ₽' },
+  { name:'Шкив 120 мм', d:120, price:'620 ₽' },
+  { name:'Шкив 160 мм', d:160, price:'720 ₽' },
+  { name:'Шкив 200 мм', d:200, price:'850 ₽' },
+  { name:'Шкив 240 мм', d:240, price:'980 ₽' },
+];
+
+const cones = {
+  60: {
+    name:'Конус винтовой 60 мм L165',
+    diameter:60, thread:'2-заходная упорная', length:165,
+    shafts:[19,20,22,24,25,28,30,32,34,35],
+    shaftNote:'под заказ: правая резьба в любом размере',
+    steel:'Сталь 45 + ТВЧ (24–28 HRC)', price:'1 950 ₽',
+    power:'от 2.2 кВт', rpm:'400–700 об/мин',
+    threadAngle:'15°', threadLen:'100 мм',
+    fit_yes:['Двигатель от 2.2 кВт','Дрова до 40 см диаметром','Дача, баня, небольшой объём','Мотоблок или малый двигатель'],
+    fit_no:['Берёза и дуб — крупные чурки (лучше 75 мм)','Коммерческая заготовка','Двигатель ВОМ трактора'],
+    also:'Вал 30 мм, UCP206, шкив маховик D240'
+  },
+  75: {
+    name:'Конус винтовой 75 мм L300',
+    diameter:75, thread:'2-заходная упорная', length:300,
+    shafts:[19,20,22,24,25,28,30,32,34,35,38,40,42,45],
+    shaftNote:'левая — в наличии; правая — под заказ 3–7 дн.',
+    steel:'Сталь 45 + ТВЧ (24–28 HRC)', price:'3 771 ₽',
+    power:'от 2.2 кВт', rpm:'400–600 об/мин',
+    threadAngle:'17.5°', threadLen:'200 мм',
+    fit_yes:['Двигатель 2.2–4 кВт','Дрова до 40 см (берёза, осина, ель)','Дом, дача, баня','220В, мотоблок, бензин'],
+    fit_no:['Трактор ВОМ — рекомендуем 100 мм','Дуб и акация толще 40 см'],
+    also:'Вал 30 мм, UCP206, шкив D240, ремень профиль А'
+  },
+  90: {
+    name:'Конус винтовой 72 мм L230',
+    diameter:72, thread:'2-заходная упорная', length:230,
+    shafts:[19,20,22,24,25,28,30,32,34,35],
+    shaftNote:'уточнять наличие; правая — под заказ',
+    steel:'Сталь 45 + ТВЧ (24–28 HRC)', price:'2 450 ₽',
+    power:'от 2.2 кВт', rpm:'400–600 об/мин',
+    threadAngle:'17°', threadLen:'150 мм',
+    fit_yes:['Двигатель 2.2–3 кВт','Дрова до 40 см','Промежуточный вариант между 60 и 75','Когда 75 мм избыточен'],
+    fit_no:['Крупная берёза и дуб — возьмите 75 или 100 мм','ВОМ трактора'],
+    also:'Вал 30 мм, UCP206, шкив D240'
+  },
+  100: {
+    name:'Конус винтовой 100 мм L300',
+    diameter:100, thread:'2-заходная упорная', length:300,
+    shafts:[19,20,22,24,25,28,30,32,34,35,38,40,42,45,48,50,55],
+    shaftNote:'левая — в наличии; правая — под заказ 3–7 дн.',
+    steel:'Сталь 45 + ТВЧ (24–28 HRC)', price:'4 811 ₽',
+    power:'от 4 кВт', rpm:'300–500 об/мин',
+    threadAngle:'23.5°', threadLen:'200 мм',
+    fit_yes:['Двигатель от 4 кВт','Чурбаки до 70 см диаметром','Трактор ВОМ','Коммерческая заготовка дров'],
+    fit_no:['Бытовой двигатель 220В 1.5–2.2 кВт — не потянет','Небольшой объём — конус 75 мм выгоднее'],
+    also:'Вал 35 мм, UCP207/208, шкив D240, ремень профиль А'
+  }
+};
+
+// ──── TABS ────
+function switchTab(i) {
+  document.querySelectorAll('.tab').forEach((t,idx) => t.classList.toggle('active', idx===i));
+  document.querySelectorAll('.panel').forEach((p,idx) => p.classList.toggle('active', idx===i));
+}
+
+// ──── BELT CALC ────
+function calcBelt() {
+  const L = parseFloat(document.getElementById('belt_L').value);
+  const D1 = parseFloat(document.getElementById('belt_D1').value);
+  const D2 = parseFloat(document.getElementById('belt_D2').value);
+  let ok = true;
+  if (!L || L<=0) { showErr('err_L', 'belt_L'); ok=false; } else hideErr('err_L','belt_L');
+  if (!D1 || D1<=0) { showErr('err_D1', 'belt_D1'); ok=false; } else hideErr('err_D1','belt_D1');
+  if (!D2 || D2<=0) { showErr('err_D2', 'belt_D2'); ok=false; } else hideErr('err_D2','belt_D2');
+  if (!ok) return;
+
+  const len = Math.round(2*L + Math.PI*(D1+D2)/2 + Math.pow(D1-D2,2)/(4*L));
+  document.getElementById('beltVal').textContent = len.toLocaleString('ru');
+
+  const ratio = D1/D2;
+  const note = `Передаточное отношение: ${ratio.toFixed(2)}×. При оборотах двигателя 1450 об/мин → на валу конуса ≈ ${Math.round(1450/ratio)} об/мин.`;
+  document.getElementById('beltNote').textContent = note;
+
+  // Find matching belts
+  const matched = belts.filter(b => len >= b.match[0] && len <= b.match[1]);
+  const closest = belts.slice().sort((a,b) => Math.abs(a.length-len) - Math.abs(b.length-len)).slice(0,3);
+  const show = matched.length > 0 ? matched.slice(0,3) : closest;
+
+  document.getElementById('beltProducts').innerHTML = show.map((b,i) => `
+    <div class="prod-match ${i===0?'recommended':''}">
+      ${i===0 ? '<div class="prod-match-badge">★ РЕКОМЕНДУЕМ</div>' : ''}
+      <div class="prod-match-name">${b.name}</div>
+      <div class="prod-match-size">${b.length} мм</div>
+      <div class="prod-match-price">${b.price}</div>
+      <button class="prod-match-btn">В каталог →</button>
+    </div>
+  `).join('');
+
+  document.getElementById('beltResult').classList.add('show');
+  document.getElementById('beltResult').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ──── RPM CALC ────
+function calcRPM() {
+  const n1 = parseFloat(document.getElementById('rpm_n1').value);
+  const D1 = parseFloat(document.getElementById('rpm_D1').value);
+  const D2 = parseFloat(document.getElementById('rpm_D2').value);
+  const kpd = parseFloat(document.getElementById('rpm_kpd').value) || 95;
+  let ok = true;
+  if (!n1||n1<=0) { showErr('err_n1','rpm_n1'); ok=false; } else hideErr('err_n1','rpm_n1');
+  if (!D1||D1<=0) { showErr('err_rD1','rpm_D1'); ok=false; } else hideErr('err_rD1','rpm_D1');
+  if (!D2||D2<=0) { showErr('err_rD2','rpm_D2'); ok=false; } else hideErr('err_rD2','rpm_D2');
+  if (!ok) return;
+
+  const n2 = Math.round(n1 * D1 / D2 * kpd/100);
+  document.getElementById('rpmVal').textContent = n2.toLocaleString('ru');
+
+  // Bar chart
+  const maxH = 70;
+  const maxN = Math.max(n1, n2);
+  const h1 = Math.round(n1/maxN*maxH);
+  const h2 = Math.round(n2/maxN*maxH);
+  document.getElementById('barMotor').style.height = h1+'px';
+  document.getElementById('barCone').style.height = h2+'px';
+  document.getElementById('barMotorVal').textContent = n1+' об/мин';
+  document.getElementById('barConeVal').textContent = n2+' об/мин';
+
+  let status, color;
+  if (n2 < 300) { status='⚠️ Слишком мало оборотов — конус будет плохо захватывать дерево. Увеличьте шкив двигателя или уменьшите шкив вала.'; color='#fca5a5'; }
+  else if (n2 <= 600) { status='✅ Оптимальный диапазон — конус будет работать эффективно и надёжно.'; color='#86efac'; }
+  else if (n2 <= 750) { status='⚠️ Немного выше нормы — допустимо, но следите за нагревом вала и подшипников.'; color='#fde68a'; }
+  else { status='🔴 Слишком много оборотов — повышенный износ, перегрев. Уменьшите шкив двигателя или увеличьте шкив вала.'; color='#fca5a5'; }
+
+  const noteEl = document.getElementById('rpmNote');
+  noteEl.textContent = status;
+  noteEl.style.color = color;
+
+  // Suggest pulleys
+  const d1Closest = pulleys.slice().sort((a,b)=>Math.abs(a.d-D1)-Math.abs(b.d-D1))[0];
+  const d2Closest = pulleys.slice().sort((a,b)=>Math.abs(a.d-D2)-Math.abs(b.d-D2))[0];
+  const d2Optimal = pulleys.slice().sort((a,b)=>Math.abs(n1*D1/a.d - 500)-Math.abs(n1*D1/b.d - 500))[0];
+
+  document.getElementById('rpmProducts').innerHTML = [
+    { ...d1Closest, label:'Шкив двигателя', rec:false },
+    { ...d2Closest, label:'Шкив вала (ваш размер)', rec:false },
+    { ...d2Optimal, label:'Шкив вала (оптим. ≈500 об/мин)', rec:true },
+  ].map(p => `
+    <div class="prod-match ${p.rec?'recommended':''}">
+      ${p.rec ? '<div class="prod-match-badge">★ ДЛЯ 500 ОБ/МИН</div>' : ''}
+      <div class="prod-match-name">${p.name}</div>
+      <div class="prod-match-size">${p.label}</div>
+      <div class="prod-match-price">${p.price}</div>
+      <button class="prod-match-btn">В каталог →</button>
+    </div>
+  `).join('');
+
+  document.getElementById('rpmResult').classList.add('show');
+  document.getElementById('rpmResult').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ──── CONE SELECTOR ────
+let currentCone = 75;
+function selectCone(d, el) {
+  currentCone = d;
+  document.querySelectorAll('.cone-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  const c = cones[d];
+  const shaftBtns = c.shafts.map(s =>
+    `<button class="sel-opt" style="padding:7px 12px;font-size:12px" onclick="highlightShaft(this);updateBuyBtn('${c.name}','${c.price}',${s})">${s} мм</button>`
+  ).join('');
+  document.getElementById('coneDetail').innerHTML = `
+    <div class="cone-detail-header">
+      <div class="cone-detail-img">
+        <svg width="50" height="70" viewBox="0 0 60 90">
+          <polygon points="30,4 ${30+c.diameter*0.22},86 ${30-c.diameter*0.22},86" fill="#2a2a2a" stroke="#f5c800" stroke-width="2"/>
+          <line x1="${30-c.diameter*0.22}" y1="86" x2="${30+c.diameter*0.22}" y2="86" stroke="#555" stroke-width="4"/>
+        </svg>
+      </div>
+      <div>
+        <div class="cone-detail-title">${c.name}</div>
+        <div class="cone-detail-sub">${c.thread} · ${c.steel}</div>
+      </div>
+    </div>
+    <div class="cone-specs-grid">
+      <div class="cone-spec-item"><div class="cone-spec-key">ДИАМЕТР</div><div class="cone-spec-val">${c.diameter} мм</div></div>
+      <div class="cone-spec-item"><div class="cone-spec-key">ДЛИНА</div><div class="cone-spec-val">${c.length} мм</div></div>
+      <div class="cone-spec-item"><div class="cone-spec-key">УГОЛ РЕЗЬБЫ</div><div class="cone-spec-val">${c.threadAngle}</div></div>
+      <div class="cone-spec-item"><div class="cone-spec-key">МОЩНОСТЬ</div><div class="cone-spec-val">${c.power}</div></div>
+      <div class="cone-spec-item"><div class="cone-spec-key">ОБ/МИН КОНУСА</div><div class="cone-spec-val">${c.rpm}</div></div>
+      <div class="cone-spec-item"><div class="cone-spec-key">ЦЕНА</div><div class="cone-spec-val" style="color:var(--yellow)">${c.price}</div></div>
+    </div>
+
+    <div style="margin-bottom:20px">
+      <div class="fit-title" style="margin-bottom:8px">ПОСАДОЧНОЕ ОТВЕРСТИЕ — ВЫБЕРИТЕ ДИАМЕТР ВАЛА</div>
+      <div class="shaft-opts" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">${shaftBtns}</div>
+      <div style="font-size:11px;color:var(--steel);font-family:'Fira Mono',monospace">${c.shaftNote}</div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <div style="padding:8px 14px;font-size:12px;font-weight:700;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#86efac">● Левая резьба — в наличии</div>
+        <div style="padding:8px 14px;font-size:12px;font-weight:700;background:rgba(245,200,0,0.05);border:1px solid rgba(245,200,0,0.3);color:var(--yellow)">◯ Правая резьба — под заказ</div>
+      </div>
+    </div>
+
+    <div class="fit-section">
+      <div class="fit-title">ПОДХОДИТ / НЕ ПОДХОДИТ</div>
+      <div class="fit-grid">
+        <div class="fit-yes">
+          <div class="fit-yes-title">✅ Подойдёт, если:</div>
+          <ul>${c.fit_yes.map(f=>`<li>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="fit-no">
+          <div class="fit-no-title">❌ Лучше другой, если:</div>
+          <ul>${c.fit_no.map(f=>`<li>${f}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.08)">
+      <div class="fit-title">ОБЫЧНО БЕРУТ ВМЕСТЕ</div>
+      <div style="color:var(--steel-light);font-size:13px;margin-top:6px">${c.also}</div>
+    </div>
+    <button class="cone-buy-btn" id="coneBuyBtn" style="opacity:0.55;cursor:default">Выберите посадочный диаметр ↑</button>
+  `;
+  document.getElementById('coneResult').classList.add('show');
+  document.getElementById('coneResult').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ──── UPDATE BUY BUTTON ────
+function updateBuyBtn(name, price, shaft) {
+  const btn = document.getElementById('coneBuyBtn');
+  if (!btn) return;
+  btn.textContent = `Купить / Ø${cones[currentCone].diameter} мм / L${cones[currentCone].length} мм / посадка ${shaft} мм / ${price}`;
+  btn.style.opacity = '1';
+  btn.classList.add('ready');
+  // shake
+  btn.classList.remove('shake');
+  void btn.offsetWidth; // reflow to restart animation
+  btn.classList.add('shake');
+}
+
+function highlightShaft(el) {
+  // remove fire from siblings
+  el.closest('.shaft-opts').querySelectorAll('.sel-opt').forEach(b => {
+    b.classList.remove('active','shaft-fire');
+  });
+  el.classList.add('active','shaft-fire');
+}
+
+// ──── HELPERS ────
+function showErr(errId, fieldId) {
+  document.getElementById(errId).classList.add('show');
+  document.getElementById(fieldId).classList.add('error');
+}
+function hideErr(errId, fieldId) {
+  document.getElementById(errId).classList.remove('show');
+  document.getElementById(fieldId).classList.remove('error');
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const active = document.querySelector('.panel.active').id;
+  if (active === 'panel0') calcBelt();
+  else if (active === 'panel1') calcRPM();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODROVA.RU — Винтовые дровоколы от производителя</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #111111;
+  --graphite: #1e1e1e;
+  --graphite-mid: #2a2a2a;
+  --graphite-light: #3a3a3a;
+  --steel: #6b7280;
+  --steel-light: #9ca3af;
+  --white: #f5f5f5;
+  --white-pure: #ffffff;
+  --yellow: #f5c800;
+  --yellow-dark: #d4a800;
+  --green: #22c55e;
+  --border: rgba(255,255,255,0.08);
+  --border-light: rgba(0,0,0,0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'PT Sans', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ─── UTILITY ─── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.tag { font-family: 'Fira Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.yellow-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--yellow); color: var(--black);
+  font-family: 'PT Sans', sans-serif; font-weight: 700; font-size: 15px;
+  padding: 14px 28px; border: none; cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: background .2s, transform .15s;
+  text-decoration: none;
+}
+.yellow-btn:hover { background: var(--yellow-dark); transform: translateY(-1px); }
+.ghost-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--white);
+  font-family: 'PT Sans', sans-serif; font-weight: 700; font-size: 15px;
+  padding: 13px 27px; border: 1.5px solid rgba(255,255,255,0.35); cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: border-color .2s, background .2s;
+  text-decoration: none;
+}
+.ghost-btn:hover { border-color: var(--yellow); color: var(--yellow); }
+.ghost-btn-dark {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--black);
+  font-family: 'PT Sans', sans-serif; font-weight: 700; font-size: 15px;
+  padding: 13px 27px; border: 1.5px solid rgba(0,0,0,0.25); cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  transition: border-color .2s;
+  text-decoration: none;
+}
+.ghost-btn-dark:hover { border-color: var(--black); }
+
+/* ─── TOP BAR ─── */
+.top-bar {
+  background: var(--black);
+  border-bottom: 1px solid var(--border);
+  padding: 8px 0;
+}
+.top-bar-inner {
+  display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+}
+.top-bar-item {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--steel-light); font-size: 12px; font-family: 'Fira Mono', monospace;
+  letter-spacing: 0.05em;
+}
+.top-bar-item span { color: var(--yellow); font-size: 13px; }
+
+/* ─── HEADER ─── */
+header {
+  background: var(--graphite);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-main {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; padding: 16px 0; gap: 24px;
+}
+.logo { display: flex; flex-direction: column; }
+.logo-text {
+  font-family: 'Bebas Neue', sans-serif; font-size: 28px;
+  color: var(--white-pure); letter-spacing: 0.08em; line-height: 1;
+}
+.logo-text span { color: var(--yellow); }
+.logo-sub { font-size: 10px; color: var(--steel); font-family: 'Fira Mono', monospace; letter-spacing: 0.1em; margin-top: 2px; }
+.header-center { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.header-search {
+  display: flex; align-items: center; background: var(--graphite-light);
+  border: 1px solid var(--border); width: 320px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.header-search input {
+  flex: 1; background: transparent; border: none; outline: none;
+  color: var(--white); padding: 10px 14px; font-size: 14px; font-family: 'PT Sans', sans-serif;
+}
+.header-search input::placeholder { color: var(--steel); }
+.header-search button {
+  background: var(--yellow); border: none; padding: 10px 16px;
+  cursor: pointer; color: var(--black); font-size: 14px;
+}
+.header-right {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+}
+.header-contacts { display: flex; gap: 16px; align-items: center; }
+.phone { color: var(--white-pure); font-size: 17px; font-weight: 700; text-decoration: none; }
+.phone:hover { color: var(--yellow); }
+.messenger-btns { display: flex; gap: 8px; }
+.msg-btn {
+  padding: 6px 12px; font-size: 12px; font-weight: 700;
+  border: none; cursor: pointer; font-family: 'PT Sans', sans-serif;
+  transition: opacity .2s;
+}
+.msg-btn:hover { opacity: 0.85; }
+.msg-wa { background: #25d366; color: white; }
+.msg-tg { background: #229ed9; color: white; }
+.cart-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--graphite-light); border: 1px solid var(--border);
+  color: var(--white); padding: 8px 16px; cursor: pointer; font-size: 13px;
+  font-family: 'PT Sans', sans-serif;
+}
+.cart-btn .count {
+  background: var(--yellow); color: var(--black);
+  width: 18px; height: 18px; border-radius: 50%;
+  font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── NAV ─── */
+nav {
+  background: var(--graphite-mid);
+  border-top: 1px solid var(--border);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-links { display: flex; }
+.nav-links a {
+  color: var(--steel-light); text-decoration: none;
+  padding: 14px 18px; font-size: 13.5px; font-weight: 700;
+  border-right: 1px solid var(--border);
+  transition: color .2s, background .2s;
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--white-pure); background: var(--graphite-light); }
+.nav-pick {
+  background: var(--yellow); color: var(--black);
+  padding: 14px 24px; font-size: 13.5px; font-weight: 700;
+  border: none; cursor: pointer; font-family: 'PT Sans', sans-serif;
+  white-space: nowrap; text-decoration: none;
+  transition: background .2s;
+}
+.nav-pick:hover { background: var(--yellow-dark); }
+
+/* ─── HERO ─── */
+.hero {
+  background: var(--black);
+  position: relative; overflow: hidden;
+  padding: 90px 0 80px;
+  min-height: 560px;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.025) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.025) 40px);
+}
+.hero::after {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 55%; height: 100%;
+  background: radial-gradient(ellipse at 70% 40%, rgba(245,200,0,0.07) 0%, transparent 65%);
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
+}
+.hero-eyebrow {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--yellow); letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 30px; height: 1px; background: var(--yellow); }
+.hero-title {
+  font-family: 'Russo One', sans-serif; font-size: clamp(40px, 5vw, 64px);
+  color: var(--white-pure); line-height: 1.05; margin-bottom: 6px;
+}
+.hero-title-accent { color: var(--yellow); }
+.hero-subtitle {
+  font-size: 17px; color: var(--steel-light); line-height: 1.6;
+  margin-bottom: 32px; max-width: 480px;
+}
+.hero-badges {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px;
+}
+.hero-badge {
+  display: flex; flex-direction: column;
+  background: var(--graphite); border: 1px solid var(--border);
+  padding: 10px 16px; gap: 2px;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.hero-badge-val {
+  font-family: 'Bebas Neue', sans-serif; font-size: 22px;
+  color: var(--yellow); line-height: 1;
+}
+.hero-badge-label { font-size: 10px; color: var(--steel); font-family: 'Fira Mono', monospace; }
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* hero right */
+.hero-right { position: relative; }
+.hero-video-card {
+  background: var(--graphite);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+.hero-video-thumb {
+  width: 100%; aspect-ratio: 16/9;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.hero-video-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-conic-gradient(#222 0% 25%, #1a1a1a 0% 50%) 0 0/40px 40px;
+  opacity: 0.5;
+}
+.play-btn {
+  width: 64px; height: 64px; background: var(--yellow);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1; transition: transform .2s;
+  box-shadow: 0 0 0 8px rgba(245,200,0,0.15);
+}
+.play-btn:hover { transform: scale(1.1); }
+.play-icon { width: 0; height: 0; border-top: 14px solid transparent; border-bottom: 14px solid transparent; border-left: 22px solid var(--black); margin-left: 4px; }
+.hero-video-info {
+  padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+}
+.hero-video-title { color: var(--white); font-size: 13px; font-weight: 700; }
+.hero-video-sub { color: var(--steel); font-size: 11px; font-family: 'Fira Mono', monospace; }
+.video-label {
+  background: var(--yellow); color: var(--black);
+  font-size: 10px; font-weight: 700; padding: 4px 8px;
+  font-family: 'Fira Mono', monospace;
+}
+.hero-specs {
+  margin-top: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.hero-spec {
+  background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+  padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+}
+.hero-spec-dot { width: 6px; height: 6px; background: var(--yellow); flex-shrink: 0; }
+.hero-spec-text { font-size: 12px; color: var(--steel-light); }
+
+/* ─── SCENARIO ─── */
+.scenario { padding: 72px 0; background: var(--white); }
+.section-header { margin-bottom: 40px; }
+.section-eyebrow {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--steel); letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Russo One', sans-serif; font-size: clamp(28px, 3vw, 40px);
+  color: var(--black); line-height: 1.1;
+}
+.section-sub { font-size: 16px; color: var(--steel); margin-top: 8px; }
+.scenario-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.scenario-card {
+  background: var(--white-pure);
+  border: 1.5px solid rgba(0,0,0,0.1);
+  padding: 28px 24px 24px;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+.scenario-card:hover {
+  border-color: var(--yellow);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+.scenario-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--yellow); transform: scaleX(0); transition: transform .2s;
+}
+.scenario-card:hover::after { transform: scaleX(1); }
+.scenario-icon {
+  width: 48px; height: 48px; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; font-size: 22px;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.scenario-title {
+  font-family: 'Russo One', sans-serif; font-size: 22px;
+  color: var(--black); margin-bottom: 8px;
+}
+.scenario-text { font-size: 14px; color: var(--steel); line-height: 1.6; margin-bottom: 20px; }
+.scenario-link {
+  font-size: 13px; font-weight: 700; color: var(--black);
+  text-decoration: none; display: flex; align-items: center; gap: 6px;
+  font-family: 'Fira Mono', monospace; letter-spacing: 0.05em;
+}
+.scenario-link::after { content: '→'; transition: transform .2s; }
+.scenario-card:hover .scenario-link::after { transform: translateX(4px); }
+
+/* ─── HITS ─── */
+.hits { padding: 72px 0; background: #f0f0f0; }
+.hits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.product-card {
+  background: var(--white-pure); border: 1.5px solid rgba(0,0,0,0.08);
+  display: flex; flex-direction: column; position: relative; overflow: hidden;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.product-card:hover {
+  border-color: var(--yellow);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+.product-img {
+  width: 100%; aspect-ratio: 1;
+  background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.product-img-icon { font-size: 56px; opacity: 0.3; }
+.product-badge {
+  position: absolute; top: 12px; left: 0;
+  background: var(--black); color: var(--yellow);
+  font-family: 'Fira Mono', monospace; font-size: 10px; font-weight: 500;
+  padding: 5px 12px; letter-spacing: 0.1em;
+}
+.product-badge.green { background: var(--green); color: white; }
+.product-badge.blue { background: #1d4ed8; color: white; }
+.product-fav {
+  position: absolute; top: 12px; right: 12px;
+  background: white; border: 1px solid rgba(0,0,0,0.1);
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px;
+}
+.product-body { padding: 16px; flex: 1; display: flex; flex-direction: column; }
+.product-specs {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;
+}
+.product-spec {
+  font-family: 'Fira Mono', monospace; font-size: 10px;
+  color: var(--steel); border: 1px solid rgba(0,0,0,0.1);
+  padding: 3px 8px;
+}
+.product-name {
+  font-weight: 700; font-size: 15px; color: var(--black);
+  margin-bottom: 6px; line-height: 1.3;
+}
+.product-desc { font-size: 13px; color: var(--steel); line-height: 1.5; margin-bottom: 12px; flex: 1; }
+.product-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.stars { color: var(--yellow); font-size: 13px; }
+.rating-count { font-size: 12px; color: var(--steel); }
+.product-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.product-price {
+  font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--black);
+}
+.product-price-sub { font-size: 11px; color: var(--green); font-weight: 700; display: block; margin-top: -4px; }
+.product-buy {
+  background: var(--yellow); color: var(--black);
+  border: none; padding: 10px 16px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: 'PT Sans', sans-serif;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  transition: background .2s;
+}
+.product-buy:hover { background: var(--yellow-dark); }
+.product-ask {
+  width: 100%; background: transparent; border: 1px solid rgba(0,0,0,0.15);
+  padding: 8px; font-size: 12px; color: var(--steel); cursor: pointer;
+  font-family: 'PT Sans', sans-serif; margin-top: 8px;
+  transition: border-color .2s;
+}
+.product-ask:hover { border-color: var(--black); color: var(--black); }
+
+/* ─── WHY ─── */
+.why {
+  background: var(--black); padding: 80px 0;
+  position: relative; overflow: hidden;
+}
+.why::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 80% 50%, rgba(245,200,0,0.05) 0%, transparent 70%),
+    repeating-linear-gradient(90deg, transparent, transparent 99px, rgba(255,255,255,0.02) 100px);
+}
+.why-inner { position: relative; z-index: 1; }
+.why-header { margin-bottom: 48px; }
+.why-header .section-title { color: var(--white-pure); }
+.why-header .section-eyebrow { color: var(--yellow); }
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 48px; }
+.why-item {
+  background: var(--graphite); padding: 32px 28px;
+  border: 1px solid var(--border);
+  transition: background .2s;
+}
+.why-item:hover { background: var(--graphite-light); }
+.why-num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 48px;
+  color: rgba(245,200,0,0.15); line-height: 1; margin-bottom: 8px;
+}
+.why-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.why-title { font-size: 15px; font-weight: 700; color: var(--white-pure); margin-bottom: 8px; }
+.why-text { font-size: 13px; color: var(--steel); line-height: 1.6; }
+.why-tagline {
+  text-align: center; border: 1px solid var(--border);
+  padding: 32px; background: rgba(245,200,0,0.04);
+}
+.why-tagline-text {
+  font-family: 'Russo One', sans-serif; font-size: clamp(18px, 2vw, 24px);
+  color: var(--white-pure); line-height: 1.3;
+}
+.why-tagline-text span { color: var(--yellow); }
+
+/* ─── SELECTOR ─── */
+.selector { padding: 80px 0; background: var(--white); }
+.selector-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+}
+.selector-questions { }
+.selector-q {
+  margin-bottom: 28px;
+}
+.selector-q-label {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--steel); letter-spacing: 0.1em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.selector-q-label span {
+  background: var(--black); color: var(--yellow);
+  width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.selector-q-text { font-size: 17px; font-weight: 700; color: var(--black); margin-bottom: 12px; }
+.selector-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.sel-opt {
+  padding: 9px 18px; border: 1.5px solid rgba(0,0,0,0.15);
+  font-size: 13px; font-weight: 700; cursor: pointer; background: transparent;
+  font-family: 'PT Sans', sans-serif; transition: all .15s;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.sel-opt:hover, .sel-opt.active {
+  background: var(--black); color: var(--yellow); border-color: var(--black);
+}
+.selector-result {
+  background: var(--graphite);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  padding: 36px; position: sticky; top: 100px;
+}
+.result-label {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--steel); letter-spacing: 0.15em; margin-bottom: 10px;
+}
+.result-title {
+  font-family: 'Russo One', sans-serif; font-size: 26px;
+  color: var(--white-pure); margin-bottom: 12px;
+}
+.result-desc { font-size: 14px; color: var(--steel-light); line-height: 1.6; margin-bottom: 24px; }
+.result-price {
+  font-family: 'Bebas Neue', sans-serif; font-size: 36px;
+  color: var(--yellow); margin-bottom: 20px;
+}
+.result-btns { display: flex; flex-direction: column; gap: 10px; }
+.result-placeholder {
+  text-align: center; padding: 48px 24px;
+}
+.result-placeholder-icon { font-size: 48px; opacity: 0.2; margin-bottom: 12px; }
+.result-placeholder-text { font-size: 14px; color: var(--steel); line-height: 1.6; }
+
+/* ─── VIDEO ─── */
+.videos { padding: 72px 0; background: #0e0e0e; }
+.videos .section-title { color: var(--white-pure); }
+.videos .section-eyebrow { color: var(--yellow); }
+.videos .section-sub { color: var(--steel); }
+.video-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: auto auto; gap: 12px; }
+.video-card {
+  background: var(--graphite); border: 1px solid var(--border);
+  cursor: pointer; overflow: hidden; transition: border-color .2s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.video-card:hover { border-color: var(--yellow); }
+.video-card.big { grid-row: span 2; }
+.video-thumb {
+  aspect-ratio: 16/9; background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.video-card.big .video-thumb { aspect-ratio: 4/3; }
+.video-play {
+  width: 48px; height: 48px; background: var(--yellow);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  transition: transform .2s;
+}
+.video-card:hover .video-play { transform: scale(1.15); }
+.video-play-i { width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 16px solid var(--black); margin-left: 3px; }
+.video-card.big .video-play { width: 64px; height: 64px; }
+.video-card.big .video-play-i { border-top-width: 14px; border-bottom-width: 14px; border-left-width: 22px; margin-left: 4px; }
+.video-info { padding: 14px 16px; }
+.video-title { color: var(--white-pure); font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.video-card.big .video-title { font-size: 16px; }
+.video-sub { font-family: 'Fira Mono', monospace; font-size: 10px; color: var(--steel); }
+.video-duration {
+  position: absolute; bottom: 8px; right: 10px;
+  background: rgba(0,0,0,0.75); color: var(--white-pure);
+  font-size: 11px; font-family: 'Fira Mono', monospace; padding: 2px 6px;
+}
+
+/* ─── PRODUCTION ─── */
+.production { padding: 80px 0; background: var(--black); }
+.production .section-title { color: var(--white-pure); }
+.production .section-eyebrow { color: var(--yellow); }
+.production-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 0; }
+.prod-photo {
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%);
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 20px; position: relative; overflow: hidden; cursor: pointer;
+  transition: opacity .2s;
+}
+.prod-photo:hover { opacity: 0.85; }
+.prod-photo-icon { font-size: 48px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-60%); opacity: 0.2; }
+.prod-photo-label {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--steel); letter-spacing: 0.1em; background: rgba(0,0,0,0.7); padding: 4px 10px;
+  position: relative; z-index: 1;
+}
+.production-tagline {
+  margin-top: 40px;
+  display: flex; align-items: center; justify-content: center; gap: 24px;
+  border: 1px solid var(--border); padding: 32px;
+  background: rgba(245,200,0,0.03);
+}
+.production-tagline-text {
+  font-family: 'Russo One', sans-serif; font-size: clamp(16px, 2vw, 22px);
+  color: var(--white-pure); max-width: 600px; text-align: center; line-height: 1.4;
+}
+.production-tagline-text span { color: var(--yellow); }
+
+/* ─── REVIEWS ─── */
+.reviews { padding: 72px 0; background: #f0f0f0; }
+.reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.review-card {
+  background: var(--white-pure); border: 1.5px solid rgba(0,0,0,0.08);
+  padding: 24px; display: flex; flex-direction: column; gap: 12px;
+  transition: border-color .2s, box-shadow .2s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.review-card:hover { border-color: rgba(0,0,0,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.review-header { display: flex; align-items: center; justify-content: space-between; }
+.review-author { display: flex; flex-direction: column; }
+.review-name { font-weight: 700; font-size: 14px; }
+.review-city { font-size: 12px; color: var(--steel); font-family: 'Fira Mono', monospace; }
+.review-source {
+  font-family: 'Fira Mono', monospace; font-size: 10px;
+  color: var(--steel); border: 1px solid rgba(0,0,0,0.1); padding: 3px 8px;
+}
+.review-product { font-size: 12px; color: var(--steel); }
+.review-product b { color: var(--black); }
+.review-text { font-size: 14px; line-height: 1.65; color: #333; font-style: italic; }
+.review-rating { color: var(--yellow); font-size: 15px; }
+
+/* ─── KB ─── */
+.kb { padding: 72px 0; background: var(--white); }
+.kb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.kb-card {
+  border: 1.5px solid rgba(0,0,0,0.1); padding: 24px;
+  cursor: pointer; text-decoration: none;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: border-color .2s, background .2s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.kb-card:hover { border-color: var(--black); background: var(--black); }
+.kb-card:hover .kb-icon { background: var(--yellow); }
+.kb-card:hover .kb-title { color: var(--white-pure); }
+.kb-card:hover .kb-sub { color: var(--steel); }
+.kb-icon {
+  width: 36px; height: 36px; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: background .2s;
+}
+.kb-title { font-size: 14px; font-weight: 700; color: var(--black); line-height: 1.3; transition: color .2s; }
+.kb-sub { font-size: 12px; color: var(--steel-light); font-family: 'Fira Mono', monospace; transition: color .2s; }
+
+/* ─── CONTACTS ─── */
+.contacts-strip {
+  background: var(--yellow); padding: 48px 0;
+}
+.contacts-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 32px;
+}
+.contacts-text .ct-title {
+  font-family: 'Russo One', sans-serif; font-size: clamp(22px, 2.5vw, 32px);
+  color: var(--black); margin-bottom: 6px;
+}
+.contacts-text .ct-sub { font-size: 15px; color: rgba(0,0,0,0.65); max-width: 480px; line-height: 1.5; }
+.contacts-btns { display: flex; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
+.contact-btn {
+  padding: 13px 22px; font-size: 14px; font-weight: 700;
+  border: none; cursor: pointer; font-family: 'PT Sans', sans-serif;
+  transition: opacity .2s; text-decoration: none; display: inline-block;
+}
+.contact-btn:hover { opacity: 0.85; }
+.contact-btn.black { background: var(--black); color: var(--white-pure); }
+.contact-btn.wa { background: #25d366; color: white; }
+.contact-btn.tg { background: #229ed9; color: white; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black); border-top: 1px solid var(--border);
+  padding: 48px 0 24px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border);
+}
+.footer-brand { }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--white-pure); letter-spacing: 0.08em; }
+.footer-logo span { color: var(--yellow); }
+.footer-tagline { font-size: 12px; color: var(--steel); font-family: 'Fira Mono', monospace; margin-top: 4px; margin-bottom: 16px; }
+.footer-desc { font-size: 13px; color: var(--steel); line-height: 1.7; max-width: 260px; }
+.footer-col-title {
+  font-family: 'Fira Mono', monospace; font-size: 11px;
+  color: var(--yellow); letter-spacing: 0.15em; margin-bottom: 16px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.footer-links a { color: var(--steel); font-size: 13px; text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--white-pure); }
+.footer-bottom {
+  padding-top: 24px; display: flex; align-items: center;
+  justify-content: space-between; gap: 16px;
+}
+.footer-copy { font-size: 12px; color: var(--steel); font-family: 'Fira Mono', monospace; }
+
+/* ─── MOBILE BOTTOM NAV ─── */
+.mobile-nav {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--graphite); border-top: 1px solid var(--border);
+  z-index: 200;
+}
+.mobile-nav-inner { display: flex; }
+.mobile-nav a {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  padding: 10px 6px; text-decoration: none; color: var(--steel);
+  font-size: 10px; font-family: 'Fira Mono', monospace; gap: 4px;
+  transition: color .2s;
+}
+.mobile-nav a:hover { color: var(--yellow); }
+.mobile-nav a.active { color: var(--yellow); }
+.mobile-nav-icon { font-size: 18px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-eyebrow { animation: fadeUp 0.5s ease both; }
+.hero-title { animation: fadeUp 0.6s 0.1s ease both; }
+.hero-subtitle { animation: fadeUp 0.6s 0.2s ease both; }
+.hero-badges { animation: fadeUp 0.6s 0.3s ease both; }
+.hero-btns { animation: fadeUp 0.6s 0.4s ease both; }
+.hero-right { animation: fadeUp 0.7s 0.3s ease both; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .scenario-grid { grid-template-columns: repeat(2, 1fr); }
+  .hits-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .video-grid { grid-template-columns: 1fr 1fr; }
+  .video-card.big { grid-row: span 1; }
+}
+@media (max-width: 768px) {
+  .top-bar-inner { gap: 16px; overflow-x: auto; justify-content: flex-start; padding: 0 16px; }
+  .header-main { grid-template-columns: 1fr auto; gap: 12px; }
+  .header-center { display: none; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .scenario-grid { grid-template-columns: 1fr 1fr; }
+  .hits-grid { grid-template-columns: 1fr 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .selector-inner { grid-template-columns: 1fr; }
+  .selector-result { position: static; }
+  .video-grid { grid-template-columns: 1fr; }
+  .production-grid { grid-template-columns: 1fr 1fr; }
+  .reviews-grid { grid-template-columns: 1fr; }
+  .kb-grid { grid-template-columns: 1fr 1fr; }
+  .contacts-inner { flex-direction: column; }
+  .footer-top { grid-template-columns: 1fr; }
+  .nav-links { overflow-x: auto; }
+  .nav-links a { padding: 12px 14px; font-size: 12px; }
+  .mobile-nav { display: block; }
+  body { padding-bottom: 60px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="container">
+    <div class="top-bar-inner">
+      <div class="top-bar-item"><span>⚙</span> Собственное производство с 2014 года</div>
+      <div class="top-bar-item"><span>◈</span> ЧПУ обработка</div>
+      <div class="top-bar-item"><span>⟳</span> Двухзаходная резьба</div>
+      <div class="top-bar-item"><span>◆</span> Сталь 45 + ТВЧ</div>
+      <div class="top-bar-item"><span>▶</span> Доставка по РФ и СНГ</div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-main">
+      <div class="logo">
+        <div class="logo-text">ODROVA<span>.RU</span></div>
+        <div class="logo-sub">винтовые дровоколы от производителя</div>
+      </div>
+      <div class="header-center">
+        <div class="header-search">
+          <input type="text" placeholder="Поиск по каталогу...">
+          <button>🔍</button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-contacts">
+          <a href="tel:+73433000000" class="phone">+7 (343) 300-00-00</a>
+          <div class="messenger-btns">
+            <button class="msg-btn msg-wa">WA</button>
+            <button class="msg-btn msg-tg">TG</button>
+          </div>
+        </div>
+        <button class="cart-btn">🛒 Корзина <span class="count">0</span></button>
+      </div>
+    </div>
+  </div>
+  <nav>
+    <div class="container">
+      <div class="nav-inner">
+        <div class="nav-links">
+          <a href="#">Готовые дровоколы</a>
+          <a href="#">Конусы</a>
+          <a href="#">Комплекты</a>
+          <a href="#">ВОМ / трактор</a>
+          <a href="#">Комплектующие</a>
+          <a href="#">Видео</a>
+          <a href="#">Отзывы</a>
+          <a href="#">О производстве</a>
+        </div>
+        <a href="#selector" class="nav-pick">▶ Подобрать дровокол</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Производство на Урале</div>
+        <h1 class="hero-title">
+          Винтовые<br>
+          дровоколы<br>
+          <span class="hero-title-accent">от производителя</span>
+        </h1>
+        <p class="hero-subtitle">От конуса до готового станка. Подберём решение под ваш двигатель, трактор или объём дров.</p>
+        <div class="hero-badges">
+          <div class="hero-badge"><span class="hero-badge-val">2</span><span class="hero-badge-label">захода резьбы</span></div>
+          <div class="hero-badge"><span class="hero-badge-val">Ст45</span><span class="hero-badge-label">марка стали</span></div>
+          <div class="hero-badge"><span class="hero-badge-val">ТВЧ</span><span class="hero-badge-label">закалка</span></div>
+          <div class="hero-badge"><span class="hero-badge-val">ЧПУ</span><span class="hero-badge-label">обработка</span></div>
+          <div class="hero-badge"><span class="hero-badge-val">2014</span><span class="hero-badge-label">год основания</span></div>
+        </div>
+        <div class="hero-btns">
+          <a href="#selector" class="yellow-btn">▶ Подобрать дровокол</a>
+          <a href="#hits" class="ghost-btn">Смотреть каталог</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-video-card">
+          <div class="hero-video-thumb">
+            <div class="play-btn"><div class="play-icon"></div></div>
+          </div>
+          <div class="hero-video-info">
+            <div>
+              <div class="hero-video-title">Конус 75 мм против обычного</div>
+              <div class="hero-video-sub">Сравнение скорости раскола</div>
+            </div>
+            <div class="video-label">▶ ВИДЕО</div>
+          </div>
+        </div>
+        <div class="hero-specs">
+          <div class="hero-spec"><div class="hero-spec-dot"></div><span class="hero-spec-text">Берёза 35 см — 4 сек</span></div>
+          <div class="hero-spec"><div class="hero-spec-dot"></div><span class="hero-spec-text">Посадка под вал 25–30 мм</span></div>
+          <div class="hero-spec"><div class="hero-spec-dot"></div><span class="hero-spec-text">Гарантия 12 месяцев</span></div>
+          <div class="hero-spec"><div class="hero-spec-dot"></div><span class="hero-spec-text">Отправка по РФ и СНГ</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCENARIO -->
+<section class="scenario">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Выберите задачу</div>
+      <h2 class="section-title">Какой дровокол вам нужен?</h2>
+      <p class="section-sub">Выберите сценарий — покажем подходящие дровоколы, конусы и комплекты.</p>
+    </div>
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <div class="scenario-icon">⚡</div>
+        <div class="scenario-title">220В</div>
+        <div class="scenario-text">Для дома, бани и дачи. Готовые электрические дровоколы и комплекты под бытовой двигатель.</div>
+        <a href="#" class="scenario-link">Смотреть 220В</a>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">🔥</div>
+        <div class="scenario-title">Бензиновый</div>
+        <div class="scenario-text">Для большого объёма и работы там, где нет электричества. Подходит для участка и фермы.</div>
+        <a href="#" class="scenario-link">Смотреть бензиновые</a>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">🚜</div>
+        <div class="scenario-title">ВОМ / трактор</div>
+        <div class="scenario-text">Для МТЗ, мини-трактора и хозяйства. Решения под ВОМ 35 мм, 38 мм и тракторные задачи.</div>
+        <a href="#" class="scenario-link">Смотреть ВОМ</a>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon">🔧</div>
+        <div class="scenario-title">Собрать самому</div>
+        <div class="scenario-text">Конусы, валы, шкивы, подшипники, ремни и готовые комплекты для самостоятельной сборки.</div>
+        <a href="#" class="scenario-link">Собрать комплект</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HITS -->
+<section class="hits" id="hits">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Самые популярные</div>
+      <h2 class="section-title">Хиты продаж</h2>
+      <p class="section-sub">От конуса до готового станка — проверенные решения ODROVA.</p>
+    </div>
+    <div class="hits-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-icon">🔩</div>
+          <div class="product-badge">ХИТ ПРОДАЖ</div>
+          <div class="product-fav">♡</div>
+        </div>
+        <div class="product-body">
+          <div class="product-specs">
+            <span class="product-spec">2 ЗАХОДА</span>
+            <span class="product-spec">СТАЛЬ 45</span>
+            <span class="product-spec">ТВЧ</span>
+          </div>
+          <div class="product-name">Конус винтовой 75 мм</div>
+          <div class="product-desc">2 захода, L300, посадка под вал. Универсальный размер для самостоятельной сборки дровокола.</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">4.9 (128 отзывов)</span></div>
+          <div class="product-bottom">
+            <div>
+              <div class="product-price">2 400 ₽</div>
+              <span class="product-price-sub">● В наличии</span>
+            </div>
+            <button class="product-buy">В корзину</button>
+          </div>
+          <button class="product-ask">Подойдёт ли мне?</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-icon">⚙️</div>
+          <div class="product-badge green">ГОТОВОЕ РЕШЕНИЕ</div>
+          <div class="product-fav">♡</div>
+        </div>
+        <div class="product-body">
+          <div class="product-specs">
+            <span class="product-spec">КОН. 75мм</span>
+            <span class="product-spec">ВАЛ 30мм</span>
+            <span class="product-spec">UCP206</span>
+          </div>
+          <div class="product-name">Мини комплект для дровокола 75 мм</div>
+          <div class="product-desc">Конус 75 мм, вал, UCP206, шкив, ремни и крепёж. Основа для сборки под свой привод.</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">4.8 (74 отзыва)</span></div>
+          <div class="product-bottom">
+            <div>
+              <div class="product-price">6 800 ₽</div>
+              <span class="product-price-sub">● В наличии</span>
+            </div>
+            <button class="product-buy">В корзину</button>
+          </div>
+          <button class="product-ask">Подойдёт ли мне?</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-icon">🪵</div>
+          <div class="product-badge">ГОТОВЫЙ СТАНОК</div>
+          <div class="product-fav">♡</div>
+        </div>
+        <div class="product-body">
+          <div class="product-specs">
+            <span class="product-spec">220В</span>
+            <span class="product-spec">ГОТОВЫЙ</span>
+            <span class="product-spec">ДОМ/ДАЧА</span>
+          </div>
+          <div class="product-name">Бураво-Дров 220В</div>
+          <div class="product-desc">Готовый электрический винтовой дровокол для дома, дачи и бани. Купил — подключил — работаешь.</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">4.9 (212 отзывов)</span></div>
+          <div class="product-bottom">
+            <div>
+              <div class="product-price">18 500 ₽</div>
+              <span class="product-price-sub">● В наличии</span>
+            </div>
+            <button class="product-buy">В корзину</button>
+          </div>
+          <button class="product-ask">Смотреть видео</button>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <div class="product-img-icon">🚜</div>
+          <div class="product-badge blue">ДЛЯ ТРАКТОРА</div>
+          <div class="product-fav">♡</div>
+        </div>
+        <div class="product-body">
+          <div class="product-specs">
+            <span class="product-spec">ВОМ 35мм</span>
+            <span class="product-spec">ТРАКТОР</span>
+            <span class="product-spec">УСИЛЕННЫЙ</span>
+          </div>
+          <div class="product-name">Дровокол ВОМ 35 мм</div>
+          <div class="product-desc">Решение для трактора, МТЗ и хозяйства. Для больших объёмов дров и тяжёлой работы.</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">4.8 (56 отзывов)</span></div>
+          <div class="product-bottom">
+            <div>
+              <div class="product-price">24 900 ₽</div>
+              <span class="product-price-sub">● В наличии</span>
+            </div>
+            <button class="product-buy">В корзину</button>
+          </div>
+          <button class="product-ask">Задать вопрос</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="container why-inner">
+    <div class="why-header section-header">
+      <div class="section-eyebrow">Наши преимущества</div>
+      <h2 class="section-title">Почему ODROVA?</h2>
+      <p class="section-sub" style="color:var(--steel)">Мы производим дровоколы и комплектующие сами: от обработки металла до отправки клиенту.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <span class="why-icon">⚙️</span>
+        <div class="why-title">Собственное производство</div>
+        <div class="why-text">Контроль качества на каждом этапе: токарная обработка, сборка, упаковка и отправка.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <span class="why-icon">🔬</span>
+        <div class="why-title">ЧПУ обработка</div>
+        <div class="why-text">Точная геометрия конуса, посадки и резьбы. Каждый размер важен для нормальной работы дровокола.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <span class="why-icon">🔩</span>
+        <div class="why-title">Двухзаходная резьба</div>
+        <div class="why-text">Конус быстрее цепляет древесину и увереннее заходит в чурбак — разница заметна сразу.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <span class="why-icon">💎</span>
+        <div class="why-title">Сталь 45 + ТВЧ закалка</div>
+        <div class="why-text">Прочная сталь и закалка рабочей части. Увеличенный ресурс при интенсивной работе.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">05</div>
+        <span class="why-icon">🛡️</span>
+        <div class="why-title">Гарантия и поддержка</div>
+        <div class="why-text">Поможем подобрать комплект, объясним по сборке и подскажем по эксплуатации. Гарантия 12 месяцев.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">06</div>
+        <span class="why-icon">🚚</span>
+        <div class="why-title">Доставка по РФ и СНГ</div>
+        <div class="why-text">Отправляем транспортными компаниями и службами доставки по всей России и СНГ.</div>
+      </div>
+    </div>
+    <div class="why-tagline">
+      <div class="why-tagline-text">Мы не перепродаём — <span>точим, проверяем и отправляем сами</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTOR -->
+<section class="selector" id="selector">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Умный подбор</div>
+      <h2 class="section-title">Подберите комплект за 30 секунд</h2>
+      <p class="section-sub">Ответьте на 4 вопроса — покажем подходящее решение.</p>
+    </div>
+    <div class="selector-inner">
+      <div class="selector-questions">
+
+        <div class="selector-q">
+          <div class="selector-q-label"><span>1</span>ЕСТЬ ЛИ У ВАС ДВИГАТЕЛЬ?</div>
+          <div class="selector-q-text">Есть ли у вас двигатель?</div>
+          <div class="selector-options">
+            <button class="sel-opt" onclick="selectOpt(this,'q1')">Да</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q1')">Нет</button>
+          </div>
+        </div>
+
+        <div class="selector-q">
+          <div class="selector-q-label"><span>2</span>ПРИВОД</div>
+          <div class="selector-q-text">Какой привод планируете использовать?</div>
+          <div class="selector-options">
+            <button class="sel-opt" onclick="selectOpt(this,'q2')">220В</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q2')">380В</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q2')">Бензин</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q2')">Мотоблок</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q2')">ВОМ / трактор</button>
+          </div>
+        </div>
+
+        <div class="selector-q">
+          <div class="selector-q-label"><span>3</span>ЧТО ХОТИТЕ КУПИТЬ?</div>
+          <div class="selector-q-text">Что вам нужно?</div>
+          <div class="selector-options">
+            <button class="sel-opt" onclick="selectOpt(this,'q3')">Готовый станок</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q3')">Комплект для сборки</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q3')">Только конус</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q3')">Комплектующие</button>
+          </div>
+        </div>
+
+        <div class="selector-q">
+          <div class="selector-q-label"><span>4</span>ОБЪЁМ ДРОВ</div>
+          <div class="selector-q-text">Какой объём дров планируете колоть?</div>
+          <div class="selector-options">
+            <button class="sel-opt" onclick="selectOpt(this,'q4')">Для дома</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q4')">Для бани</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q4')">Много</button>
+            <button class="sel-opt" onclick="selectOpt(this,'q4')">Коммерческая заготовка</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="selector-result" id="selectorResult">
+        <div class="result-placeholder">
+          <div class="result-placeholder-icon">🔩</div>
+          <div class="result-placeholder-text">Выберите параметры слева — мы подберём подходящее решение из нашего каталога.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="videos">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:36px">
+      <div class="section-eyebrow">Дровоколы в действии</div>
+      <h2 class="section-title">Смотрите дровоколы в работе</h2>
+      <p class="section-sub">Видео лучше слов показывает, как работает двухзаходный конус ODROVA.</p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card big">
+        <div class="video-thumb">
+          <div class="video-play"><div class="video-play-i"></div></div>
+          <div class="video-duration">2:14</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Конус 2 захода против обычного</div>
+          <div class="video-sub">Сравнение скорости входа в древесину</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="video-play"><div class="video-play-i"></div></div>
+          <div class="video-duration">1:47</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Берёза 35 см конусом 75 мм</div>
+          <div class="video-sub">Работа по плотной древесине</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="video-play"><div class="video-play-i"></div></div>
+          <div class="video-duration">3:05</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Производство конусов на ЧПУ</div>
+          <div class="video-sub">Как точим и контролируем изделия</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="video-play"><div class="video-play-i"></div></div>
+          <div class="video-duration">4:22</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">Бураво-Дров 220В в работе</div>
+          <div class="video-sub">Готовый станок для дома и дачи</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">
+          <div class="video-play"><div class="video-play-i"></div></div>
+          <div class="video-duration">2:58</div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">ВОМ на тракторе</div>
+          <div class="video-sub">Решение для хозяйства</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTION -->
+<section class="production">
+  <div class="container">
+    <div class="section-header" style="margin-bottom:36px">
+      <div class="section-eyebrow">Наш завод</div>
+      <h2 class="section-title">Собственное производство на Урале</h2>
+      <p class="section-sub" style="color:var(--steel)">ODROVA.RU — это не витрина перекупщика. Сами точим, собираем, проверяем и отправляем.</p>
+    </div>
+    <div class="production-grid">
+      <div class="prod-photo"><div class="prod-photo-icon">⚙️</div><div class="prod-photo-label">ЧПУ станки</div></div>
+      <div class="prod-photo"><div class="prod-photo-icon">🔧</div><div class="prod-photo-label">Токарная обработка</div></div>
+      <div class="prod-photo"><div class="prod-photo-icon">🔩</div><div class="prod-photo-label">Нарезка резьбы</div></div>
+      <div class="prod-photo"><div class="prod-photo-icon">🔥</div><div class="prod-photo-label">Закалка ТВЧ</div></div>
+      <div class="prod-photo"><div class="prod-photo-icon">📦</div><div class="prod-photo-label">Сборка и упаковка</div></div>
+      <div class="prod-photo"><div class="prod-photo-icon">🚚</div><div class="prod-photo-label">Склад и отправка</div></div>
+    </div>
+    <div class="production-tagline">
+      <div class="production-tagline-text">Каждый конус проходит обработку, <span>контроль посадки и упаковку</span> перед отправкой</div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Реальные покупатели</div>
+      <h2 class="section-title">Отзывы наших клиентов</h2>
+      <p class="section-sub">Покупатели используют дровоколы ODROVA дома, на даче, в хозяйстве и при заготовке дров.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <span class="review-name">Алексей</span>
+            <span class="review-city">Пермь</span>
+          </div>
+          <span class="review-source">Ozon</span>
+        </div>
+        <div class="review-product">Купил: <b>Мини комплект 75 мм</b></div>
+        <div class="review-rating">★★★★★</div>
+        <div class="review-text">Собрал за вечер, колет уверенно. Конус заходит быстро, комплект полный. Берёза 35 см идёт как масло.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <span class="review-name">Сергей</span>
+            <span class="review-city">Новосибирск</span>
+          </div>
+          <span class="review-source">Avito</span>
+        </div>
+        <div class="review-product">Купил: <b>Конус 75 мм</b></div>
+        <div class="review-rating">★★★★★</div>
+        <div class="review-text">Качество отличное, резьба ровная. Видно что ЧПУ — посадка идеальная. Уже второй заказываю, первый у соседа стоит.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author">
+            <span class="review-name">Виктор</span>
+            <span class="review-city">Екатеринбург</span>
+          </div>
+          <span class="review-source">Сайт</span>
+        </div>
+        <div class="review-product">Купил: <b>Бураво-Дров 220В</b></div>
+        <div class="review-rating">★★★★★</div>
+        <div class="review-text">Купил станок месяц назад. За выходные перекололи 8 кубов. Работает без нареканий, сборка крепкая, вибрации нет.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KB -->
+<section class="kb">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Статьи и гайды</div>
+      <h2 class="section-title">Поможем разобраться перед покупкой</h2>
+      <p class="section-sub">Простые инструкции по выбору, сборке и безопасной работе с винтовым дровоколом.</p>
+    </div>
+    <div class="kb-grid">
+      <a href="#" class="kb-card">
+        <div class="kb-icon">📋</div>
+        <div class="kb-title">Как выбрать дровокол</div>
+        <div class="kb-sub">Руководство покупателя</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">⚡</div>
+        <div class="kb-title">Какой двигатель нужен</div>
+        <div class="kb-sub">Мощность и обороты</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">🔩</div>
+        <div class="kb-title">Конус 60 / 72 / 75 / 100 — в чём разница</div>
+        <div class="kb-sub">Сравнение размеров</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">🔧</div>
+        <div class="kb-title">Как собрать дровокол самому</div>
+        <div class="kb-sub">Пошаговая инструкция</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">⚙️</div>
+        <div class="kb-title">Как подобрать шкивы и ремни</div>
+        <div class="kb-sub">Расчёт передачи</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">🚜</div>
+        <div class="kb-title">Как выбрать ВОМ-комплект</div>
+        <div class="kb-sub">Для МТЗ и мини-трактора</div>
+      </a>
+      <a href="#" class="kb-card">
+        <div class="kb-icon">🛡️</div>
+        <div class="kb-title">Безопасность при работе</div>
+        <div class="kb-sub">Правила эксплуатации</div>
+      </a>
+      <a href="#" class="kb-card" style="background:var(--black);border-color:var(--black)">
+        <div class="kb-icon" style="background:var(--yellow)">▶</div>
+        <div class="kb-title" style="color:var(--white-pure)">Все статьи базы знаний</div>
+        <div class="kb-sub" style="color:var(--steel)">Перейти в раздел</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<div class="contacts-strip">
+  <div class="container">
+    <div class="contacts-inner">
+      <div class="contacts-text">
+        <div class="ct-title">Свяжитесь с ODROVA</div>
+        <div class="ct-sub">Поможем подобрать дровокол, конус или комплект под ваш двигатель, трактор или объём дров.</div>
+      </div>
+      <div class="contacts-btns">
+        <a href="tel:+73433000000" class="contact-btn black">📞 Позвонить</a>
+        <a href="#" class="contact-btn wa">WhatsApp</a>
+        <a href="#" class="contact-btn tg">Telegram</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">ODROVA<span>.RU</span></div>
+        <div class="footer-tagline">винтовые дровоколы от производителя</div>
+        <div class="footer-desc">Производим и продаём винтовые дровоколы, конусы и комплектующие с 2014 года. ЧПУ обработка, сталь 45, закалка ТВЧ.</div>
+      </div>
+      <div>
+        <div class="footer-col-title">КАТАЛОГ</div>
+        <ul class="footer-links">
+          <li><a href="#">Готовые дровоколы</a></li>
+          <li><a href="#">Конусы</a></li>
+          <li><a href="#">Комплекты</a></li>
+          <li><a href="#">ВОМ / трактор</a></li>
+          <li><a href="#">Комплектующие</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">ПОКУПАТЕЛЮ</div>
+        <ul class="footer-links">
+          <li><a href="#">Доставка и оплата</a></li>
+          <li><a href="#">Гарантия</a></li>
+          <li><a href="#">Возврат</a></li>
+          <li><a href="#">База знаний</a></li>
+          <li><a href="#">Видео</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">БЫСТРАЯ СВЯЗЬ</div>
+        <ul class="footer-links">
+          <li><a href="#">📞 +7 (343) 300-00-00</a></li>
+          <li><a href="#">💬 WhatsApp</a></li>
+          <li><a href="#">✈️ Telegram</a></li>
+          <li><a href="#">📧 Email</a></li>
+          <li><a href="#">О производстве</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2014–2025 ODROVA.RU — винтовые дровоколы от производителя</div>
+      <div class="footer-copy">ЧПУ · Сталь 45 · ТВЧ · Доставка по РФ и СНГ</div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <a href="#" class="active"><span class="mobile-nav-icon">🏠</span>Каталог</a>
+    <a href="#selector"><span class="mobile-nav-icon">🎯</span>Подбор</a>
+    <a href="#"><span class="mobile-nav-icon">▶</span>Видео</a>
+    <a href="#"><span class="mobile-nav-icon">★</span>Отзывы</a>
+    <a href="#"><span class="mobile-nav-icon">🛒</span>Корзина</a>
+  </div>
+</div>
+
+<script>
+// Selector logic
+const answers = {};
+const results = {
+  '220В_Готовый станок': { title: 'Бураво-Дров 220В', desc: 'Готовый электрический дровокол для дома, бани и дачи. Подключил — и работаешь. Ничего собирать не нужно.', price: 'от 18 500 ₽' },
+  '220В_Комплект для сборки': { title: 'Мини комплект 75 мм', desc: 'Конус 75 мм, вал, UCP206, шкив, ремни и крепёж. Подходит под бытовой двигатель 220В от 2.2 кВт.', price: 'от 6 800 ₽' },
+  '220В_Только конус': { title: 'Конус винтовой 75 мм', desc: '2 захода, L300, посадка под вал. Универсальный размер для самостоятельной сборки под двигатель 220В.', price: 'от 2 400 ₽' },
+  'ВОМ / трактор_Готовый станок': { title: 'Дровокол ВОМ 35 мм', desc: 'Готовое решение для МТЗ, мини-трактора и хозяйства. Большой объём дров, усиленная конструкция.', price: 'от 24 900 ₽' },
+  'Бензин_Готовый станок': { title: 'Бураво-Дров Бензо', desc: 'Бензиновый дровокол для работы без электричества. Для участка, фермы и выездной заготовки дров.', price: 'от 32 000 ₽' },
+  'default': { title: 'Подберём вместе', desc: 'Напишите нам — ответим на вопросы по мощности двигателя, диаметру вала, шкивам и комплектации.', price: 'Бесплатная консультация' }
+};
+
+function selectOpt(btn, q) {
+  btn.closest('.selector-options').querySelectorAll('.sel-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  answers[q] = btn.textContent;
+  updateResult();
+}
+
+function updateResult() {
+  const drive = answers['q2'] || '';
+  const want = answers['q3'] || '';
+  const key = drive + '_' + want;
+  const r = results[key] || (drive ? results[drive + '_default'] : null) || results['default'];
+  document.getElementById('selectorResult').innerHTML = `
+    <div class="result-label">ВАМ ПОДХОДИТ</div>
+    <div class="result-title">${r.title}</div>
+    <div class="result-desc">${r.desc}</div>
+    <div class="result-price">${r.price}</div>
+    <div class="result-btns">
+      <a href="#" class="yellow-btn" style="justify-content:center">Смотреть решение</a>
+      <a href="#" class="ghost-btn" style="justify-content:center;color:var(--steel-light)">Получить консультацию</a>
+    </div>
+  `;
+}
+
+// Nav scroll highlight
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  if (window.scrollY > 80) {
+    header.style.boxShadow = '0 4px 24px rgba(0,0,0,0.4)';
+  } else {
+    header.style.boxShadow = 'none';
+  }
+});
+</script>
+</body>
+</html>
