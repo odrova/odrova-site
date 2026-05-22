@@ -211,6 +211,18 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 .cone-spec-val { font-size:15px; font-weight:700; color:var(--white-pure); }
 .fit-section { }
 .fit-title { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; margin-bottom:10px; }
+
+@keyframes shaftHint {
+  0%,100% { color:var(--steel); letter-spacing:0.1em; }
+  50%      { color:var(--yellow); letter-spacing:0.18em; }
+}
+.shaft-label-hint {
+  animation: shaftHint 1.6s ease-in-out infinite;
+}
+.shaft-label-hint.selected {
+  animation: none;
+  color:var(--green);
+}
 .fit-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 .fit-yes, .fit-no {
   padding:14px 16px; font-size:13px; line-height:1.6;
@@ -748,8 +760,11 @@ function calcRPM() {
 
 // ──── CONE SELECTOR ────
 let currentCone = 75;
-function selectCone(d, el) {
+function selectCone(d, el, noScroll) {
   currentCone = d;
+  // reset shaft label animation
+  const lbl = document.getElementById('shaftLabel');
+  if (lbl) lbl.classList.remove('selected');
   document.querySelectorAll('.cone-card').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
   const c = cones[d];
@@ -779,7 +794,7 @@ function selectCone(d, el) {
     </div>
 
     <div style="margin-bottom:20px">
-      <div class="fit-title" style="margin-bottom:8px">ПОСАДОЧНОЕ ОТВЕРСТИЕ — ВЫБЕРИТЕ ДИАМЕТР ВАЛА</div>
+      <div class="fit-title shaft-label-hint" id="shaftLabel" style="margin-bottom:8px">ПОСАДОЧНОЕ ОТВЕРСТИЕ — ВЫБЕРИТЕ ДИАМЕТР ВАЛА</div>
       <div class="shaft-opts" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">${shaftBtns}</div>
       <div style="font-size:11px;color:var(--steel);font-family:'Fira Mono',monospace">${c.shaftNote}</div>
       <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
@@ -808,12 +823,14 @@ function selectCone(d, el) {
     <button class="cone-buy-btn" id="coneBuyBtn" style="opacity:0.55;cursor:default">Выберите посадочный диаметр ↑</button>
   `;
   document.getElementById('coneResult').classList.add('show');
-  document.getElementById('coneResult').scrollIntoView({behavior:'smooth', block:'nearest'});
+  if (!noScroll) document.getElementById('coneResult').scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 // ──── UPDATE BUY BUTTON ────
 function updateBuyBtn(name, price, shaft) {
   const btn = document.getElementById('coneBuyBtn');
+  const lbl = document.getElementById('shaftLabel');
+  if (lbl) lbl.classList.add('selected');
   if (!btn) return;
   btn.textContent = `Купить / Ø${cones[currentCone].diameter} мм / L${cones[currentCone].length} мм / посадка ${shaft} мм / ${price}`;
   btn.style.opacity = '1';
@@ -835,6 +852,12 @@ function highlightShaft(el) {
   });
   el.classList.add('active','shaft-fire');
 }
+
+// ──── AUTO-LOAD CONE 75 ON START ────
+document.addEventListener('DOMContentLoaded', () => {
+  const card = document.querySelector('.cone-card[onclick*="selectCone(75"]');
+  if (card) selectCone(75, card, true);
+});
 
 // ──── HELPERS ────
 function showErr(errId, fieldId) {
