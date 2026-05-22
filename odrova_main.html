@@ -100,6 +100,8 @@ header {
   color: var(--white-pure); letter-spacing: 0.08em; line-height: 1;
 }
 .logo-text span { color: var(--yellow); }
+.logo-drova { color: var(--yellow) !important; }
+.logo-o { color: var(--white-pure) !important; font-size: 18px; vertical-align: baseline; }
 .logo-sub { font-size: 10px; color: var(--steel); font-family: 'Fira Mono', monospace; letter-spacing: 0.1em; margin-top: 2px; }
 .header-center { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 .header-search {
@@ -117,9 +119,9 @@ header {
   cursor: pointer; color: var(--black); font-size: 14px;
 }
 .header-right {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
 }
-.header-contacts { display: flex; gap: 16px; align-items: center; }
+.header-contacts { display: flex; gap: 12px; align-items: center; flex-wrap: nowrap; }
 .phone { color: var(--white-pure); font-size: 17px; font-weight: 700; text-decoration: none; }
 .phone:hover { color: var(--yellow); }
 .messenger-btns { display: flex; gap: 8px; }
@@ -129,8 +131,9 @@ header {
   transition: opacity .2s;
 }
 .msg-btn:hover { opacity: 0.85; }
-.msg-wa { background: #25d366; color: white; }
+.msg-wa { background: #2563eb; color: white; }
 .msg-tg { background: #229ed9; color: white; }
+.msg-max { background: #8b5cf6; color: white; }
 .cart-btn {
   display: flex; align-items: center; gap: 8px;
   background: var(--graphite-light); border: 1px solid var(--border);
@@ -737,8 +740,8 @@ footer {
   <div class="container">
     <div class="header-main">
       <div class="logo">
-        <div class="logo-text">ODROVA<span>.RU</span></div>
-        <div class="logo-sub">винтовые дровоколы от производителя</div>
+        <div class="logo-text"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></div>
+        <div class="logo-sub">Делаем тяжёлую работу лёгкой</div>
       </div>
       <div class="header-center">
         <div class="header-search">
@@ -748,10 +751,11 @@ footer {
       </div>
       <div class="header-right">
         <div class="header-contacts">
-          <a href="tel:+73433000000" class="phone">+7 (343) 300-00-00</a>
+          <a href="tel:+79220352887" class="phone" style="white-space:nowrap">8 (922) 035-28-87</a>
           <div class="messenger-btns">
-            <button class="msg-btn msg-wa">WA</button>
+            <button class="msg-btn msg-wa">SMS</button>
             <button class="msg-btn msg-tg">TG</button>
+            <button class="msg-btn msg-max">MAX</button>
           </div>
         </div>
         <button class="cart-btn">🛒 Корзина <span class="count">0</span></button>
@@ -1295,7 +1299,7 @@ footer {
         <div class="ct-sub">Поможем подобрать дровокол, конус или комплект под ваш двигатель, трактор или объём дров.</div>
       </div>
       <div class="contacts-btns">
-        <a href="tel:+73433000000" class="contact-btn black">📞 Позвонить</a>
+        <a href="tel:+79220352887" class="contact-btn black">📞 Позвонить</a>
         <a href="#" class="contact-btn wa">WhatsApp</a>
         <a href="#" class="contact-btn tg">Telegram</a>
       </div>
@@ -1309,7 +1313,7 @@ footer {
     <div class="footer-top">
       <div class="footer-brand">
         <div class="footer-logo">ODROVA<span>.RU</span></div>
-        <div class="footer-tagline">винтовые дровоколы от производителя</div>
+        <div class="footer-tagline">Делаем тяжёлую работу лёгкой</div>
         <div class="footer-desc">Производим и продаём винтовые дровоколы, конусы и комплектующие с 2014 года. ЧПУ обработка, сталь 45, закалка ТВЧ.</div>
       </div>
       <div>
@@ -1335,7 +1339,7 @@ footer {
       <div>
         <div class="footer-col-title">БЫСТРАЯ СВЯЗЬ</div>
         <ul class="footer-links">
-          <li><a href="#">📞 +7 (343) 300-00-00</a></li>
+          <li><a href="#">📞 8 (922) 035-28-87</a></li>
           <li><a href="#">💬 WhatsApp</a></li>
           <li><a href="#">✈️ Telegram</a></li>
           <li><a href="#">📧 Email</a></li>
@@ -1344,7 +1348,7 @@ footer {
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2014–2025 ODROVA.RU — винтовые дровоколы от производителя</div>
+      <div class="footer-copy">© 2014–2025 ODROVA.RU — Делаем тяжёлую работу лёгкой</div>
       <div class="footer-copy">ЧПУ · Сталь 45 · ТВЧ · Доставка по РФ и СНГ</div>
     </div>
   </div>
