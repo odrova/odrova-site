@@ -32,6 +32,16 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 }
 .logo { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--white-pure); letter-spacing:0.08em; }
 .logo span { color:var(--yellow); }
+.logo-o { color:var(--white-pure) !important; font-size:18px; vertical-align:baseline; }
+.logo-drova { color:var(--yellow) !important; }
+.logo-link { text-decoration:none; cursor:pointer; }
+.logo-link:hover .logo { opacity:.8; }
+.header-tagline-link {
+  font-family:'Fira Mono',monospace; font-size:11px;
+  color:var(--steel); letter-spacing:.08em; text-decoration:none;
+  transition:color .2s; cursor:pointer;
+}
+.header-tagline-link:hover { color:var(--yellow); }
 .header-tag { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; }
 
 /* TABS */
@@ -220,9 +230,13 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 }
 .cone-buy-btn.ready {
   cursor:pointer;
+}
+.cone-buy-btn.fire {
   animation: fireGlow 1.8s ease-in-out infinite;
 }
-.cone-buy-btn.ready:hover { background:var(--yellow-dark); }
+.cone-buy-btn.shake {
+  animation: shakeBtn 0.5s ease both;
+}
 
 @keyframes fireGlow {
   0%   { box-shadow: 0 0 8px 2px #f5c800, 0 0 20px 4px #ff6a00; }
@@ -293,26 +307,109 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 <body>
 
 <div class="header">
-  <div class="logo">ODROVA<span>.RU</span></div>
+  <a href="odrova_main.html" class="logo-link"><div class="logo"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></div></a>
+  <a href="odrova_main.html" class="header-tagline-link">Делаем тяжёлую работу лёгкой</a>
   <div class="header-tag">ИНСТРУМЕНТЫ ДЛЯ СБОРКИ ДРОВОКОЛА</div>
 </div>
 
 <div class="tabs-wrap">
   <div class="tabs">
     <div class="tab active" onclick="switchTab(0)">
-      <span class="tab-icon">📐</span>Длина ремня
+      <span class="tab-icon">🔩</span>Подбор конуса
     </div>
     <div class="tab" onclick="switchTab(1)">
-      <span class="tab-icon">⚙️</span>Обороты шкивов
+      <span class="tab-icon">📐</span>Длина ремня
     </div>
     <div class="tab" onclick="switchTab(2)">
-      <span class="tab-icon">🔩</span>Подбор конуса
+      <span class="tab-icon">⚙️</span>Обороты шкивов
     </div>
   </div>
 </div>
 
-<!-- ═══ PANEL 1: РЕМЕНЬ ═══ -->
-<div class="panel active" id="panel0">
+<!-- ═══ PANEL 1: КОНУС ═══ -->
+<div class="panel" id="panel0" class="panel active">
+
+  <div class="calc-card">
+    <div class="calc-title">Подбор конуса по задаче</div>
+    <div class="calc-sub">Выберите диаметр конуса — покажем полные характеристики, под какой двигатель подходит и что берут вместе с ним.</div>
+
+    <div class="cone-grid">
+      <div class="cone-card" onclick="selectCone(60, this)">
+        <div class="cone-size">60</div>
+        <div class="cone-mm">мм</div>
+        <svg width="50" height="56" viewBox="0 0 50 80" class="cone-svg-wrap">
+          <polygon points="25,4 40,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="40" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Лёгкий</div>
+        <div class="cone-params">
+          <span class="cone-param">L 165 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">15°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(90, this)">
+        <div class="cone-size">72</div>
+        <div class="cone-mm">мм</div>
+        <svg width="64" height="56" viewBox="0 0 64 80" class="cone-svg-wrap">
+          <polygon points="32,4 54,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="54" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Средний</div>
+        <div class="cone-params">
+          <span class="cone-param">L 230 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">17°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(75, this)">
+        <div class="cone-size">75</div>
+        <div class="cone-mm">мм</div>
+        <svg width="60" height="56" viewBox="0 0 60 80" class="cone-svg-wrap">
+          <polygon points="30,4 50,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="50" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Хит продаж</div>
+        <div class="cone-params">
+          <span class="cone-param">L 300 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">17.5°</span>
+        </div>
+      </div>
+      <div class="cone-card" onclick="selectCone(100, this)">
+        <div class="cone-size">100</div>
+        <div class="cone-mm">мм</div>
+        <svg width="68" height="56" viewBox="0 0 68 80" class="cone-svg-wrap">
+          <polygon points="34,4 58,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
+          <line x1="10" y1="76" x2="58" y2="76" stroke="#555" stroke-width="3"/>
+        </svg>
+        <div class="cone-tag">Мощный</div>
+        <div class="cone-params">
+          <span class="cone-param">L 300 мм</span>
+          <span class="cone-param-sep">·</span>
+          <span class="cone-param">23.5°</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cone-result" id="coneResult">
+      <div class="cone-detail" id="coneDetail"></div>
+    </div>
+  </div>
+
+  <div class="info-boxes">
+    <div class="info-box">
+      <div class="info-box-title">🔩 2 захода — что это значит?</div>
+      <div class="info-box-text">Все конусы ODROVA имеют двухзаходную упорную резьбу. Это значит, что за один оборот конус входит в дерево вдвое быстрее, чем однозаходный. Берёза 35 см раскалывается за 3–5 секунд.</div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">💎 Сталь 45 + ТВЧ</div>
+      <div class="info-box-text">Конусы точатся из стали 45 и проходят закалку ТВЧ на рабочей части. Это увеличивает твёрдость резьбы и продлевает срок службы при интенсивной работе.</div>
+    </div>
+  </div>
+</div>
+<!-- ═══ PANEL 2: РЕМЕНЬ ═══ -->
+<div class="panel" id="panel1">
 
   <div class="calc-card">
     <div class="calc-title">Калькулятор длины ремня</div>
@@ -392,8 +489,8 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   </div>
 </div>
 
-<!-- ═══ PANEL 2: ОБОРОТЫ ═══ -->
-<div class="panel" id="panel1">
+<!-- ═══ PANEL 3: ОБОРОТЫ ═══ -->
+<div class="panel" id="panel2">
 
   <div class="calc-card">
     <div class="calc-title">Калькулятор оборотов шкивной передачи</div>
@@ -471,88 +568,6 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   </div>
 </div>
 
-<!-- ═══ PANEL 3: КОНУС ═══ -->
-<div class="panel" id="panel2">
-
-  <div class="calc-card">
-    <div class="calc-title">Подбор конуса по задаче</div>
-    <div class="calc-sub">Выберите диаметр конуса — покажем полные характеристики, под какой двигатель подходит и что берут вместе с ним.</div>
-
-    <div class="cone-grid">
-      <div class="cone-card" onclick="selectCone(60, this)">
-        <div class="cone-size">60</div>
-        <div class="cone-mm">мм</div>
-        <svg width="50" height="56" viewBox="0 0 50 80" class="cone-svg-wrap">
-          <polygon points="25,4 40,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
-          <line x1="10" y1="76" x2="40" y2="76" stroke="#555" stroke-width="3"/>
-        </svg>
-        <div class="cone-tag">Лёгкий</div>
-        <div class="cone-params">
-          <span class="cone-param">L 165 мм</span>
-          <span class="cone-param-sep">·</span>
-          <span class="cone-param">15°</span>
-        </div>
-      </div>
-      <div class="cone-card" onclick="selectCone(75, this)">
-        <div class="cone-size">75</div>
-        <div class="cone-mm">мм</div>
-        <svg width="60" height="56" viewBox="0 0 60 80" class="cone-svg-wrap">
-          <polygon points="30,4 50,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
-          <line x1="10" y1="76" x2="50" y2="76" stroke="#555" stroke-width="3"/>
-        </svg>
-        <div class="cone-tag">Хит продаж</div>
-        <div class="cone-params">
-          <span class="cone-param">L 300 мм</span>
-          <span class="cone-param-sep">·</span>
-          <span class="cone-param">17.5°</span>
-        </div>
-      </div>
-      <div class="cone-card" onclick="selectCone(90, this)">
-        <div class="cone-size">72</div>
-        <div class="cone-mm">мм</div>
-        <svg width="64" height="56" viewBox="0 0 64 80" class="cone-svg-wrap">
-          <polygon points="32,4 54,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
-          <line x1="10" y1="76" x2="54" y2="76" stroke="#555" stroke-width="3"/>
-        </svg>
-        <div class="cone-tag">Средний</div>
-        <div class="cone-params">
-          <span class="cone-param">L 230 мм</span>
-          <span class="cone-param-sep">·</span>
-          <span class="cone-param">17°</span>
-        </div>
-      </div>
-      <div class="cone-card" onclick="selectCone(100, this)">
-        <div class="cone-size">100</div>
-        <div class="cone-mm">мм</div>
-        <svg width="68" height="56" viewBox="0 0 68 80" class="cone-svg-wrap">
-          <polygon points="34,4 58,76 10,76" fill="#333" stroke="#f5c800" stroke-width="1.5"/>
-          <line x1="10" y1="76" x2="58" y2="76" stroke="#555" stroke-width="3"/>
-        </svg>
-        <div class="cone-tag">Мощный</div>
-        <div class="cone-params">
-          <span class="cone-param">L 300 мм</span>
-          <span class="cone-param-sep">·</span>
-          <span class="cone-param">23.5°</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="cone-result" id="coneResult">
-      <div class="cone-detail" id="coneDetail"></div>
-    </div>
-  </div>
-
-  <div class="info-boxes">
-    <div class="info-box">
-      <div class="info-box-title">🔩 2 захода — что это значит?</div>
-      <div class="info-box-text">Все конусы ODROVA имеют двухзаходную упорную резьбу. Это значит, что за один оборот конус входит в дерево вдвое быстрее, чем однозаходный. Берёза 35 см раскалывается за 3–5 секунд.</div>
-    </div>
-    <div class="info-box">
-      <div class="info-box-title">💎 Сталь 45 + ТВЧ</div>
-      <div class="info-box-text">Конусы точатся из стали 45 и проходят закалку ТВЧ на рабочей части. Это увеличивает твёрдость резьбы и продлевает срок службы при интенсивной работе.</div>
-    </div>
-  </div>
-</div>
 
 <script>
 // ──── ДАННЫЕ ────
@@ -739,7 +754,7 @@ function selectCone(d, el) {
   el.classList.add('active');
   const c = cones[d];
   const shaftBtns = c.shafts.map(s =>
-    `<button class="sel-opt" style="padding:7px 12px;font-size:12px" onclick="highlightShaft(this);updateBuyBtn('${c.name}','${c.price}',${s})">${s} мм</button>`
+    `<button class="sel-opt" style="padding:7px 12px;font-size:12px;cursor:pointer" onclick="highlightShaft(this);updateBuyBtn('${c.name}','${c.price}',${s})">${s} мм</button>`
   ).join('');
   document.getElementById('coneDetail').innerHTML = `
     <div class="cone-detail-header">
@@ -802,11 +817,15 @@ function updateBuyBtn(name, price, shaft) {
   if (!btn) return;
   btn.textContent = `Купить / Ø${cones[currentCone].diameter} мм / L${cones[currentCone].length} мм / посадка ${shaft} мм / ${price}`;
   btn.style.opacity = '1';
-  btn.classList.add('ready');
-  // shake
-  btn.classList.remove('shake');
-  void btn.offsetWidth; // reflow to restart animation
-  btn.classList.add('shake');
+  btn.style.cursor = 'pointer';
+  // shake first, then fire
+  btn.classList.remove('shake','fire','ready');
+  void btn.offsetWidth;
+  btn.classList.add('ready','shake');
+  setTimeout(() => {
+    btn.classList.remove('shake');
+    btn.classList.add('fire');
+  }, 520);
 }
 
 function highlightShaft(el) {
@@ -831,8 +850,8 @@ function hideErr(errId, fieldId) {
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter') return;
   const active = document.querySelector('.panel.active').id;
-  if (active === 'panel0') calcBelt();
-  else if (active === 'panel1') calcRPM();
+  if (active === 'panel1') calcBelt();
+  else if (active === 'panel2') calcRPM();
 });
 </script>
 </body>
