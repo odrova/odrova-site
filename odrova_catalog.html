@@ -213,6 +213,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
       <button class="filter-btn" onclick="filterSection(this,'stanki')">Станки</button>
       <button class="filter-btn" onclick="filterSection(this,'konusy')">Конусы</button>
       <button class="filter-btn" onclick="filterSection(this,'komplekty')">Комплекты</button>
+      <button class="filter-btn" onclick="filterSection(this,'traktor')">На трактор</button>
       <button class="filter-btn" onclick="filterSection(this,'komplektuyushchie')">Комплектующие</button>
     </div>
   </div>
@@ -248,12 +249,19 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
     <div class="sidebar-section">
       <div class="sidebar-title">КОМПЛЕКТЫ</div>
       <div class="sidebar-links">
-        <a href="#komplekty" class="sidebar-link">Все комплекты <span class="sidebar-count">10</span></a>
+        <a href="#komplekty" class="sidebar-link">Все комплекты <span class="sidebar-count">6</span></a>
         <a href="odrova_mini75.html" class="sidebar-link">Мини 75 мм</a>
         <a href="odrova_mini100.html" class="sidebar-link">Мини 100 мм</a>
         <a href="odrova_komplekt1.html" class="sidebar-link">Комплект №1</a>
         <a href="odrova_komplekt2_75.html" class="sidebar-link">Комплект №2 75</a>
         <a href="odrova_komplekt2.html" class="sidebar-link">Комплект №2 100</a>
+        <a href="odrova_porosenok.html" class="sidebar-link">Поросёнок 75</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">НА ТРАКТОР</div>
+      <div class="sidebar-links">
+        <a href="#traktor" class="sidebar-link">Все на трактор <span class="sidebar-count">5</span></a>
         <a href="odrova_vom35.html" class="sidebar-link">ВОМ 35/75</a>
         <a href="odrova_vom38_75.html" class="sidebar-link">ВОМ 38/75</a>
         <a href="odrova_vom38_100.html" class="sidebar-link">ВОМ 38/100</a>
@@ -264,8 +272,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
     <div class="sidebar-section">
       <div class="sidebar-title">КОМПЛЕКТУЮЩИЕ</div>
       <div class="sidebar-links">
-        <a href="#komplektuyushchie" class="sidebar-link">Все <span class="sidebar-count">16</span></a>
-        <a href="odrova_porosenok.html" class="sidebar-link">Поросёнок 75</a>
+        <a href="#komplektuyushchie" class="sidebar-link">Все <span class="sidebar-count">15</span></a>
         <a href="odrova_pu.html" class="sidebar-link">Узел PU</a>
         <a href="odrova_shkiv_d240.html" class="sidebar-link">Шкив D240</a>
         <a href="odrova_shkiv_d98.html" class="sidebar-link">Шкив D98</a>
@@ -466,7 +473,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           <div class="section-eyebrow">ДЛЯ САМОСТОЯТЕЛЬНОЙ СБОРКИ</div>
           <div class="section-title">Комплекты</div>
         </div>
-        <div class="section-count">10 товаров</div>
+        <div class="section-count">6 товаров</div>
       </div>
       <div class="products-grid">
 
@@ -534,6 +541,30 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
             </div>
           </div>
         </a>
+
+        <a href="odrova_porosenok.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">УСИЛЕННЫЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Оцинков.</span><span class="prod-card-spec">в 2× крепче</span></div>
+            <div class="prod-card-name">Подшипниковый узел «Поросёнок»</div>
+            <div class="prod-card-desc">Усиленный узел для сборки. В 2 раза крепче UCP.</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">11 320 ₽</div><div class="prod-card-price-online">● онлайн 10 188 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- НА ТРАКТОР -->
+    <section class="catalog-section" id="traktor" data-cat="traktor">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ВОМ · ОТ ВАЛА ОТБОРА МОЩНОСТИ ТРАКТОРА</div>
+          <div class="section-title">На трактор</div>
+        </div>
+        <div class="section-count">5 товаров</div>
+      </div>
+      <div class="products-grid">
 
         <a href="odrova_vom35.html" class="prod-card">
           <div class="prod-card-img">🚜<div class="prod-card-badge">ВОМ 35 ММ</div></div>
@@ -610,18 +641,9 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           <div class="section-eyebrow">ШКИВЫ · ВАЛЫ · ПОДШИПНИКИ · РЕМНИ</div>
           <div class="section-title">Комплектующие</div>
         </div>
-        <div class="section-count">16 товаров</div>
+        <div class="section-count">15 товаров</div>
       </div>
       <div class="products-grid">
-
-        <a href="odrova_porosenok.html" class="prod-card">
-          <div class="prod-card-img">⚙️<div class="prod-card-badge">УСИЛЕННЫЙ</div></div>
-          <div class="prod-card-body">
-            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Оцинков.</span><span class="prod-card-spec">в 2× крепче</span></div>
-            <div class="prod-card-name">Подшипниковый узел «Поросёнок»</div>
-            <div class="prod-card-bottom"><div><div class="prod-card-price">11 320 ₽</div><div class="prod-card-price-online">● онлайн 10 188 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
-          </div>
-        </a>
 
         <a href="odrova_pu.html" class="prod-card">
           <div class="prod-card-img">⚙️<div class="prod-card-badge">КОМПАКТНЫЙ</div></div>
