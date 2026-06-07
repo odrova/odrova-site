@@ -214,7 +214,13 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
       <button class="filter-btn" onclick="filterSection(this,'konusy')">Конусы</button>
       <button class="filter-btn" onclick="filterSection(this,'komplekty')">Комплекты</button>
       <button class="filter-btn" onclick="filterSection(this,'traktor')">На трактор</button>
-      <button class="filter-btn" onclick="filterSection(this,'komplektuyushchie')">Комплектующие</button>
+      <button class="filter-btn" onclick="filterSection(this,'uzly')">Подшипниковые узлы</button>
+      <button class="filter-btn" onclick="filterSection(this,'shkivy')">Шкивы</button>
+      <button class="filter-btn" onclick="filterSection(this,'valy')">Валы</button>
+      <button class="filter-btn" onclick="filterSection(this,'remni')">Ремни</button>
+      <button class="filter-btn" onclick="filterSection(this,'dvigateli')">Двигатели</button>
+      <button class="filter-btn" onclick="filterSection(this,'shponki')">Шпонки</button>
+      <button class="filter-btn" onclick="filterSection(this,'prochee')">Прочее</button>
     </div>
   </div>
 </div>
@@ -270,24 +276,65 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
       </div>
     </div>
     <div class="sidebar-section">
-      <div class="sidebar-title">КОМПЛЕКТУЮЩИЕ</div>
+      <div class="sidebar-title">ПОДШИПНИКОВЫЕ УЗЛЫ</div>
       <div class="sidebar-links">
-        <a href="#komplektuyushchie" class="sidebar-link">Все <span class="sidebar-count">15</span></a>
+        <a href="#uzly" class="sidebar-link">Все узлы <span class="sidebar-count">5</span></a>
         <a href="odrova_pu.html" class="sidebar-link">Узел PU</a>
+        <a href="odrova_ucp205.html" class="sidebar-link">UCP 205</a>
+        <a href="odrova_ucp206.html" class="sidebar-link">UCP 206</a>
+        <a href="odrova_ucp207.html" class="sidebar-link">UCP 207</a>
+        <a href="odrova_ucpa207.html" class="sidebar-link">UCPA 207</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ШКИВЫ</div>
+      <div class="sidebar-links">
+        <a href="#shkivy" class="sidebar-link">Все шкивы <span class="sidebar-count">6</span></a>
         <a href="odrova_shkiv_d240.html" class="sidebar-link">Шкив D240</a>
         <a href="odrova_shkiv_d98.html" class="sidebar-link">Шкив D98</a>
         <a href="odrova_shkiv_neva.html" class="sidebar-link">Шкив Нева</a>
         <a href="odrova_shkiv_zakaz.html" class="sidebar-link">Шкив под заказ</a>
+        <a href="odrova_rolik_d70.html" class="sidebar-link">Ролик D70</a>
+        <a href="odrova_rolik_d100.html" class="sidebar-link">Ролик D100</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ВАЛЫ</div>
+      <div class="sidebar-links">
+        <a href="#valy" class="sidebar-link">Все валы <span class="sidebar-count">3</span></a>
         <a href="odrova_val30.html" class="sidebar-link">Вал 30 мм</a>
         <a href="odrova_val35.html" class="sidebar-link">Вал 35 мм</a>
         <a href="odrova_val_vom635.html" class="sidebar-link">Вал ВОМ 6×35</a>
-        <a href="odrova_ucp205.html" class="sidebar-link">UCP 205</a>
-        <a href="odrova_ucp206.html" class="sidebar-link">UCP 206</a>
-        <a href="odrova_ucp207.html" class="sidebar-link">UCP 207</a>
-        <a href="odrova_klin.html" class="sidebar-link">Клин-рассекатель</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">РЕМНИ</div>
+      <div class="sidebar-links">
+        <a href="#remni" class="sidebar-link">Все ремни <span class="sidebar-count">2</span></a>
         <a href="odrova_remen_a1650.html" class="sidebar-link">Ремень А L1650</a>
         <a href="odrova_remen_pj559.html" class="sidebar-link">Ремень PJ559</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ДВИГАТЕЛИ</div>
+      <div class="sidebar-links">
+        <a href="#dvigateli" class="sidebar-link">Все двигатели <span class="sidebar-count">1</span></a>
         <a href="odrova_motor380.html" class="sidebar-link">Двигатель 380В</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ШПОНКИ</div>
+      <div class="sidebar-links">
+        <a href="#shponki" class="sidebar-link">Все шпонки <span class="sidebar-count">2</span></a>
+        <a href="odrova_shponka_8x7x32.html" class="sidebar-link">Шпонка 8х7х32</a>
+        <a href="odrova_shponka_10x8x32.html" class="sidebar-link">Шпонка 10х8х32</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">ПРОЧЕЕ</div>
+      <div class="sidebar-links">
+        <a href="#prochee" class="sidebar-link">Прочее <span class="sidebar-count">1</span></a>
+        <a href="odrova_klin.html" class="sidebar-link">Клин-рассекатель</a>
       </div>
     </div>
   </aside>
@@ -634,14 +681,14 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
       </div>
     </section>
 
-    <!-- КОМПЛЕКТУЮЩИЕ -->
-    <section class="catalog-section" id="komplektuyushchie" data-cat="komplektuyushchie">
+    <!-- ПОДШИПНИКОВЫЕ УЗЛЫ -->
+    <section class="catalog-section" id="uzly" data-cat="uzly">
       <div class="section-head">
         <div class="section-head-left">
-          <div class="section-eyebrow">ШКИВЫ · ВАЛЫ · ПОДШИПНИКИ · РЕМНИ</div>
-          <div class="section-title">Комплектующие</div>
+          <div class="section-eyebrow">ОПОРА ВАЛА · UCP И ПОДШИПНИКОВЫЕ УЗЛЫ</div>
+          <div class="section-title">Подшипниковые узлы</div>
         </div>
-        <div class="section-count">15 товаров</div>
+        <div class="section-count">5 товаров</div>
       </div>
       <div class="products-grid">
 
@@ -653,6 +700,56 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
             <div class="prod-card-bottom"><div><div class="prod-card-price">6 978 ₽</div><div class="prod-card-price-online">● онлайн 6 280 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
           </div>
         </a>
+
+        <a href="odrova_ucp205.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 205</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 25 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипник UCP 205</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_ucp206.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 206</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 30 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипник UCP 206</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_ucp207.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 207</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 35 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипник UCP 207</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_ucpa207.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCPA 207</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 35 мм</span><span class="prod-card-spec">На лапах</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипниковый узел UCPA 207</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ШКИВЫ -->
+    <section class="catalog-section" id="shkivy" data-cat="shkivy">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ВЕДУЩИЕ · ВЕДОМЫЕ · МАХОВИКИ · ПОД ЗАКАЗ</div>
+          <div class="section-title">Шкивы</div>
+        </div>
+        <div class="section-count">6 товаров</div>
+      </div>
+      <div class="products-grid">
 
         <a href="odrova_shkiv_d240.html" class="prod-card">
           <div class="prod-card-img">⭕<div class="prod-card-badge">МАХОВИК</div></div>
@@ -690,6 +787,38 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           </div>
         </a>
 
+        <a href="odrova_rolik_d70.html" class="prod-card">
+          <div class="prod-card-img">⭕<div class="prod-card-badge">НАПРАВЛЯЮЩИЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">D70 мм</span><span class="prod-card-spec">С подшипником</span><span class="prod-card-spec">Натяжной</span></div>
+            <div class="prod-card-name">Ролик-шкив D70 с подшипником</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">600 ₽</div><div class="prod-card-price-online">● онлайн 540 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_rolik_d100.html" class="prod-card">
+          <div class="prod-card-img">⭕<div class="prod-card-badge">НАПРАВЛЯЮЩИЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">D100 мм</span><span class="prod-card-spec">С подшипником</span><span class="prod-card-spec">Натяжной</span></div>
+            <div class="prod-card-name">Ролик-шкив D100 с подшипником</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">800 ₽</div><div class="prod-card-price-online">● онлайн 720 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ВАЛЫ -->
+    <section class="catalog-section" id="valy" data-cat="valy">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">СТАЛЬ 45 · ЧПУ · ПОД КОНУС И ВОМ</div>
+          <div class="section-title">Валы</div>
+        </div>
+        <div class="section-count">3 товара</div>
+      </div>
+      <div class="products-grid">
+
         <a href="odrova_val30.html" class="prod-card">
           <div class="prod-card-img">🔧<div class="prod-card-badge">ВАЛ 30 ММ</div></div>
           <div class="prod-card-body">
@@ -717,23 +846,19 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           </div>
         </a>
 
-        <a href="odrova_ucp206.html" class="prod-card">
-          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 206</div></div>
-          <div class="prod-card-body">
-            <div class="prod-card-specs"><span class="prod-card-spec">Вал 30 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
-            <div class="prod-card-name">Подшипник UCP 206</div>
-            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
-          </div>
-        </a>
+      </div>
+    </section>
 
-        <a href="odrova_ucp207.html" class="prod-card">
-          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 207</div></div>
-          <div class="prod-card-body">
-            <div class="prod-card-specs"><span class="prod-card-spec">Вал 35 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
-            <div class="prod-card-name">Подшипник UCP 207</div>
-            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
-          </div>
-        </a>
+    <!-- РЕМНИ -->
+    <section class="catalog-section" id="remni" data-cat="remni">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">КЛИНОВЫЕ · ПОЛИКЛИНОВЫЕ</div>
+          <div class="section-title">Ремни</div>
+        </div>
+        <div class="section-count">2 товара</div>
+      </div>
+      <div class="products-grid">
 
         <a href="odrova_remen_a1650.html" class="prod-card">
           <div class="prod-card-img">〰️<div class="prod-card-badge">ПРОФИЛЬ А</div></div>
@@ -753,14 +878,19 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           </div>
         </a>
 
-        <a href="odrova_klin.html" class="prod-card">
-          <div class="prod-card-img">🔺<div class="prod-card-badge">РАССЕКАТЕЛЬ</div></div>
-          <div class="prod-card-body">
-            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">Для сучков</span></div>
-            <div class="prod-card-name">Клин-рассекатель</div>
-            <div class="prod-card-bottom"><div><div class="prod-card-price">424 ₽</div><div class="prod-card-price-online">● онлайн 382 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
-          </div>
-        </a>
+      </div>
+    </section>
+
+    <!-- ДВИГАТЕЛИ -->
+    <section class="catalog-section" id="dvigateli" data-cat="dvigateli">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ЭЛЕКТРОДВИГАТЕЛИ</div>
+          <div class="section-title">Двигатели</div>
+        </div>
+        <div class="section-count">1 товар</div>
+      </div>
+      <div class="products-grid">
 
         <a href="odrova_motor380.html" class="prod-card">
           <div class="prod-card-img">⚡<div class="prod-card-badge">380В</div></div>
@@ -768,6 +898,61 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
             <div class="prod-card-specs"><span class="prod-card-spec">380В</span><span class="prod-card-spec">3 кВт</span><span class="prod-card-spec">1450 об/мин</span></div>
             <div class="prod-card-name">Электродвигатель 380В 3 кВт</div>
             <div class="prod-card-bottom"><div><div class="prod-card-price">от 8 500 ₽</div><div class="prod-card-price-online">● онлайн от 7 650 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ШПОНКИ -->
+    <section class="catalog-section" id="shponki" data-cat="shponki">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ГОСТ 23360-78 · ФИКСАЦИЯ НА ВАЛУ</div>
+          <div class="section-title">Шпонки</div>
+        </div>
+        <div class="section-count">2 товара</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_shponka_8x7x32.html" class="prod-card">
+          <div class="prod-card-img">🔑<div class="prod-card-badge">ГОСТ 23360</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">8×7 мм</span><span class="prod-card-spec">L 32 мм</span><span class="prod-card-spec">Сталь 45</span></div>
+            <div class="prod-card-name">Шпонка 8х7х32 мм</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">90 ₽</div><div class="prod-card-price-online">● онлайн 81 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_shponka_10x8x32.html" class="prod-card">
+          <div class="prod-card-img">🔑<div class="prod-card-badge">ГОСТ 23360</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">10×8 мм</span><span class="prod-card-spec">L 32 мм</span><span class="prod-card-spec">Сталь 45</span></div>
+            <div class="prod-card-name">Шпонка 10х8х32 мм</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">90 ₽</div><div class="prod-card-price-online">● онлайн 81 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ПРОЧЕЕ -->
+    <section class="catalog-section" id="prochee" data-cat="prochee">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ДОПОЛНИТЕЛЬНОЕ ОБОРУДОВАНИЕ</div>
+          <div class="section-title">Прочее</div>
+        </div>
+        <div class="section-count">1 товар</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_klin.html" class="prod-card">
+          <div class="prod-card-img">🔺<div class="prod-card-badge">РАССЕКАТЕЛЬ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">Для сучков</span></div>
+            <div class="prod-card-name">Клин-рассекатель</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">424 ₽</div><div class="prod-card-price-online">● онлайн 382 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
           </div>
         </a>
 
