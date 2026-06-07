@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Корзина — ODROVA.RU</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#111;--graphite:#1e1e1e;--graphite-mid:#252525;--graphite-light:#333;
+  --steel:#6b7280;--steel-light:#9ca3af;--white:#f5f5f5;--white-pure:#fff;
+  --yellow:#f5c800;--yellow-dark:#d4a800;--green:#22c55e;--red:#ef4444;
+  --border:rgba(255,255,255,0.07);--border-light:rgba(0,0,0,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black);}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;}
+.header-top{background:var(--graphite);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.header-bottom{background:var(--black);border-top:1px solid var(--border);padding:6px 20px;display:flex;align-items:center;gap:8px;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--white-pure);letter-spacing:.08em;text-decoration:none;}
+.logo-o{color:var(--white-pure)!important;font-size:18px;vertical-align:baseline;}
+.logo-drova{color:var(--yellow)!important;}
+.logo span{color:var(--yellow);}
+.header-since{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap;margin-left:12px;}
+.header-since span{color:var(--yellow);}
+.header-calc-btn{display:flex;align-items:center;gap:5px;background:var(--graphite-light);color:var(--steel-light);border:1px solid var(--border);text-decoration:none;padding:5px 10px;font-size:11px;font-weight:700;font-family:'Fira Mono',monospace;white-space:nowrap;letter-spacing:.05em;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));transition:color .2s;}
+.header-calc-btn:hover{color:var(--yellow);}
+.header-phone-btn{display:flex;align-items:center;gap:8px;background:var(--yellow);color:var(--black);text-decoration:none;padding:6px 16px 6px 12px;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));margin-left:auto;}
+.header-phone-num{font-size:14px;font-weight:700;white-space:nowrap;}
+
+/* BREADCRUMB */
+.breadcrumb{background:var(--graphite-mid);padding:12px 24px;font-family:'PT Sans',sans-serif;font-size:13px;color:var(--steel);}
+.breadcrumb a{color:var(--steel);text-decoration:none;}
+.breadcrumb span{color:var(--steel);margin:0 8px;font-weight:700;}
+
+/* LAYOUT */
+.cart-wrap{max-width:1100px;margin:0 auto;padding:36px 24px;display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start;}
+
+/* EMPTY STATE */
+.cart-empty{
+  grid-column:1/-1;text-align:center;padding:80px 24px;
+  background:var(--graphite);
+  clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));
+}
+.cart-empty-icon{font-size:64px;margin-bottom:16px;opacity:.4;}
+.cart-empty-title{font-family:'Russo One',sans-serif;font-size:24px;color:var(--white-pure);margin-bottom:8px;}
+.cart-empty-sub{font-size:14px;color:var(--steel);margin-bottom:28px;}
+.cart-empty-btn{display:inline-block;padding:14px 28px;background:var(--yellow);color:var(--black);font-weight:700;font-size:15px;text-decoration:none;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+
+/* ITEMS */
+.cart-items-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.cart-items-title{font-family:'Russo One',sans-serif;font-size:20px;color:var(--black);}
+.cart-clear-btn{font-size:12px;color:var(--steel);background:none;border:none;cursor:pointer;font-family:'Fira Mono',monospace;text-decoration:underline;}
+.cart-clear-btn:hover{color:var(--red);}
+
+.cart-item{
+  background:var(--white-pure);border:1.5px solid var(--border-light);
+  display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:center;
+  padding:16px;margin-bottom:12px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+  transition:border-color .2s;
+}
+.cart-item:hover{border-color:rgba(245,200,0,.3);}
+.cart-item-img{
+  aspect-ratio:1;background:var(--graphite);
+  display:flex;align-items:center;justify-content:center;font-size:28px;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  overflow:hidden;
+}
+.cart-item-img img{width:100%;height:100%;object-fit:cover;}
+.cart-item-info{}
+.cart-item-name{font-size:14px;font-weight:700;color:var(--black);margin-bottom:4px;line-height:1.3;}
+.cart-item-variant{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);margin-bottom:8px;}
+.cart-item-qty{display:flex;align-items:center;gap:8px;}
+.qty-btn{width:28px;height:28px;background:var(--graphite);border:none;color:var(--white-pure);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-weight:700;transition:background .15s;}
+.qty-btn:hover{background:var(--yellow);color:var(--black);}
+.qty-val{font-family:'Bebas Neue',sans-serif;font-size:20px;min-width:24px;text-align:center;}
+.cart-item-right{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px;}
+.cart-item-price{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--black);}
+.cart-item-remove{background:none;border:none;color:var(--steel);cursor:pointer;font-size:18px;line-height:1;transition:color .15s;}
+.cart-item-remove:hover{color:var(--red);}
+
+/* PROMO */
+.promo-wrap{margin-top:16px;}
+.promo-label{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.1em;margin-bottom:8px;}
+.promo-row{display:flex;gap:8px;}
+.promo-input{
+  flex:1;background:var(--white-pure);border:1.5px solid var(--border-light);
+  padding:10px 14px;font-size:13px;font-family:'PT Sans',sans-serif;outline:none;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.promo-input:focus{border-color:var(--yellow);}
+.promo-btn{padding:10px 18px;background:var(--graphite);color:var(--white-pure);border:none;cursor:pointer;font-weight:700;font-size:13px;font-family:'PT Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+.promo-btn:hover{background:var(--graphite-light);}
+
+/* SUMMARY */
+.cart-summary{position:sticky;top:80px;}
+.summary-box{
+  background:var(--graphite);padding:28px;
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+  margin-bottom:12px;
+}
+.summary-title{font-family:'Russo One',sans-serif;font-size:18px;color:var(--white-pure);margin-bottom:20px;}
+.summary-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:14px;}
+.summary-label{color:var(--steel);}
+.summary-val{color:var(--white-pure);font-weight:700;}
+.summary-sep{border:none;border-top:1px solid var(--border);margin:16px 0;}
+
+/* ONLINE DISCOUNT */
+.online-discount-box{
+  background:rgba(245,200,0,.08);border:1.5px solid var(--yellow);
+  padding:16px;margin-bottom:16px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+}
+.online-discount-title{font-family:'Fira Mono',monospace;font-size:10px;color:var(--yellow);letter-spacing:.12em;margin-bottom:8px;}
+.online-discount-row{display:flex;justify-content:space-between;align-items:baseline;}
+.online-discount-price{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--yellow);line-height:1;}
+.online-discount-save{font-size:13px;color:var(--green);font-weight:700;}
+.online-discount-note{font-size:11px;color:var(--steel);margin-top:4px;}
+
+/* PAYMENT TOGGLE */
+.payment-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.pay-opt{
+  flex:1;padding:10px 8px;text-align:center;font-size:12px;font-weight:700;
+  cursor:pointer;border:1.5px solid var(--border-light);background:transparent;
+  font-family:'PT Sans',sans-serif;transition:all .2s;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+}
+.pay-opt.active{background:var(--yellow);color:var(--black);border-color:var(--yellow);}
+.pay-opt-sub{font-size:10px;font-weight:400;display:block;margin-top:2px;font-family:'Fira Mono',monospace;}
+
+/* CHECKOUT BTN */
+.btn-checkout{
+  width:100%;padding:18px;font-size:17px;font-weight:700;
+  background:var(--yellow);color:var(--black);border:none;cursor:pointer;
+  font-family:'PT Sans',sans-serif;margin-bottom:10px;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition:background .2s;
+}
+.btn-checkout:hover{background:var(--yellow-dark);}
+.btn-continue{
+  width:100%;padding:12px;font-size:14px;font-weight:700;
+  background:transparent;color:var(--steel-light);border:1px solid rgba(255,255,255,.1);
+  cursor:pointer;font-family:'PT Sans',sans-serif;text-decoration:none;display:block;text-align:center;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:border-color .2s,color .2s;
+}
+.btn-continue:hover{border-color:var(--steel);color:var(--white-pure);}
+
+/* TRUST */
+.trust-list{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--steel);}
+.trust-icon{font-size:16px;}
+
+/* MESSENGERS */
+.ms-strip{display:flex;gap:8px;margin-top:16px;}
+.ms-btn{flex:1;padding:9px;font-size:12px;font-weight:700;border:none;cursor:pointer;font-family:'PT Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:5px;}
+.ms-sms{background:#2563eb;color:#fff;}
+.ms-tg{background:#229ed9;color:#fff;}
+.ms-max{background:#8b5cf6;color:#fff;}
+
+/* RELATED */
+.related-section{margin-top:48px;grid-column:1/-1;}
+.related-title{font-family:'Russo One',sans-serif;font-size:20px;color:var(--black);margin-bottom:16px;}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.related-card{border:1.5px solid var(--border-light);background:var(--white-pure);clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:border-color .2s,transform .2s;cursor:pointer;text-decoration:none;color:inherit;display:block;}
+.related-card:hover{border-color:var(--yellow);transform:translateY(-2px);}
+.related-img{aspect-ratio:1;background:var(--graphite);display:flex;align-items:center;justify-content:center;font-size:32px;}
+.related-body{padding:12px;}
+.related-name{font-size:13px;font-weight:700;margin-bottom:4px;line-height:1.3;}
+.related-price{font-family:'Bebas Neue',sans-serif;font-size:20px;}
+.related-btn{width:100%;padding:8px;background:var(--yellow);color:var(--black);border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'PT Sans',sans-serif;margin-top:8px;}
+
+/* DELIVERY */
+.delivery-card{
+  display:flex;align-items:center;gap:14px;padding:14px 16px;
+  border:1.5px solid var(--border-light);background:var(--white-pure);cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  transition:border-color .2s;
+}
+.delivery-card:hover{border-color:rgba(245,200,0,.4);}
+.delivery-card.selected{border-color:var(--yellow);background:rgba(245,200,0,.04);}
+.delivery-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border-light);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:border-color .2s;}
+.delivery-card.selected .delivery-radio{border-color:var(--yellow);}
+.delivery-radio-dot{width:8px;height:8px;border-radius:50%;background:var(--yellow);display:none;}
+.delivery-card.selected .delivery-radio-dot{display:block;}
+.delivery-icon{font-size:24px;flex-shrink:0;}
+.delivery-info{flex:1;}
+.delivery-name{font-size:13px;font-weight:700;color:var(--black);}
+.delivery-sub{font-size:11px;color:var(--steel);margin-top:2px;}
+.delivery-price{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--black);white-space:nowrap;}
+.delivery-free{color:var(--green);font-family:'Fira Mono',monospace;font-size:11px;font-weight:700;}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.cart-item{animation:slideIn .3s ease both;}
+
+@media(max-width:900px){
+  .cart-wrap{grid-template-columns:1fr;}
+  .cart-summary{position:static;}
+  .related-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .cart-item{grid-template-columns:64px 1fr auto;}
+  .related-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a href="odrova_main.html" class="logo"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></a>
+    <span class="header-since">точим с <span>2014</span> г.</span>
+    <button class="cart-btn" style="margin-left:auto;display:flex;align-items:center;gap:6px;background:var(--graphite-light);border:1px solid var(--border);color:var(--white-pure);padding:6px 12px;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif;">
+      🛒 <span id="cartCountHead" style="background:var(--yellow);color:var(--black);width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;">🔥</span>
+    </button>
+  </div>
+  <div class="header-bottom">
+    <a href="odrova_calculator.html" class="header-calc-btn">⚙️ Калькуляторы</a>
+    <a href="tel:+79220352887" class="header-phone-btn">
+      <span style="font-size:16px">📞</span>
+      <span class="header-phone-num">8 (922) 035-28-87</span>
+    </a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="odrova_main.html">Главная</a><span>›</span>
+  Корзина
+</div>
+
+<div class="cart-wrap" id="cartWrap">
+
+  <!-- EMPTY (shown when cart is empty) -->
+  <div class="cart-empty" id="emptyState" style="display:none">
+    <div class="cart-empty-icon">🛒</div>
+    <div class="cart-empty-title">Корзина пуста</div>
+    <div class="cart-empty-sub">Выберите товары из нашего каталога — подберём конус, комплект или шкив под ваш двигатель.</div>
+    <a href="odrova_catalog.html" class="cart-empty-btn">Перейти в каталог →</a>
+  </div>
+
+  <!-- ITEMS -->
+  <div id="itemsCol">
+    <div class="cart-items-head">
+      <div class="cart-items-title">Ваш заказ <span id="itemCount" style="font-size:14px;color:var(--steel);font-family:'Fira Mono',monospace"></span></div>
+      <button class="cart-clear-btn" onclick="clearCart()">Очистить корзину</button>
+    </div>
+
+    <div id="cartItemsList"></div>
+
+    <!-- PROMO -->
+    <div class="promo-wrap">
+      <div class="promo-label">ПРОМОКОД</div>
+      <div class="promo-row">
+        <input class="promo-input" placeholder="Введите промокод" id="promoInput">
+        <button class="promo-btn" onclick="applyPromo()">Применить</button>
+      </div>
+      <div id="promoMsg" style="font-size:12px;margin-top:6px;font-family:'Fira Mono',monospace"></div>
+    </div>
+
+    <!-- ДОСТАВКА -->
+    <div style="margin-top:24px">
+      <div style="font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.12em;margin-bottom:12px">СПОСОБ ДОСТАВКИ</div>
+
+      <!-- ГОРОД -->
+      <div style="margin-bottom:12px;position:relative">
+        <div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.1em;margin-bottom:6px">ГОРОД ДОСТАВКИ</div>
+        <div style="display:flex;gap:8px">
+          <input id="cityInput" type="text" placeholder="Введите город..." autocomplete="off"
+            oninput="citySearch(this.value)"
+            style="flex:1;background:var(--white-pure);border:1.5px solid var(--border-light);padding:10px 14px;font-size:14px;font-family:'PT Sans',sans-serif;outline:none;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:border-color .2s"
+            onfocus="this.style.borderColor='var(--yellow)'"
+            onblur="setTimeout(()=>{this.style.borderColor='';hideSuggest()},200)">
+          <button onclick="calcDelivery()" style="padding:10px 16px;background:var(--yellow);color:var(--black);border:none;font-weight:700;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));white-space:nowrap">Рассчитать</button>
+        </div>
+        <div id="citySuggest" style="display:none;position:absolute;top:100%;left:0;right:48px;background:var(--white-pure);border:1.5px solid var(--yellow);z-index:50;max-height:200px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.15)"></div>
+        <div id="cityInfo" style="font-size:12px;color:var(--steel);font-family:'Fira Mono',monospace;margin-top:6px"></div>
+      </div>
+
+      <div id="deliveryList" style="display:flex;flex-direction:column;gap:8px"></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="cart-summary" id="summaryCol">
+
+    <!-- ONLINE DISCOUNT -->
+    <div class="online-discount-box">
+      <div class="online-discount-title">🔥 СКИДКА ПРИ ОНЛАЙН-ОПЛАТЕ</div>
+      <div class="online-discount-row">
+        <div class="online-discount-price" id="onlinePrice">—</div>
+        <div class="online-discount-save" id="onlineSave"></div>
+      </div>
+      <div class="online-discount-note">Выберите «Онлайн» ниже чтобы получить скидку −10%</div>
+    </div>
+
+    <div class="summary-box">
+      <div class="summary-title">Итого</div>
+
+      <div class="summary-row">
+        <span class="summary-label">Товары (<span id="summaryCount">0</span> шт)</span>
+        <span class="summary-val" id="summarySubtotal">0 ₽</span>
+      </div>
+      <div class="summary-row" id="deliveryRow">
+        <span class="summary-label">Доставка</span>
+        <span class="summary-val" id="deliveryVal">—</span>
+      </div>
+      <div class="summary-row" id="promoRow" style="display:none">
+        <span class="summary-label">Промокод</span>
+        <span class="summary-val" style="color:var(--green)" id="promoDiscount"></span>
+      </div>
+      <hr class="summary-sep">
+
+      <!-- PAYMENT TYPE -->
+      <div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.1em;margin-bottom:8px">СПОСОБ ОПЛАТЫ</div>
+      <div class="payment-toggle">
+        <button class="pay-opt active" onclick="setPayment(this,'online')" id="payOnline">
+          Онлайн
+          <span class="pay-opt-sub">−10% скидка</span>
+        </button>
+        <button class="pay-opt" onclick="setPayment(this,'delivery')" id="payDelivery">
+          При получении
+          <span class="pay-opt-sub">без скидки</span>
+        </button>
+      </div>
+
+      <div class="summary-row" id="discountRow">
+        <span class="summary-label">Скидка онлайн −10%</span>
+        <span class="summary-val" style="color:var(--green)" id="discountVal"></span>
+      </div>
+
+      <hr class="summary-sep">
+      <div class="summary-row" style="margin-bottom:0">
+        <span style="font-size:16px;font-weight:700;color:var(--white-pure)">К оплате</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--yellow)" id="summaryTotal">0 ₽</span>
+      </div>
+    </div>
+
+    <button class="btn-checkout" onclick="checkout()">Оформить заказ →</button>
+    <a href="odrova_catalog.html" class="btn-continue">← Продолжить покупки</a>
+
+    <div class="trust-list">
+      <div class="trust-item"><span class="trust-icon">🛡️</span> Гарантия 12 месяцев на всё</div>
+      <div class="trust-item"><span class="trust-icon">🚚</span> СДЭК / DPD / Почта России</div>
+      <div class="trust-item"><span class="trust-icon">💳</span> Оплата при получении доступна</div>
+      <div class="trust-item"><span class="trust-icon">🏭</span> Производство Верхняя Пышма</div>
+    </div>
+
+    <div class="ms-strip">
+      <button class="ms-btn ms-sms">💬 SMS</button>
+      <button class="ms-btn ms-tg">✈️ TG</button>
+      <button class="ms-btn ms-max">💜 MAX</button>
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  <div class="related-section" id="relatedSection">
+    <div class="related-title">Часто берут вместе</div>
+    <div class="related-grid" id="relatedGrid"></div>
+  </div>
+
+</div>
+
+<script>
+// ── DELIVERY ──
+const deliveryOptions = [
+  { id:'cdek',   icon:'🚚', name:'СДЭК',          sub:'2–5 дней · по всей России',        price:350, freeFrom:5000 },
+  { id:'dpd',    icon:'🚛', name:'DPD',            sub:'2–4 дня · по всей России и СНГ',   price:350, freeFrom:5000 },
+  { id:'post',   icon:'📬', name:'Почта России',   sub:'5–14 дней · в любой населённый пункт', price:250, freeFrom:0 },
+  { id:'ozon',   icon:'🔵', name:'Ozon Rocket',    sub:'1–3 дня · быстрая доставка',       price:299, freeFrom:3000 },
+  { id:'pickup', icon:'🏭', name:'Самовывоз',      sub:'Верхняя Пышма · по договорённости', price:0,  freeFrom:0 },
+];
+let selectedDelivery = 'cdek';
+
+function renderDelivery() {
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  document.getElementById('deliveryList').innerHTML = deliveryOptions.map(d => {
+    let price = selectedCity ? (zoneRates[d.id]?.[cityZone] ?? d.price) : d.price;
+    const unavailable = price === 0 && d.id !== 'pickup' && cityZone > 0 && selectedCity;
+    const isFree = price === 0 || (!unavailable && d.freeFrom > 0 && subtotal >= d.freeFrom);
+    if (unavailable) {
+      return `<div class="delivery-card" style="opacity:.4;cursor:default">
+        <div class="delivery-radio"></div>
+        <div class="delivery-icon">${d.icon}</div>
+        <div class="delivery-info"><div class="delivery-name">${d.name}</div><div class="delivery-sub">Недоступно в выбранный город</div></div>
+        <span style="font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel)">—</span>
+      </div>`;
+    }
+    let priceLabel = '';
+    if (d.id === 'pickup' || price === 0 || isFree) {
+      priceLabel = '<span class="delivery-free">БЕСПЛАТНО</span>';
+    } else {
+      const freeNote = d.freeFrom > 0 && subtotal < d.freeFrom
+        ? `<div style="font-size:10px;color:var(--steel);margin-top:2px">бесплатно от ${d.freeFrom.toLocaleString('ru')} ₽</div>`
+        : '';
+      priceLabel = `<div style="text-align:right"><span class="delivery-price">${price} ₽</span>${freeNote}</div>`;
+    }
+    return `<div class="delivery-card ${selectedDelivery===d.id?'selected':''}" onclick="selectDelivery('${d.id}')">
+      <div class="delivery-radio"><div class="delivery-radio-dot"></div></div>
+      <div class="delivery-icon">${d.icon}</div>
+      <div class="delivery-info">
+        <div class="delivery-name">${d.name}</div>
+        <div class="delivery-sub">${d.sub}</div>
+      </div>
+      ${priceLabel}
+    </div>`;
+  }).join('');
+}
+
+function selectDelivery(id) {
+  selectedDelivery = id;
+  renderDelivery();
+  render();
+}
+
+// ── CITY & DELIVERY ──
+const cities = [
+  { name:'Москва',           zone:1 },
+  { name:'Санкт-Петербург',  zone:1 },
+  { name:'Екатеринбург',     zone:1 },
+  { name:'Верхняя Пышма',    zone:0 }, // самовывоз рядом
+  { name:'Новосибирск',      zone:2 },
+  { name:'Казань',           zone:1 },
+  { name:'Челябинск',        zone:1 },
+  { name:'Уфа',              zone:1 },
+  { name:'Пермь',            zone:1 },
+  { name:'Тюмень',           zone:1 },
+  { name:'Красноярск',       zone:2 },
+  { name:'Иркутск',          zone:2 },
+  { name:'Владивосток',      zone:3 },
+  { name:'Хабаровск',        zone:3 },
+  { name:'Краснодар',        zone:2 },
+  { name:'Ростов-на-Дону',   zone:2 },
+  { name:'Воронеж',          zone:1 },
+  { name:'Самара',           zone:1 },
+  { name:'Нижний Новгород',  zone:1 },
+  { name:'Омск',             zone:2 },
+  { name:'Барнаул',          zone:2 },
+  { name:'Ижевск',           zone:1 },
+  { name:'Тюмень',           zone:1 },
+  { name:'Сургут',           zone:2 },
+  { name:'Ханты-Мансийск',   zone:2 },
+];
+
+// Коэффициенты стоимости по зонам
+// zone 0 = рядом, zone 1 = Урал/Центр, zone 2 = далеко, zone 3 = Дальний Восток
+const zoneRates = {
+  cdek:   [0, 350, 500, 700],
+  dpd:    [0, 350, 520, 0],   // 0 = недоступно
+  post:   [0, 250, 300, 400],
+  ozon:   [0, 299, 399, 0],
+  pickup: [0, 0,   0,   0],
+};
+
+let selectedCity = null;
+let cityZone = 1; // default
+
+function citySearch(val) {
+  const suggest = document.getElementById('citySuggest');
+  if (!val || val.length < 2) { suggest.style.display='none'; return; }
+  const matches = cities.filter(c => c.name.toLowerCase().startsWith(val.toLowerCase())).slice(0,6);
+  if (!matches.length) { suggest.style.display='none'; return; }
+  suggest.innerHTML = matches.map(c =>
+    `<div onclick="selectCity('${c.name}',${c.zone})"
+      style="padding:10px 14px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border-light);transition:background .15s"
+      onmouseover="this.style.background='rgba(245,200,0,.08)'"
+      onmouseout="this.style.background=''">${c.name}</div>`
+  ).join('');
+  suggest.style.display = 'block';
+}
+
+function selectCity(name, zone) {
+  selectedCity = name;
+  cityZone = zone;
+  document.getElementById('cityInput').value = name;
+  document.getElementById('citySuggest').style.display = 'none';
+  calcDelivery();
+}
+
+function hideSuggest() {
+  document.getElementById('citySuggest').style.display = 'none';
+}
+
+function calcDelivery() {
+  const val = document.getElementById('cityInput').value.trim();
+  if (!val) {
+    document.getElementById('cityInfo').textContent = 'Введите город для расчёта стоимости';
+    return;
+  }
+  // Try to find city
+  const found = cities.find(c => c.name.toLowerCase() === val.toLowerCase());
+  if (found) {
+    cityZone = found.zone;
+    selectedCity = found.name;
+  } else {
+    cityZone = 1; // default zone for unknown cities
+    selectedCity = val;
+  }
+  const info = document.getElementById('cityInfo');
+  if (cityZone === 0) {
+    info.style.color = 'var(--green)';
+    info.textContent = `✓ ${selectedCity} — доступен самовывоз бесплатно`;
+  } else {
+    info.style.color = 'var(--steel)';
+    info.textContent = `✓ Стоимость рассчитана для: ${selectedCity}`;
+  }
+  render();
+}
+
+function getDeliveryCost() {
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const d = deliveryOptions.find(d => d.id === selectedDelivery);
+  if (!d) return 0;
+  if (d.id === 'pickup') return 0;
+  // Zone-based pricing if city selected
+  if (selectedCity) {
+    const rate = zoneRates[d.id]?.[cityZone] ?? d.price;
+    if (rate === 0 && d.id !== 'pickup') {
+      // Check if it's free due to zone (pickup area) or unavailable
+      if (cityZone === 0) return 0;
+    }
+    // Free threshold
+    if (d.freeFrom > 0 && subtotal >= d.freeFrom) return 0;
+    return rate;
+  }
+  // No city selected - use default price
+  if (d.freeFrom > 0 && subtotal >= d.freeFrom) return 0;
+  return d.price;
+}
+// В реальном InSales это будет заменено на Liquid-данные корзины
+let cart = [
+  { id:1, name:'Конус винтовой 75 мм L300', variant:'Посадка 30 мм / Левая резьба', price:3771, qty:1, img:'🔩' },
+  { id:2, name:'Вал 30 мм', variant:'Длина 300 мм', price:1947, qty:1, img:'🔧' },
+  { id:3, name:'Подшипник UCP 206', variant:'Для вала 30 мм', price:1473, qty:2, img:'⚙️' },
+];
+
+const related = [
+  { name:'Шкив маховик D240', price:'6 623 ₽', img:'⭕', href:'odrova_shkiv_d240.html' },
+  { name:'Ремень А L1650', price:'402 ₽', img:'〰️', href:'odrova_remen_a1650.html' },
+  { name:'Мини комплект 75 мм', price:'7 599 ₽', img:'⚙️', href:'odrova_mini75.html' },
+  { name:'Клин-рассекатель', price:'424 ₽', img:'🔺', href:'odrova_klin.html' },
+];
+
+let paymentType = 'online'; // online | delivery
+let promoDiscount = 0;
+
+// ── RENDER ──
+function render() {
+  const list = document.getElementById('cartItemsList');
+  const empty = document.getElementById('emptyState');
+  const itemsCol = document.getElementById('itemsCol');
+  const summaryCol = document.getElementById('summaryCol');
+  const relatedSection = document.getElementById('relatedSection');
+
+  if (cart.length === 0) {
+    empty.style.display = 'block';
+    itemsCol.style.display = 'none';
+    summaryCol.style.display = 'none';
+    relatedSection.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  itemsCol.style.display = 'block';
+  summaryCol.style.display = 'block';
+  relatedSection.style.display = 'block';
+
+  // Items
+  list.innerHTML = cart.map((item, i) => `
+    <div class="cart-item" style="animation-delay:${i*0.05}s">
+      <div class="cart-item-img">${item.img}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-variant">${item.variant}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <div class="cart-item-right">
+        <button class="cart-item-remove" onclick="removeItem(${item.id})" title="Удалить">✕</button>
+        <div class="cart-item-price">${(item.price * item.qty).toLocaleString('ru')} ₽</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Summary
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  const totalQty = cart.reduce((s,i) => s + i.qty, 0);
+  const onlineDiscount = Math.round(subtotal * 0.1);
+  const afterOnline = subtotal - onlineDiscount;
+  const delivery = getDeliveryCost();
+  const total = paymentType === 'online'
+    ? afterOnline - promoDiscount + delivery
+    : subtotal - promoDiscount + delivery;
+
+  document.getElementById('summaryCount').textContent = totalQty;
+  document.getElementById('summarySubtotal').textContent = subtotal.toLocaleString('ru') + ' ₽';
+  document.getElementById('itemCount').textContent = `(${totalQty} шт)`;
+  document.getElementById('summaryTotal').textContent = Math.max(0, total).toLocaleString('ru') + ' ₽';
+  document.getElementById('onlinePrice').textContent = (afterOnline + delivery).toLocaleString('ru') + ' ₽';
+  document.getElementById('onlineSave').textContent = `экономия ${onlineDiscount.toLocaleString('ru')} ₽`;
+
+  // Delivery row in summary
+  const delivRow = document.getElementById('deliveryRow');
+  const delivVal = document.getElementById('deliveryVal');
+  if (delivRow) {
+    delivRow.style.display = 'flex';
+    delivVal.textContent = delivery === 0 ? 'Бесплатно' : delivery.toLocaleString('ru') + ' ₽';
+    delivVal.style.color = delivery === 0 ? 'var(--green)' : 'var(--white-pure)';
+  }
+
+  renderDelivery();
+
+  const discRow = document.getElementById('discountRow');
+  const discVal = document.getElementById('discountVal');
+  if (paymentType === 'online') {
+    discRow.style.display = 'flex';
+    discVal.textContent = '−' + onlineDiscount.toLocaleString('ru') + ' ₽';
+  } else {
+    discRow.style.display = 'none';
+  }
+
+  // Promo row
+  const promoRow = document.getElementById('promoRow');
+  if (promoDiscount > 0) {
+    promoRow.style.display = 'flex';
+    document.getElementById('promoDiscount').textContent = '−' + promoDiscount.toLocaleString('ru') + ' ₽';
+  } else {
+    promoRow.style.display = 'none';
+  }
+
+  // Header count
+  const hc = document.getElementById('cartCountHead');
+  if (hc) hc.textContent = totalQty > 0 ? totalQty : '🔥';
+
+  // Related
+  renderRelated();
+}
+
+function renderRelated() {
+  document.getElementById('relatedGrid').innerHTML = related.map(r => `
+    <a href="${r.href}" class="related-card">
+      <div class="related-img">${r.img}</div>
+      <div class="related-body">
+        <div class="related-name">${r.name}</div>
+        <div class="related-price">${r.price}</div>
+        <button class="related-btn" onclick="event.preventDefault();addRelated('${r.name}',parseInt('${r.price}'.replace(/\D/g,'')))">В корзину</button>
+      </div>
+    </a>
+  `).join('');
+}
+
+function addRelated(name, price) {
+  const existing = cart.find(i => i.name === name);
+  if (existing) { existing.qty++; }
+  else { cart.push({ id: Date.now(), name, variant:'', price, qty:1, img:'📦' }); }
+  render();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  render();
+}
+
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  render();
+}
+
+function clearCart() {
+  if (confirm('Очистить корзину?')) { cart = []; render(); }
+}
+
+function setPayment(btn, type) {
+  paymentType = type;
+  document.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function applyPromo() {
+  const code = document.getElementById('promoInput').value.trim().toUpperCase();
+  const msg = document.getElementById('promoMsg');
+  const subtotal = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  if (code === 'DROVA10') {
+    promoDiscount = Math.round(subtotal * 0.05);
+    msg.style.color = 'var(--green)';
+    msg.textContent = '✓ Промокод применён — скидка ещё 5%';
+  } else if (code === '') {
+    msg.textContent = '';
+  } else {
+    msg.style.color = 'var(--red)';
+    msg.textContent = '✕ Промокод не найден';
+    promoDiscount = 0;
+  }
+  render();
+}
+
+function checkout() {
+  const total = document.getElementById('summaryTotal').textContent;
+  const type = paymentType === 'online' ? 'Онлайн-оплата (−10%)' : 'Оплата при получении';
+  alert(`Переход к оформлению заказа\n\nСпособ оплаты: ${type}\nСумма: ${total}\n\nВ реальном InSales здесь будет форма оформления заказа.`);
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
