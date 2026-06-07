@@ -154,7 +154,31 @@ nav {
 .nav-inner {
   display: flex; align-items: center; justify-content: space-between;
 }
-.nav-links { display: flex; }
+.burger-btn {
+  display: none;
+  background: none; border: none;
+  color: var(--white-pure); font-size: 24px;
+  cursor: pointer; padding: 4px 8px; margin-left: auto;
+}
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--graphite-mid);
+  border-top: 1px solid var(--border);
+}
+.burger-menu a {
+  color: var(--steel-light); text-decoration: none;
+  padding: 14px 24px; font-size: 15px; font-weight: 700;
+  border-bottom: 1px solid var(--border);
+  transition: color .2s, background .2s;
+}
+.burger-menu a:hover { color: var(--yellow); background: var(--graphite-light); }
+.burger-menu.open { display: flex; }
+@media(max-width: 900px) {
+  .burger-btn { display: block; }
+  .nav-links { display: none !important; }
+  .nav-pick { display: none; }
+}
 .nav-links a {
   color: var(--steel-light); text-decoration: none;
   padding: 14px 18px; font-size: 13.5px; font-weight: 700;
@@ -713,8 +737,9 @@ footer {
   .kb-grid { grid-template-columns: 1fr 1fr; }
   .contacts-inner { flex-direction: column; }
   .footer-top { grid-template-columns: 1fr; }
-  .nav-links { overflow-x: auto; }
-  .nav-links a { padding: 12px 14px; font-size: 12px; }
+  .nav-links { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a { padding: 12px 14px; font-size: 12px; flex-shrink: 0; }
   .mobile-nav { display: block; }
   body { padding-bottom: 60px; }
 }
@@ -765,7 +790,7 @@ footer {
   <nav>
     <div class="container">
       <div class="nav-inner">
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
           <a href="odrova_catalog.html">Каталог</a>
           <a href="odrova_konus60.html">Конусы</a>
           <a href="odrova_mini75.html">Комплекты</a>
@@ -773,14 +798,22 @@ footer {
           <a href="odrova_shkiv_d240.html">Комплектующие</a>
           <a href="odrova_buravodrov220.html">Готовые станки</a>
           <a href="odrova_calculator.html">Калькуляторы</a>
-          <a href="odrova_main.html#about">О производстве</a>
-          <a href="odrova_calculator.html" style="color:var(--yellow)">⚙️ Калькуляторы</a>
         </div>
         <a href="odrova_calculator.html" class="nav-pick">▶ Подобрать дровокол</a>
+        <button class="burger-btn" id="burgerBtn" onclick="toggleBurger()" aria-label="Меню">☰</button>
       </div>
     </div>
   </nav>
-</header>
+  <div class="burger-menu" id="burgerMenu">
+    <a href="odrova_catalog.html">📋 Каталог</a>
+    <a href="odrova_konus60.html">🔩 Конусы</a>
+    <a href="odrova_mini75.html">⚙️ Комплекты</a>
+    <a href="odrova_vom35.html">🚜 ВОМ / трактор</a>
+    <a href="odrova_shkiv_d240.html">🔧 Комплектующие</a>
+    <a href="odrova_buravodrov220.html">⚡ Готовые станки</a>
+    <a href="odrova_calculator.html">🧮 Калькуляторы</a>
+    <a href="odrova_calculator.html">▶ Подобрать дровокол</a>
+  </div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1410,6 +1443,8 @@ window.addEventListener('scroll', () => {
     header.style.boxShadow = 'none';
   }
 });
+function toggleBurger() {
+  document.getElementById('burgerMenu').classList.toggle('open');
+}
 </script>
-</body>
 </html>
