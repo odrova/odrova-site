@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Каталог — ODROVA.RU</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#111; --graphite:#1e1e1e; --graphite-mid:#252525;
+  --graphite-light:#333; --steel:#6b7280; --steel-light:#9ca3af;
+  --white:#f5f5f5; --white-pure:#fff; --yellow:#f5c800;
+  --yellow-dark:#d4a800; --green:#22c55e; --red:#ef4444;
+  --border:rgba(255,255,255,0.07); --border-light:rgba(0,0,0,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black);}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:100;}
+.header-top{background:var(--graphite);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.header-bottom{background:var(--black);border-top:1px solid var(--border);padding:6px 20px;display:flex;align-items:center;gap:8px;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--white-pure);letter-spacing:.08em;text-decoration:none;}
+.logo-o{color:var(--white-pure)!important;font-size:18px;vertical-align:baseline;}
+.logo-drova{color:var(--yellow)!important;}
+.logo span{color:var(--yellow);}
+.header-since{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap;margin-left:12px;}
+.header-since span{color:var(--yellow);}
+.cart-btn{display:flex;align-items:center;gap:6px;background:var(--graphite-light);border:1px solid var(--border);color:var(--white-pure);padding:6px 12px;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif;}
+.cart-count{background:var(--yellow);color:var(--black);width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.header-calc-btn{display:flex;align-items:center;gap:5px;background:var(--graphite-light);color:var(--steel-light);border:1px solid var(--border);text-decoration:none;padding:5px 10px;font-size:11px;font-weight:700;font-family:'Fira Mono',monospace;white-space:nowrap;letter-spacing:.05em;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));transition:color .2s,border-color .2s;}
+.header-calc-btn:hover{color:var(--yellow);border-color:var(--yellow);}
+.header-phone-btn{display:flex;align-items:center;gap:8px;background:var(--yellow);color:var(--black);text-decoration:none;padding:6px 16px 6px 12px;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));transition:background .15s;margin-left:auto;}
+.header-phone-btn:hover{background:var(--yellow-dark);}
+.header-phone-num{font-size:14px;font-weight:700;white-space:nowrap;}
+
+/* HERO */
+.catalog-hero{
+  background:var(--black);padding:40px 24px 36px;
+  border-bottom:3px solid var(--yellow);
+  position:relative;overflow:hidden;
+}
+.catalog-hero::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(255,255,255,.02) 40px),
+    repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(255,255,255,.02) 40px);
+}
+.catalog-hero-inner{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.catalog-eyebrow{font-family:'Fira Mono',monospace;font-size:11px;color:var(--yellow);letter-spacing:.2em;margin-bottom:10px;}
+.catalog-title{font-family:'Russo One',sans-serif;font-size:clamp(28px,4vw,48px);color:var(--white-pure);line-height:1.05;margin-bottom:10px;}
+.catalog-sub{font-size:15px;color:var(--steel);max-width:560px;}
+.catalog-stats{display:flex;gap:24px;margin-top:20px;flex-wrap:wrap;}
+.catalog-stat{display:flex;flex-direction:column;}
+.catalog-stat-val{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--yellow);line-height:1;}
+.catalog-stat-label{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.08em;}
+
+/* SEARCH */
+.catalog-search-wrap{background:var(--graphite-mid);border-bottom:1px solid var(--border);padding:12px 24px;}
+.catalog-search-inner{max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center;}
+.catalog-search{
+  flex:1;display:flex;align-items:center;
+  background:var(--graphite-light);border:1.5px solid rgba(255,255,255,.1);
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.catalog-search input{
+  flex:1;background:transparent;border:none;outline:none;
+  color:var(--white-pure);padding:10px 16px;font-size:14px;font-family:'PT Sans',sans-serif;
+}
+.catalog-search input::placeholder{color:var(--steel);}
+.catalog-search-btn{background:var(--yellow);border:none;padding:10px 16px;cursor:pointer;font-size:14px;color:var(--black);}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.filter-btn{
+  padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;
+  background:transparent;color:var(--steel-light);
+  border:1px solid rgba(255,255,255,.1);font-family:'Fira Mono',monospace;
+  transition:all .2s;white-space:nowrap;
+}
+.filter-btn:hover,.filter-btn.active{background:var(--yellow);color:var(--black);border-color:var(--yellow);}
+
+/* MAIN LAYOUT */
+.catalog-wrap{max-width:1200px;margin:0 auto;padding:32px 24px;display:grid;grid-template-columns:220px 1fr;gap:32px;align-items:start;}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:80px;}
+.sidebar-section{margin-bottom:24px;}
+.sidebar-title{font-family:'Fira Mono',monospace;font-size:10px;color:var(--yellow);letter-spacing:.15em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border-light);}
+.sidebar-links{display:flex;flex-direction:column;gap:4px;}
+.sidebar-link{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 10px;font-size:13px;color:var(--steel);
+  text-decoration:none;border-radius:0;transition:all .15s;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
+}
+.sidebar-link:hover{background:var(--graphite);color:var(--white-pure);}
+.sidebar-link.active{background:var(--black);color:var(--yellow);}
+.sidebar-count{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);background:var(--graphite);padding:2px 6px;}
+
+/* SECTIONS */
+.catalog-section{margin-bottom:48px;scroll-margin-top:80px;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid rgba(0,0,0,.08);}
+.section-head-left{}
+.section-eyebrow{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.12em;margin-bottom:4px;}
+.section-title{font-family:'Russo One',sans-serif;font-size:22px;color:var(--black);}
+.section-count{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);}
+
+/* PRODUCT GRID */
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.prod-card{
+  background:var(--white-pure);border:1.5px solid var(--border-light);
+  display:flex;flex-direction:column;
+  clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+  transition:border-color .2s,transform .2s,box-shadow .2s;text-decoration:none;color:inherit;
+}
+.prod-card:hover{border-color:var(--yellow);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+.prod-card-img{
+  aspect-ratio:1;background:var(--graphite);
+  display:flex;align-items:center;justify-content:center;
+  font-size:48px;position:relative;overflow:hidden;
+}
+.prod-card-img img{width:100%;height:100%;object-fit:cover;}
+.prod-card-badge{
+  position:absolute;top:10px;left:0;
+  background:var(--yellow);color:var(--black);
+  font-family:'Fira Mono',monospace;font-size:9px;font-weight:700;
+  padding:4px 10px;letter-spacing:.08em;
+}
+.prod-card-badge.order{background:var(--graphite-light);color:var(--steel-light);border-left:3px solid var(--yellow);}
+.prod-card-body{padding:14px;flex:1;display:flex;flex-direction:column;}
+.prod-card-specs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
+.prod-card-spec{font-family:'Fira Mono',monospace;font-size:9px;color:var(--steel);border:1px solid var(--border-light);padding:2px 6px;}
+.prod-card-name{font-size:13px;font-weight:700;color:var(--black);margin-bottom:4px;line-height:1.3;flex:1;}
+.prod-card-desc{font-size:11px;color:var(--steel);line-height:1.5;margin-bottom:10px;}
+.prod-card-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;}
+.prod-card-price{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--black);line-height:1;}
+.prod-card-price-online{font-size:10px;color:var(--green);font-weight:700;}
+.prod-card-btn{
+  background:var(--yellow);color:var(--black);border:none;
+  padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'PT Sans',sans-serif;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
+  transition:background .15s;white-space:nowrap;text-decoration:none;display:inline-block;
+}
+.prod-card-btn:hover{background:var(--yellow-dark);}
+.prod-card-btn.order-btn{background:var(--graphite);color:var(--steel-light);}
+
+/* CTA */
+.catalog-cta{
+  background:var(--yellow);padding:32px 24px;margin-bottom:0;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.cta-text h3{font-family:'Russo One',sans-serif;font-size:22px;color:var(--black);margin-bottom:4px;}
+.cta-text p{font-size:14px;color:rgba(0,0,0,.65);max-width:480px;}
+.cta-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.cta-btn{padding:12px 20px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:'PT Sans',sans-serif;text-decoration:none;display:inline-block;}
+.cta-black{background:var(--black);color:var(--white-pure);}
+.cta-tg{background:#229ed9;color:#fff;}
+.cta-max{background:#8b5cf6;color:#fff;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.products-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){
+  .catalog-wrap{grid-template-columns:1fr;}
+  .sidebar{position:static;display:flex;flex-wrap:wrap;gap:16px;}
+  .sidebar-section{flex:1;min-width:140px;}
+  .products-grid{grid-template-columns:repeat(2,1fr);}
+  .catalog-stats{gap:16px;}
+}
+@media(max-width:480px){.products-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-top">
+    <a href="odrova_main.html" class="logo"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></a>
+    <span class="header-since">точим с <span>2014</span> г.</span>
+    <button class="cart-btn" style="margin-left:auto">🛒 <span class="cart-count">🔥</span></button>
+  </div>
+  <div class="header-bottom">
+    <a href="odrova_calculator.html" class="header-calc-btn">⚙️ Калькуляторы</a>
+    <a href="tel:+79220352887" class="header-phone-btn">
+      <span style="font-size:16px">📞</span>
+      <span class="header-phone-num">8 (922) 035-28-87</span>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="catalog-hero">
+  <div class="catalog-hero-inner">
+    <div class="catalog-eyebrow">КАТАЛОГ ПРОДУКЦИИ</div>
+    <h1 class="catalog-title">Винтовые дровоколы<br>и комплектующие</h1>
+    <p class="catalog-sub">Готовые станки, конусы, комплекты для сборки, шкивы, валы, ремни и подшипники. Всё от производителя — Верхняя Пышма, с 2014 года.</p>
+    <div class="catalog-stats">
+      <div class="catalog-stat"><span class="catalog-stat-val">27+</span><span class="catalog-stat-label">ПОЗИЦИЙ В КАТАЛОГЕ</span></div>
+      <div class="catalog-stat"><span class="catalog-stat-val">5</span><span class="catalog-stat-label">ГРУПП ТОВАРОВ</span></div>
+      <div class="catalog-stat"><span class="catalog-stat-val">2014</span><span class="catalog-stat-label">ГОД ОСНОВАНИЯ</span></div>
+      <div class="catalog-stat"><span class="catalog-stat-val">−10%</span><span class="catalog-stat-label">ПРИ ОНЛАЙН ОПЛАТЕ</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="catalog-search-wrap">
+  <div class="catalog-search-inner">
+    <div class="catalog-search">
+      <input type="text" placeholder="Поиск по каталогу..." oninput="filterCards(this.value)">
+      <button class="catalog-search-btn">🔍</button>
+    </div>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="filterSection(this,'all')">Все</button>
+      <button class="filter-btn" onclick="filterSection(this,'stanki')">Станки</button>
+      <button class="filter-btn" onclick="filterSection(this,'konusy')">Конусы</button>
+      <button class="filter-btn" onclick="filterSection(this,'komplekty')">Комплекты</button>
+      <button class="filter-btn" onclick="filterSection(this,'komplektuyushchie')">Комплектующие</button>
+    </div>
+  </div>
+</div>
+
+<div class="catalog-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">ГОТОВЫЕ СТАНКИ</div>
+      <div class="sidebar-links">
+        <a href="#stanki" class="sidebar-link">Все станки <span class="sidebar-count">3</span></a>
+        <a href="odrova_buravodrov220.html" class="sidebar-link">Бураво-Дров 220В</a>
+        <a href="odrova_motokolun.html" class="sidebar-link">МотоКолун</a>
+        <a href="odrova_benzokol.html" class="sidebar-link">Бензокол</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">КОНУСЫ</div>
+      <div class="sidebar-links">
+        <a href="#konusy" class="sidebar-link">Все конусы <span class="sidebar-count">5</span></a>
+        <a href="odrova_konus60.html" class="sidebar-link">60 мм L165</a>
+        <a href="odrova_konus72.html" class="sidebar-link">72 мм L230</a>
+        <a href="odrova_product.html" class="sidebar-link">75 мм L300 ★</a>
+        <a href="odrova_konus75_shpon.html" class="sidebar-link">75 мм шпонка</a>
+        <a href="odrova_konus100.html" class="sidebar-link">100 мм L300</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">КОМПЛЕКТЫ</div>
+      <div class="sidebar-links">
+        <a href="#komplekty" class="sidebar-link">Все комплекты <span class="sidebar-count">10</span></a>
+        <a href="odrova_mini75.html" class="sidebar-link">Мини 75 мм</a>
+        <a href="odrova_mini100.html" class="sidebar-link">Мини 100 мм</a>
+        <a href="odrova_komplekt1.html" class="sidebar-link">Комплект №1</a>
+        <a href="odrova_komplekt2_75.html" class="sidebar-link">Комплект №2 75</a>
+        <a href="odrova_komplekt2.html" class="sidebar-link">Комплект №2 100</a>
+        <a href="odrova_vom35.html" class="sidebar-link">ВОМ 35/75</a>
+        <a href="odrova_vom38_75.html" class="sidebar-link">ВОМ 38/75</a>
+        <a href="odrova_vom38_100.html" class="sidebar-link">ВОМ 38/100</a>
+        <a href="odrova_sila6.html" class="sidebar-link">Сила 6</a>
+        <a href="odrova_sila8.html" class="sidebar-link">Сила 8</a>
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-title">КОМПЛЕКТУЮЩИЕ</div>
+      <div class="sidebar-links">
+        <a href="#komplektuyushchie" class="sidebar-link">Все <span class="sidebar-count">14</span></a>
+        <a href="odrova_porosenok.html" class="sidebar-link">Поросёнок 75</a>
+        <a href="odrova_pu.html" class="sidebar-link">Узел PU</a>
+        <a href="odrova_sila_motobloka.html" class="sidebar-link">Сила мотоблока</a>
+        <a href="odrova_shkiv_d240.html" class="sidebar-link">Шкив D240</a>
+        <a href="odrova_shkiv_d98.html" class="sidebar-link">Шкив D98</a>
+        <a href="odrova_shkiv_neva.html" class="sidebar-link">Шкив Нева</a>
+        <a href="odrova_shkiv_zakaz.html" class="sidebar-link">Шкив под заказ</a>
+        <a href="odrova_val30.html" class="sidebar-link">Вал 30 мм</a>
+        <a href="odrova_val35.html" class="sidebar-link">Вал 35 мм</a>
+        <a href="odrova_val_vom635.html" class="sidebar-link">Вал ВОМ 6×35</a>
+        <a href="odrova_ucp205.html" class="sidebar-link">UCP 205</a>
+        <a href="odrova_ucp206.html" class="sidebar-link">UCP 206</a>
+        <a href="odrova_ucp207.html" class="sidebar-link">UCP 207</a>
+        <a href="odrova_klin.html" class="sidebar-link">Клин-рассекатель</a>
+        <a href="odrova_remen_a1650.html" class="sidebar-link">Ремень А L1650</a>
+        <a href="odrova_remen_pj559.html" class="sidebar-link">Ремень PJ559</a>
+        <a href="odrova_motor380.html" class="sidebar-link">Двигатель 380В</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- СТАНКИ -->
+    <section class="catalog-section" id="stanki" data-cat="stanki">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ГОТОВЫЕ К РАБОТЕ</div>
+          <div class="section-title">Готовые станки</div>
+        </div>
+        <div class="section-count">3 товара</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_buravodrov220.html" class="prod-card">
+          <div class="prod-card-img">⚡<div class="prod-card-badge">ГОТОВЫЙ СТАНОК</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">220В</span><span class="prod-card-spec">2.2 кВт</span><span class="prod-card-spec">конус 60 мм</span><span class="prod-card-spec">35 кг</span></div>
+            <div class="prod-card-name">Дровокол «Бураво-Дров» 220V Компакт</div>
+            <div class="prod-card-desc">Подключил к розетке — работаешь. Для дома, дачи, бани.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">33 550 ₽</div><div class="prod-card-price-online">● онлайн 30 195 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_motokolun.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">ДЛЯ МОТОБЛОКА</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Мотоблок</span><span class="prod-card-spec">от 6 л/с</span><span class="prod-card-spec">конус 100 мм</span></div>
+            <div class="prod-card-name">МотоКолун — дровокол для мотоблока</div>
+            <div class="prod-card-desc">Подключается к мотоблоку Беларус МТЗ и аналогам.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">23 500 ₽</div><div class="prod-card-price-online">● онлайн 21 150 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_benzokol.html" class="prod-card">
+          <div class="prod-card-img">🔥<div class="prod-card-badge">БЕНЗИНОВЫЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Бензин</span><span class="prod-card-spec">7 л/с</span><span class="prod-card-spec">конус 75 мм</span><span class="prod-card-spec">65 кг</span></div>
+            <div class="prod-card-name">Дровокол «Бензокол» 7 лошадок</div>
+            <div class="prod-card-desc">Без электричества. На участок, в лес, для выездной работы.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">43 500 ₽</div><div class="prod-card-price-online">● онлайн 39 150 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- КОНУСЫ -->
+    <section class="catalog-section" id="konusy" data-cat="konusy">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">СТАЛЬ 45 + ТВЧ · 2-ЗАХОДНАЯ РЕЗЬБА</div>
+          <div class="section-title">Конусы</div>
+        </div>
+        <div class="section-count">5 товаров</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_konus60.html" class="prod-card">
+          <div class="prod-card-img">🔩<div class="prod-card-badge">ЛЁГКИЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 60 мм</span><span class="prod-card-spec">L 165 мм</span><span class="prod-card-spec">15°</span><span class="prod-card-spec">посадка 19–35</span></div>
+            <div class="prod-card-name">Конус 60 мм L165</div>
+            <div class="prod-card-desc">Для дачи, бани, небольшого объёма. От 1.5 кВт.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">1 950 ₽</div><div class="prod-card-price-online">● онлайн 1 755 ₽</div></div>
+              <span class="prod-card-btn">Выбрать →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_konus72.html" class="prod-card">
+          <div class="prod-card-img">🔩<div class="prod-card-badge">АКЦИЯ −50%</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 72 мм</span><span class="prod-card-spec">L 230 мм</span><span class="prod-card-spec">17°</span><span class="prod-card-spec">посадка 19–35</span></div>
+            <div class="prod-card-name">Конус 72 мм L230</div>
+            <div class="prod-card-desc">Промежуточный. Берёза и осина до 35 см.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">2 450 ₽</div><div class="prod-card-price-online">● онлайн 2 205 ₽</div></div>
+              <span class="prod-card-btn">Выбрать →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_product.html" class="prod-card">
+          <div class="prod-card-img">🔩<div class="prod-card-badge">ХИТ ПРОДАЖ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 75 мм</span><span class="prod-card-spec">L 300 мм</span><span class="prod-card-spec">17.5°</span><span class="prod-card-spec">посадка 19–45</span></div>
+            <div class="prod-card-name">Конус 75 мм L300 ★</div>
+            <div class="prod-card-desc">Самый популярный. Дом, дача, баня. От 2.2 кВт.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">3 771 ₽</div><div class="prod-card-price-online">● онлайн 3 394 ₽</div></div>
+              <span class="prod-card-btn">Выбрать →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_konus75_shpon.html" class="prod-card">
+          <div class="prod-card-img">🔑<div class="prod-card-badge order">ПОД ЗАКАЗ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 75 мм</span><span class="prod-card-spec">L 300 мм</span><span class="prod-card-spec">Шпоночный паз</span></div>
+            <div class="prod-card-name">Конус 75 мм со шпоночным пазом</div>
+            <div class="prod-card-desc">Для валов со шпонкой. 3–7 дней изготовления.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">4 890 ₽</div><div class="prod-card-price-online">● онлайн 4 401 ₽</div></div>
+              <span class="prod-card-btn order-btn">Заказать →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_konus100.html" class="prod-card">
+          <div class="prod-card-img">🔩<div class="prod-card-badge">МОЩНЫЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 100 мм</span><span class="prod-card-spec">L 300 мм</span><span class="prod-card-spec">23.5°</span><span class="prod-card-spec">посадка 19–55</span></div>
+            <div class="prod-card-name">Конус 100 мм L300</div>
+            <div class="prod-card-desc">Дуб, акация, ВОМ трактора. До 70 см чурбак.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">4 811 ₽</div><div class="prod-card-price-online">● онлайн 4 330 ₽</div></div>
+              <span class="prod-card-btn">Выбрать →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- КОМПЛЕКТЫ -->
+    <section class="catalog-section" id="komplekty" data-cat="komplekty">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ДЛЯ САМОСТОЯТЕЛЬНОЙ СБОРКИ</div>
+          <div class="section-title">Комплекты</div>
+        </div>
+        <div class="section-count">10 товаров</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_mini75.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">АКЦИЯ −26%</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Конус 75 мм</span><span class="prod-card-spec">Вал 30 мм</span><span class="prod-card-spec">UCP-206</span></div>
+            <div class="prod-card-name">Мини комплект 75 мм</div>
+            <div class="prod-card-desc">Конус + вал + подшипники. Шкив и ремни отдельно.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">7 599 ₽</div><div class="prod-card-price-online">● онлайн 6 839 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_mini100.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">АКЦИЯ −30%</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Конус 100 мм</span><span class="prod-card-spec">Вал 35 мм</span><span class="prod-card-spec">UCP-207</span></div>
+            <div class="prod-card-name">Мини комплект 100 мм</div>
+            <div class="prod-card-desc">Мощный вариант. Для 380В, трактора, фермы.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">8 699 ₽</div><div class="prod-card-price-online">● онлайн 7 829 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_komplekt1.html" class="prod-card">
+          <div class="prod-card-img">🏗️<div class="prod-card-badge">КОМПЛЕКТ №1</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Станина</span><span class="prod-card-spec">Маховик D240</span><span class="prod-card-spec">67 кг</span></div>
+            <div class="prod-card-name">Комплект №1 — Станина + маховик</div>
+            <div class="prod-card-desc">Готовая рама с маховиком. Нужен только мотор.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">35 000 ₽</div><div class="prod-card-price-online">● онлайн 31 500 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_komplekt2_75.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">УНИВЕРСАЛ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Мотоблок</span><span class="prod-card-spec">220В</span><span class="prod-card-spec">Бензин</span></div>
+            <div class="prod-card-name">Комплект №2 Универсал 75 мм</div>
+            <div class="prod-card-desc">Три типа привода. Полный набор для сборки.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">13 378 ₽</div><div class="prod-card-price-online">● онлайн 12 040 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_komplekt2.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">МОТОБЛОК</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">Мотоблок</span><span class="prod-card-spec">от 6 л/с</span></div>
+            <div class="prod-card-name">Комплект №2 для мотоблока 100 мм</div>
+            <div class="prod-card-desc">Для МТЗ-Беларус и аналогов. Твёрдая древесина.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">14 068 ₽</div><div class="prod-card-price-online">● онлайн 12 661 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_vom35.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">ВОМ 35 ММ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 6×35</span><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">МТЗ-80/82</span></div>
+            <div class="prod-card-name">ВОМ 35 мм / Конус 75 мм</div>
+            <div class="prod-card-desc">Для МТЗ-80/82, ЮМЗ, ДТ-75.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">14 900 ₽</div><div class="prod-card-price-online">● онлайн 13 410 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_vom38_75.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">ВОМ 38 ММ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 8×38</span><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">МТЗ-1221</span></div>
+            <div class="prod-card-name">ВОМ 38 мм / Конус 75 мм</div>
+            <div class="prod-card-desc">Для МТЗ-1221, ХТЗ-17021, Беларус 920.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">14 900 ₽</div><div class="prod-card-price-online">● онлайн 13 410 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_vom38_100.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">МОЩНЫЙ ВОМ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 8×38</span><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">до 70 см</span></div>
+            <div class="prod-card-name">ВОМ 38 мм / Конус 100 мм</div>
+            <div class="prod-card-desc">Самый мощный. Дуб и акация до 70 см.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">16 900 ₽</div><div class="prod-card-price-online">● онлайн 15 210 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_sila6.html" class="prod-card">
+          <div class="prod-card-img">💪<div class="prod-card-badge">НОВИНКА</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 6×35</span><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Поросёнок</span></div>
+            <div class="prod-card-name">«Сила 6» — ВОМ 6×35 мм</div>
+            <div class="prod-card-desc">Усиленный узел в 2× крепче. Клин в комплекте.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">11 243 ₽</div><div class="prod-card-price-online">● онлайн 10 119 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="odrova_sila8.html" class="prod-card">
+          <div class="prod-card-img">💪<div class="prod-card-badge">НОВИНКА</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 8×38</span><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">Поросёнок</span></div>
+            <div class="prod-card-name">«Сила 8» — ВОМ 8×38 мм</div>
+            <div class="prod-card-desc">Максимальная мощность. Дуб до 60 см.</div>
+            <div class="prod-card-bottom">
+              <div><div class="prod-card-price">12 158 ₽</div><div class="prod-card-price-online">● онлайн 10 942 ₽</div></div>
+              <span class="prod-card-btn">Смотреть →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- КОМПЛЕКТУЮЩИЕ -->
+    <section class="catalog-section" id="komplektuyushchie" data-cat="komplektuyushchie">
+      <div class="section-head">
+        <div class="section-head-left">
+          <div class="section-eyebrow">ШКИВЫ · ВАЛЫ · ПОДШИПНИКИ · РЕМНИ</div>
+          <div class="section-title">Комплектующие</div>
+        </div>
+        <div class="section-count">17 товаров</div>
+      </div>
+      <div class="products-grid">
+
+        <a href="odrova_porosenok.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">УСИЛЕННЫЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Оцинков.</span><span class="prod-card-spec">в 2× крепче</span></div>
+            <div class="prod-card-name">Подшипниковый узел «Поросёнок»</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">11 320 ₽</div><div class="prod-card-price-online">● онлайн 10 188 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_pu.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">КОМПАКТНЫЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Узел PU</span><span class="prod-card-spec">Самосборка</span></div>
+            <div class="prod-card-name">Подшипниковый узел PU</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">6 978 ₽</div><div class="prod-card-price-online">● онлайн 6 280 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_sila_motobloka.html" class="prod-card">
+          <div class="prod-card-img">🚜<div class="prod-card-badge">МОТОБЛОК</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">МТЗ/Беларус</span><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">Поросёнок</span></div>
+            <div class="prod-card-name">«Сила мотоблока» Беларус МТЗ</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">9 651 ₽</div><div class="prod-card-price-online">● онлайн 8 686 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_shkiv_d240.html" class="prod-card">
+          <div class="prod-card-img">⭕<div class="prod-card-badge">МАХОВИК</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">D240 мм</span><span class="prod-card-spec">2 ручья</span><span class="prod-card-spec">Профиль А</span><span class="prod-card-spec">8.8 кг</span></div>
+            <div class="prod-card-name">Шкив маховик D240</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">6 623 ₽</div><div class="prod-card-price-online">● онлайн 5 961 ₽</div></div><span class="prod-card-btn">Выбрать →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_shkiv_d98.html" class="prod-card">
+          <div class="prod-card-img">⭕<div class="prod-card-badge">ВЕДУЩИЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">D98 мм</span><span class="prod-card-spec">2 ручья</span><span class="prod-card-spec">Профиль А</span></div>
+            <div class="prod-card-name">Шкив D98 ведущий</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 952 ₽</div><div class="prod-card-price-online">● онлайн 1 757 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_shkiv_neva.html" class="prod-card">
+          <div class="prod-card-img">⭕<div class="prod-card-badge">ДЛЯ НЕВЫ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">3 ручья</span><span class="prod-card-spec">Нева МБ-1/2</span><span class="prod-card-spec">Профиль А</span></div>
+            <div class="prod-card-name">Шкив для мотоблока Нева</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">2 163 ₽</div><div class="prod-card-price-online">● онлайн 1 947 ₽</div></div><span class="prod-card-btn">Выбрать →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_shkiv_zakaz.html" class="prod-card">
+          <div class="prod-card-img">🔧<div class="prod-card-badge order">ПОД ЗАКАЗ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">50–240 мм</span><span class="prod-card-spec">Любая посадка</span><span class="prod-card-spec">3–7 дней</span></div>
+            <div class="prod-card-name">Шкив под заказ + калькулятор цены</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">от 1 400 ₽</div><div class="prod-card-price-online">● онлайн от 1 260 ₽</div></div><span class="prod-card-btn order-btn">Рассчитать →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_val30.html" class="prod-card">
+          <div class="prod-card-img">🔧<div class="prod-card-badge">ВАЛ 30 ММ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 30 мм</span><span class="prod-card-spec">L 300 мм</span><span class="prod-card-spec">Сталь 45</span></div>
+            <div class="prod-card-name">Вал 30 мм</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 947 ₽</div><div class="prod-card-price-online">● онлайн 1 752 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_val35.html" class="prod-card">
+          <div class="prod-card-img">🔧<div class="prod-card-badge">ВАЛ 35 ММ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Ø 35 мм</span><span class="prod-card-spec">L 300 мм</span><span class="prod-card-spec">Сталь 45</span></div>
+            <div class="prod-card-name">Вал 35 мм</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 947 ₽</div><div class="prod-card-price-online">● онлайн 1 752 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_val_vom635.html" class="prod-card">
+          <div class="prod-card-img">🔧<div class="prod-card-badge">ВОМ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">ВОМ 6×35</span><span class="prod-card-spec">Шлицевой</span><span class="prod-card-spec">МТЗ-80</span></div>
+            <div class="prod-card-name">Вал ВОМ 6×35 шлицевой</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">2 500 ₽</div><div class="prod-card-price-online">● онлайн 2 250 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_ucp206.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 206</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 30 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипник UCP 206</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_ucp207.html" class="prod-card">
+          <div class="prod-card-img">⚙️<div class="prod-card-badge">UCP 207</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Вал 35 мм</span><span class="prod-card-spec">Нужно 2 шт</span></div>
+            <div class="prod-card-name">Подшипник UCP 207</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">1 473 ₽</div><div class="prod-card-price-online">● онлайн 1 326 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_remen_a1650.html" class="prod-card">
+          <div class="prod-card-img">〰️<div class="prod-card-badge">ПРОФИЛЬ А</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">Профиль А</span><span class="prod-card-spec">L 1650 мм</span><span class="prod-card-spec">2–3 шт/станок</span></div>
+            <div class="prod-card-name">Ремень А L1650</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">402 ₽</div><div class="prod-card-price-online">● онлайн 362 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_remen_pj559.html" class="prod-card">
+          <div class="prod-card-img">〰️<div class="prod-card-badge">ПОЛИКЛИНОВОЙ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">PJ559</span><span class="prod-card-spec">8 ручьёв</span><span class="prod-card-spec">Бураво Компакт</span></div>
+            <div class="prod-card-name">Ремень PJ559 8 ручьёв</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">890 ₽</div><div class="prod-card-price-online">● онлайн 801 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_klin.html" class="prod-card">
+          <div class="prod-card-img">🔺<div class="prod-card-badge">РАССЕКАТЕЛЬ</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">75 мм</span><span class="prod-card-spec">100 мм</span><span class="prod-card-spec">Для сучков</span></div>
+            <div class="prod-card-name">Клин-рассекатель</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">424 ₽</div><div class="prod-card-price-online">● онлайн 382 ₽</div></div><span class="prod-card-btn">Купить →</span></div>
+          </div>
+        </a>
+
+        <a href="odrova_motor380.html" class="prod-card">
+          <div class="prod-card-img">⚡<div class="prod-card-badge">380В</div></div>
+          <div class="prod-card-body">
+            <div class="prod-card-specs"><span class="prod-card-spec">380В</span><span class="prod-card-spec">3 кВт</span><span class="prod-card-spec">1450 об/мин</span></div>
+            <div class="prod-card-name">Электродвигатель 380В 3 кВт</div>
+            <div class="prod-card-bottom"><div><div class="prod-card-price">от 8 500 ₽</div><div class="prod-card-price-online">● онлайн от 7 650 ₽</div></div><span class="prod-card-btn">Смотреть →</span></div>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- CTA -->
+<div class="catalog-cta">
+  <div class="cta-text">
+    <h3>Не знаете что выбрать?</h3>
+    <p>Позвоните или напишите — подберём конус, комплект или шкив под ваш двигатель за 5 минут.</p>
+  </div>
+  <div class="cta-btns">
+    <a href="tel:+79220352887" class="cta-btn cta-black">📞 Позвонить</a>
+    <a href="odrova_calculator.html" class="cta-btn cta-black">⚙️ Калькуляторы</a>
+    <button class="cta-btn cta-tg">✈️ Telegram</button>
+    <button class="cta-btn cta-max">💜 MAX</button>
+  </div>
+</div>
+
+<script>
+function filterSection(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.catalog-section').forEach(s => {
+    s.style.display = (cat === 'all' || s.dataset.cat === cat) ? 'block' : 'none';
+  });
+}
+
+function filterCards(query) {
+  const q = query.toLowerCase().trim();
+  document.querySelectorAll('.prod-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = (!q || text.includes(q)) ? 'flex' : 'none';
+  });
+  // Show all sections if searching
+  if (q) {
+    document.querySelectorAll('.catalog-section').forEach(s => s.style.display = 'block');
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  }
+}
+</script>
+</body>
+</html>

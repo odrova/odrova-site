@@ -28,8 +28,21 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 .header {
   background:var(--black); padding:16px 24px;
   display:flex; align-items:center; justify-content:space-between;
-  border-bottom:2px solid var(--yellow);
+  border-bottom:2px solid var(--yellow); gap:24px;
 }
+.header-tag { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; text-align:right; white-space:nowrap; }
+@media(max-width:600px) { .header-tag { display:none; } }
+.header-back-btn {
+  display:flex; align-items:center; gap:6px;
+  background:var(--graphite-light); color:var(--steel-light);
+  border:1px solid var(--border); text-decoration:none;
+  padding:7px 14px; font-size:12px; font-weight:700;
+  font-family:'Fira Mono',monospace; white-space:nowrap;
+  letter-spacing:.05em; cursor:pointer; margin-left:auto;
+  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+  transition:color .2s, border-color .2s;
+}
+.header-back-btn:hover { color:var(--yellow); border-color:var(--yellow); }
 .logo { font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--white-pure); letter-spacing:0.08em; }
 .logo span { color:var(--yellow); }
 .logo-o { color:var(--white-pure) !important; font-size:18px; vertical-align:baseline; }
@@ -42,7 +55,6 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   transition:color .2s; cursor:pointer;
 }
 .header-tagline-link:hover { color:var(--yellow); }
-.header-tag { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); letter-spacing:0.1em; }
 
 /* TABS */
 .tabs-wrap { background:var(--graphite); border-bottom:1px solid var(--border); }
@@ -133,11 +145,12 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   color:var(--steel); letter-spacing:0.15em; margin:24px 0 12px;
   padding-top:24px; border-top:1px solid var(--border);
 }
-.product-matches { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.product-matches { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; align-items:stretch; }
 .prod-match {
   background:var(--graphite-light); border:1px solid var(--border);
   padding:16px; transition:border-color .2s; cursor:pointer;
   clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+  display:flex; flex-direction:column;
 }
 .prod-match:hover { border-color:var(--yellow); }
 .prod-match.recommended { border-color:var(--yellow); background:rgba(245,200,0,0.05); }
@@ -146,8 +159,8 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   color:var(--yellow); margin-bottom:6px;
 }
 .prod-match-name { font-size:13px; font-weight:700; color:var(--white-pure); margin-bottom:4px; }
-.prod-match-size { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); margin-bottom:10px; }
-.prod-match-price { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--yellow); }
+.prod-match-size { font-family:'Fira Mono',monospace; font-size:11px; color:var(--steel); margin-bottom:10px; flex:1; }
+.prod-match-price { font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--yellow); margin-bottom:8px; }
 .prod-match-btn {
   display:block; width:100%; background:var(--yellow); color:var(--black);
   border:none; padding:8px; font-size:12px; font-weight:700;
@@ -320,7 +333,7 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 
 <div class="header">
   <a href="odrova_main.html" class="logo-link"><div class="logo"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></div></a>
-  <a href="odrova_main.html" class="header-tagline-link">Делаем тяжёлую работу лёгкой</a>
+  <a href="odrova_main.html" class="header-back-btn">← На главную</a>
   <div class="header-tag">ИНСТРУМЕНТЫ ДЛЯ СБОРКИ ДРОВОКОЛА</div>
 </div>
 
@@ -335,11 +348,14 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
     <div class="tab" onclick="switchTab(2)">
       <span class="tab-icon">⚙️</span>Обороты шкивов
     </div>
+    <div class="tab" onclick="switchTab(3)">
+      <span class="tab-icon">💰</span>Стоимость шкива
+    </div>
   </div>
 </div>
 
 <!-- ═══ PANEL 1: КОНУС ═══ -->
-<div class="panel" id="panel0" class="panel active">
+<div class="panel active" id="panel0">
 
   <div class="calc-card">
     <div class="calc-title">Подбор конуса по задаче</div>
@@ -581,6 +597,88 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 </div>
 
 
+<!-- ═══ PANEL 4: СТОИМОСТЬ ШКИВА ═══ -->
+<div class="panel" id="panel3">
+  <div class="calc-card">
+    <div class="calc-title">Калькулятор стоимости шкива под заказ</div>
+    <div class="calc-sub">Укажите параметры — получите предварительную цену. Диаметр от 50 до 240 мм. Срок изготовления 3–7 дней.</div>
+
+    <div class="fields" style="margin-bottom:20px">
+      <div class="field">
+        <label>Диаметр шкива, мм</label>
+        <input type="number" id="sh_diam" placeholder="50–240" min="50" max="240" oninput="clampVal(this,50,240);calcShkiv()" onblur="clampVal(this,50,240);calcShkiv()">
+        <div class="field-hint">Наружный диаметр шкива</div>
+      </div>
+      <div class="field">
+        <label>Посадочное отверстие, мм</label>
+        <input type="number" id="sh_bore" placeholder="напр. 30" min="10" max="80" oninput="calcShkiv()">
+        <div class="field-hint">Диаметр вала двигателя</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+      <div class="field">
+        <label style="white-space:nowrap">Кол-во ручьёв</label>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="sel-opt active" onclick="setShOpt(this,'sh_ruchei','1');calcShkiv()" style="padding:6px 12px;font-size:13px">1</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_ruchei','2');calcShkiv()" style="padding:6px 12px;font-size:13px">2</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_ruchei','3');calcShkiv()" style="padding:6px 12px;font-size:13px">3</button>
+        </div>
+      </div>
+      <div class="field">
+        <label style="white-space:nowrap">Профиль ремня</label>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="sel-opt active" onclick="setShOpt(this,'sh_profil','A');calcShkiv()" style="padding:6px 14px;font-size:13px">А</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_profil','B');calcShkiv()" style="padding:6px 14px;font-size:13px">Б</button>
+        </div>
+      </div>
+      <div class="field" style="grid-column:span 2">
+        <label style="white-space:nowrap">Шпоночный паз</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <button class="sel-opt active" onclick="setShOpt(this,'sh_shponka','no');calcShkiv()">Нет</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_shponka','5x5');calcShkiv()">5×5</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_shponka','6x6');calcShkiv()">6×6</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_shponka','7x7');calcShkiv()">7×7</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_shponka','8x7');calcShkiv()">8×7</button>
+          <button class="sel-opt" onclick="setShOpt(this,'sh_shponka','10x8');calcShkiv()">10×8</button>
+        </div>
+      </div>
+      <div class="field">
+        <label style="white-space:nowrap">Ступица</label>
+        <div style="display:flex;gap:8px;margin-top:4px">
+          <button class="sel-opt" onclick="setShOpt(this,'sh_stupica','yes');calcShkiv()">Есть</button>
+          <button class="sel-opt active" onclick="setShOpt(this,'sh_stupica','no');calcShkiv()">Нет</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="result-box" id="shkivResult">
+      <div class="result-label">ПРЕДВАРИТЕЛЬНАЯ СТОИМОСТЬ</div>
+      <div class="result-value" id="shkivVal">—</div>
+      <div class="result-unit" id="shkivOnline"></div>
+      <div class="result-note" id="shkivBreakdown" style="white-space:pre-line;margin-bottom:16px"></div>
+      <div style="font-size:11px;color:var(--steel);margin-bottom:16px">* Финальная цена уточняется при подтверждении заказа. Срок — 3–7 рабочих дней.</div>
+      <button class="calc-btn" onclick="orderShkiv()">Заказать этот шкив →</button>
+    </div>
+  </div>
+
+  <div class="info-boxes">
+    <div class="info-box">
+      <div class="info-box-title">⚙️ Из чего складывается цена</div>
+      <div class="info-box-text">
+        База зависит от диаметра. К ней добавляются: количество ручьёв (+20/40%), профиль Б (+15%), шпоночный паз (+200 ₽), ступица (+400 ₽). Итог × 1.4 — наценка производства.
+      </div>
+    </div>
+    <div class="info-box">
+      <div class="info-box-title">📋 Что указать при заказе</div>
+      <div class="info-box-text">
+        Диаметр шкива · Профиль ремня (А или Б) · Количество ручьёв · Диаметр посадочного отверстия · Размер шпонки · Наличие ступицы. Позвоните или напишите — уточним за 5 минут.
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script>
 // ──── ДАННЫЕ ────
 const belts = [
@@ -661,6 +759,67 @@ const cones = {
 function switchTab(i) {
   document.querySelectorAll('.tab').forEach((t,idx) => t.classList.toggle('active', idx===i));
   document.querySelectorAll('.panel').forEach((p,idx) => p.classList.toggle('active', idx===i));
+}
+
+// ──── ШКИВ КАЛЬКУЛЯТОР ────
+const shOpts = { sh_ruchei:'1', sh_profil:'A', sh_shponka:'no', sh_stupica:'no' };
+
+function setShOpt(btn, key, val) {
+  shOpts[key] = val;
+  btn.closest('div').querySelectorAll('.sel-opt').forEach(b => b.classList.remove('active','shaft-pop','shaft-fire'));
+  btn.classList.add('active');
+  void btn.offsetWidth;
+  btn.classList.add('shaft-pop');
+  setTimeout(() => btn.classList.add('shaft-fire'), 350);
+}
+
+function clampVal(el, min, max) {
+  const v = parseFloat(el.value);
+  if (!isNaN(v)) {
+    if (v < min) el.value = min;
+    if (v > max) el.value = max;
+  }
+}
+
+function calcShkiv() {
+  const diam = parseFloat(document.getElementById('sh_diam').value);
+  const bore = parseFloat(document.getElementById('sh_bore').value);
+  const res = document.getElementById('shkivResult');
+  if (!diam || !bore || diam < 50 || diam > 240 || bore < 10) {
+    res.classList.remove('show'); return;
+  }
+  let base = 0;
+  if (diam <= 100) base = 1400;
+  else if (diam <= 150) base = 1800;
+  else if (diam <= 200) base = 2400;
+  else base = 3200;
+
+  const rucheiFactor = {'1':1,'2':1.2,'3':1.4};
+  const rucheiAdd = Math.round(base * (rucheiFactor[shOpts.sh_ruchei] - 1));
+  const profilAdd = shOpts.sh_profil === 'B' ? Math.round(base * 0.15) : 0;
+  const shponkaAdd = shOpts.sh_shponka === 'no' ? 0 : 200;
+  const stupicaAdd = shOpts.sh_stupica === 'yes' ? 400 : 0;
+  const total = Math.round((base + rucheiAdd + profilAdd + shponkaAdd + stupicaAdd) * 1.4);
+  const online = Math.round(total * 0.9);
+
+  let breakdown = `База (Ø${diam} мм): ${base.toLocaleString('ru')} ₽`;
+  if (rucheiAdd) breakdown += `\n+ ${shOpts.sh_ruchei} ручья: +${rucheiAdd.toLocaleString('ru')} ₽`;
+  if (profilAdd) breakdown += `\n+ Профиль Б: +${profilAdd.toLocaleString('ru')} ₽`;
+  if (shponkaAdd) breakdown += `\n+ Шпонка ${shOpts.sh_shponka}: +${shponkaAdd.toLocaleString('ru')} ₽`;
+  if (stupicaAdd) breakdown += `\n+ Ступица: +${stupicaAdd.toLocaleString('ru')} ₽`;
+  breakdown += `\n× Наценка 1.4`;
+
+  document.getElementById('shkivVal').textContent = total.toLocaleString('ru') + ' ₽';
+  document.getElementById('shkivOnline').textContent = `При онлайн-оплате: ${online.toLocaleString('ru')} ₽ (−10%)`;
+  document.getElementById('shkivBreakdown').textContent = breakdown;
+  res.classList.add('show');
+}
+
+function orderShkiv() {
+  const diam = document.getElementById('sh_diam').value;
+  const bore = document.getElementById('sh_bore').value;
+  const total = document.getElementById('shkivVal').textContent;
+  alert(`Заказ шкива под заказ:\nДиаметр: ${diam} мм\nПосадка: ${bore} мм\nРучьёв: ${shOpts.sh_ruchei}\nПрофиль: ${shOpts.sh_profil}\nШпонка: ${shOpts.sh_shponka==='yes'?'Да':'Нет'}\nСтупица: ${shOpts.sh_stupica==='yes'?'Да':'Нет'}\n\nСтоимость: ${total}\n\nМы свяжемся с вами для подтверждения!`);
 }
 
 // ──── BELT CALC ────
@@ -854,8 +1013,10 @@ function highlightShaft(el) {
 }
 
 // ──── AUTO-LOAD CONE 75 ON START ────
-document.addEventListener('DOMContentLoaded', () => {
-  const card = document.querySelector('.cone-card[onclick*="selectCone(75"]');
+window.addEventListener('load', () => {
+  const cards = document.querySelectorAll('.cone-card');
+  // cone 75 is 3rd card (index 2) - order: 60, 72, 75, 100
+  const card = cards[2];
   if (card) selectCone(75, card, true);
 });
 

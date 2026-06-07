@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комплект дровокола для ВОМ трактора Ø38 мм / 100 мм / Левая — ODROVA.RU</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=Fira+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#111;--graphite:#1e1e1e;--graphite-mid:#252525;--graphite-light:#333;--steel:#6b7280;--steel-light:#9ca3af;--white:#f5f5f5;--white-pure:#fff;--yellow:#f5c800;--yellow-dark:#d4a800;--green:#22c55e;--red:#ef4444;--border:rgba(255,255,255,0.07);--border-light:rgba(0,0,0,0.1);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black);}
+.header{position:sticky;top:0;z-index:100;}
+.header-top{background:var(--graphite);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.header-bottom{background:var(--black);border-top:1px solid var(--border);padding:6px 20px;display:flex;align-items:center;gap:8px;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--white-pure);letter-spacing:.08em;text-decoration:none;}
+.logo-o{color:var(--white-pure)!important;font-size:18px;vertical-align:baseline;}
+.logo-drova{color:var(--yellow)!important;}
+.logo span{color:var(--yellow);}
+.header-since{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap;}
+.header-since span{color:var(--yellow);}
+.cart-btn{display:flex;align-items:center;gap:6px;background:var(--graphite-light);border:1px solid var(--border);color:var(--white-pure);padding:6px 12px;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif;}
+.cart-count{background:var(--yellow);color:var(--black);width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.header-calc-btn{display:flex;align-items:center;gap:5px;background:var(--graphite-light);color:var(--steel-light);border:1px solid var(--border);text-decoration:none;padding:5px 10px;font-size:11px;font-weight:700;font-family:'Fira Mono',monospace;white-space:nowrap;letter-spacing:.05em;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));transition:color .2s,border-color .2s;}
+.header-calc-btn:hover{color:var(--yellow);border-color:var(--yellow);}
+.header-phone-btn{display:flex;align-items:center;gap:8px;background:var(--yellow);color:var(--black);text-decoration:none;padding:6px 16px 6px 12px;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));transition:background .15s;margin-left:auto;}
+.header-phone-btn:hover{background:var(--yellow-dark);}
+.header-phone-icon{font-size:16px;line-height:1;}
+.header-phone-num{font-size:14px;font-weight:700;white-space:nowrap;}
+.breadcrumb{background:var(--graphite-mid);padding:12px 24px;font-family:'PT Sans',sans-serif;font-size:13px;color:var(--steel);}
+.breadcrumb a{color:var(--steel);text-decoration:none;}
+.breadcrumb span{color:var(--steel);margin:0 8px;font-weight:700;}
+.product-wrap{max-width:1200px;margin:0 auto;padding:36px 24px;}
+.product-grid{display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start;}
+.gallery{position:sticky;top:72px;}
+.gallery-main{background:var(--graphite);clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,20px 100%,0 calc(100% - 20px));aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;margin-bottom:12px;}
+.gallery-img{width:100%;height:100%;object-fit:cover;}
+.gallery-badge{position:absolute;top:16px;left:0;background:var(--yellow);color:var(--black);font-family:'Fira Mono',monospace;font-size:11px;font-weight:700;padding:6px 14px;letter-spacing:.1em;}
+.gallery-badge2{position:absolute;top:52px;left:0;background:var(--graphite-light);color:var(--steel-light);font-family:'Fira Mono',monospace;font-size:10px;padding:5px 14px;letter-spacing:.1em;border-left:3px solid var(--green);}
+.gallery-thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.gallery-thumb{aspect-ratio:1;border:1.5px solid var(--border-light);cursor:pointer;overflow:hidden;transition:border-color .2s;clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));}
+.gallery-thumb img{width:100%;height:100%;object-fit:cover;}
+.gallery-thumb.active,.gallery-thumb:hover{border-color:var(--yellow);}
+.buy-panel{display:flex;flex-direction:column;gap:0;}
+.product-eyebrow{font-family:'Fira Mono',monospace;font-size:11px;color:var(--yellow);letter-spacing:.15em;margin-bottom:8px;}
+.product-title{font-family:'Russo One',sans-serif;font-size:clamp(20px,3vw,28px);color:var(--black);line-height:1.1;margin-bottom:10px;}
+.product-article{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);margin-bottom:10px;}
+.quick-specs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border-light);}
+.qs{font-family:'Fira Mono',monospace;font-size:11px;border:1px solid var(--border-light);padding:5px 10px;display:flex;align-items:center;gap:5px;color:var(--steel);}
+.qs b{color:var(--black);font-weight:700;}
+.kit-section{background:#f9f9f9;border:1.5px solid var(--border-light);padding:20px;margin-bottom:20px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));}
+.kit-title{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.12em;margin-bottom:12px;}
+.kit-items{display:flex;flex-direction:column;gap:8px;}
+.kit-item{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;}
+.kit-item-name{color:var(--black);font-weight:700;}
+.kit-item-price{color:var(--steel);font-family:'Fira Mono',monospace;font-size:12px;white-space:nowrap;}
+.kit-item-qty{color:var(--steel);font-size:12px;margin-left:4px;}
+.kit-total{margin-top:12px;padding-top:12px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;font-size:13px;font-weight:700;}
+.price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.price-main{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--black);line-height:1;}
+.price-old{font-size:18px;color:var(--steel);text-decoration:line-through;}
+.price-discount{background:var(--red);color:#fff;font-size:12px;font-weight:700;padding:3px 8px;font-family:'Fira Mono',monospace;}
+.online-discount-badge{display:flex;align-items:center;gap:8px;background:rgba(245,200,0,0.12);border:1.5px solid var(--yellow);padding:10px 14px;font-size:13px;color:var(--black);clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));margin:8px 0 6px;}
+.online-discount-badge b{font-size:15px;font-weight:700;white-space:nowrap;}
+.price-note{font-size:12px;color:var(--steel);margin-bottom:12px;}
+.stock{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--green);margin-bottom:20px;}
+.stock-dot{width:8px;height:8px;background:var(--green);border-radius:50%;}
+.btn-buy{width:100%;padding:18px;font-size:17px;font-weight:700;background:var(--yellow);color:var(--black);border:none;cursor:pointer;font-family:'PT Sans',sans-serif;margin-bottom:10px;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));transition:background .2s,transform .15s;}
+.btn-buy:hover{background:var(--yellow-dark);transform:translateY(-1px);}
+.btn-ask{width:100%;padding:14px;font-size:14px;font-weight:700;background:transparent;color:var(--black);border:1.5px solid rgba(0,0,0,.2);cursor:pointer;font-family:'PT Sans',sans-serif;margin-bottom:20px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:border-color .2s;}
+.btn-ask:hover{border-color:var(--black);}
+.messenger-strip{display:flex;gap:8px;padding-top:16px;border-top:1px solid var(--border-light);margin-bottom:8px;}
+.ms-btn{flex:1;padding:10px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:'PT Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;}
+.ms-sms{background:#2563eb;color:#fff;}.ms-tg{background:#229ed9;color:#fff;}.ms-max{background:#8b5cf6;color:#fff;}
+.ms-hint{font-size:11px;color:var(--steel);text-align:center;font-family:'Fira Mono',monospace;margin-bottom:20px;}
+.delivery-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:16px;background:#f9f9f9;border:1px solid var(--border-light);margin-bottom:20px;}
+.del-item{display:flex;align-items:flex-start;gap:8px;}
+.del-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.del-title{font-size:12px;font-weight:700;color:var(--black);}
+.del-sub{font-size:11px;color:var(--steel);}
+.trust-strip{display:flex;gap:6px;flex-wrap:wrap;}
+.trust-item{flex:1;min-width:80px;padding:10px 8px;text-align:center;background:var(--graphite);border:1px solid var(--border);}
+.trust-icon{font-size:20px;display:block;margin-bottom:4px;}
+.trust-text{font-size:10px;color:var(--steel-light);font-family:'Fira Mono',monospace;letter-spacing:.05em;line-height:1.4;}
+.tabs-section{margin-top:48px;}
+.tabs-nav-wrap{position:relative;border-bottom:2px solid rgba(0,0,0,.1);}
+.tabs-nav{display:flex;overflow-x:auto;scrollbar-width:none;}
+.tabs-nav::-webkit-scrollbar{display:none;}
+.tab-btn{padding:14px 20px;font-size:14px;font-weight:700;background:transparent;border:none;cursor:pointer;font-family:'PT Sans',sans-serif;color:var(--steel);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s;white-space:nowrap;flex-shrink:0;}
+.tab-btn.active{color:var(--black);border-bottom-color:var(--yellow);}
+.tab-content{display:none;padding:28px 0;}
+.tab-content.active{display:block;}
+.specs-table{width:100%;border-collapse:collapse;}
+.specs-table tr{border-bottom:1px solid var(--border-light);}
+.specs-table td{padding:12px 16px;font-size:14px;}
+.specs-table td:first-child{font-family:'Fira Mono',monospace;font-size:11px;color:var(--steel);letter-spacing:.08em;width:45%;background:#f9f9f9;}
+.specs-table td:last-child{font-weight:700;}
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.fit-yes{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);padding:20px;}
+.fit-no{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);padding:20px;}
+.fit-title{font-size:13px;font-weight:700;margin-bottom:10px;}
+.fit-yes .fit-title{color:var(--green);}
+.fit-no .fit-title{color:var(--red);}
+.fit-list{list-style:none;}
+.fit-list li{font-size:13px;color:#444;line-height:1.6;padding:3px 0 3px 14px;position:relative;}
+.fit-list li::before{content:'—';position:absolute;left:0;color:var(--steel);}
+.desc-body{font-size:15px;line-height:1.75;color:#333;}
+.desc-body h3{font-family:'Russo One',sans-serif;font-size:16px;color:var(--black);margin:20px 0 8px;}
+.desc-body p{margin-bottom:12px;}
+.desc-highlight{background:var(--graphite);color:var(--white-pure);padding:20px 24px;margin:20px 0;border-left:4px solid var(--yellow);font-style:italic;font-size:15px;line-height:1.6;}
+.related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.related-card{border:1.5px solid var(--border-light);background:#fff;transition:border-color .2s,transform .2s;cursor:pointer;}
+.related-card:hover{border-color:var(--yellow);transform:translateY(-2px);}
+.related-img{aspect-ratio:1;background:var(--graphite);display:flex;align-items:center;justify-content:center;font-size:36px;overflow:hidden;}
+.related-img img{width:100%;height:100%;object-fit:cover;}
+.related-body{padding:12px;}
+.related-name{font-size:13px;font-weight:700;margin-bottom:4px;color:var(--black);line-height:1.3;}
+.related-price{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--black);}
+.related-btn{width:100%;padding:8px;background:var(--yellow);color:var(--black);border:none;font-size:12px;font-weight:700;cursor:pointer;font-family:'PT Sans',sans-serif;margin-top:8px;}
+.contact-cta{background:var(--graphite);padding:28px;margin-top:32px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));}
+.contact-cta-text h3{font-family:'Russo One',sans-serif;font-size:17px;color:var(--white-pure);margin-bottom:6px;}
+.contact-cta-text p{font-size:13px;color:var(--steel);line-height:1.5;}
+.contact-cta-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+.cta-btn{padding:13px 8px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:'PT Sans',sans-serif;text-align:center;}
+.cta-call{background:var(--yellow);color:var(--black);}.cta-max{background:#8b5cf6;color:#fff;}.cta-tg{background:#229ed9;color:#fff;}.cta-sms{background:#2563eb;color:#fff;}
+@media(min-width:700px){.contact-cta-btns{grid-template-columns:repeat(4,1fr);width:auto;}}
+.mobile-buy{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--graphite);border-top:2px solid var(--yellow);padding:12px 16px;z-index:200;gap:10px;align-items:center;}
+.mobile-buy-price{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--white-pure);line-height:1;}
+.mobile-buy-sub{font-size:10px;color:var(--steel);font-family:'Fira Mono',monospace;}
+.mobile-buy-btn{flex:1;padding:14px;background:var(--yellow);color:var(--black);border:none;font-size:15px;font-weight:700;cursor:pointer;font-family:'PT Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+@media(max-width:900px){.product-grid{grid-template-columns:1fr;}.gallery{position:static;}.fit-grid{grid-template-columns:1fr;}.related-grid{grid-template-columns:1fr 1fr;}.mobile-buy{display:flex;}body{padding-bottom:72px;}.delivery-strip{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="header-top">
+    <a href="odrova_main.html" class="logo"><span class="logo-o">o</span><span class="logo-drova">DROVA</span><span>.RU</span></a>
+    <span class="header-since" style="margin-left:12px">точим с <span>2014</span> г.</span>
+    <button class="cart-btn" style="margin-left:auto">🛒 <span class="cart-count" id="cartCount">🔥</span></button>
+  </div>
+  <div class="header-bottom">
+    <a href="odrova_calculator.html" class="header-calc-btn">⚙️ Калькуляторы</a>
+    <a href="tel:+79220352887" class="header-phone-btn">
+      <span class="header-phone-icon">📞</span>
+      <span class="header-phone-num">8 (922) 035-28-87</span>
+    </a>
+  </div>
+</header>
+<div class="breadcrumb">
+  <a href="odrova_main.html">Главная</a><span>›</span>
+  <a href="#">Комплекты</a><span>›</span>
+  ВОМ 38 мм / 100 мм
+</div>
+<div class="product-wrap">
+  <div class="product-grid">
+    <div class="gallery">
+      <div class="gallery-main">
+        <img class="gallery-img" id="mainImg" src="https://static.insales-cdn.com/images/products/1/1/248587265/drovokol-dlya-traktora-vot.jpg" alt="Комплект дровокола для ВОМ трактора Ø38 мм / 100 мм / Левая">
+        <div class="gallery-badge">ДЛЯ ВОМ ТРАКТОРА</div>
+        <div class="gallery-badge2">КОНУС 100 ММ / МОЩНЫЙ</div>
+      </div>
+      <div class="gallery-thumbs">
+        <div class="gallery-thumb active" onclick="setThumb(this,'https://static.insales-cdn.com/images/products/1/1/248587265/drovokol-dlya-traktora-vot.jpg')"><img src="https://static.insales-cdn.com/images/products/1/1/248587265/drovokol-dlya-traktora-vot.jpg" alt="" onerror="this.style.display='none'"></div></div>
+    </div>
+    <div class="buy-panel">
+      <div>
+        <div class="product-eyebrow">КОМПЛЕКТ ДЛЯ ТРАКТОРА · ODROVA.RU</div>
+        <h1 class="product-title">Комплект дровокола для ВОМ трактора Ø38 мм / 100 мм / Левая</h1>
+        <div class="product-article">Артикул: VOM38-100L</div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+          <span style="color:var(--yellow);font-size:16px">★★★★★</span>
+          <span style="font-size:13px;font-weight:700">4.9</span>
+          <span style="font-size:12px;color:var(--steel)">· отзывы</span>
+        </div>
+      </div>
+      <div class="quick-specs">
+        <div class="qs"><b>ВОМ</b> 38 мм</div>
+        <div class="qs"><b>8 шлицов</b> </div>
+        <div class="qs"><b>Конус</b> 100 мм</div>
+        <div class="qs"><b>Трактор</b> МТЗ/ХТЗ</div>
+        <div class="qs"><b>до 70 см</b> чурбак</div>
+        <div class="qs"><b>Шкив</b> D240</div>
+      </div>
+      <div class="kit-section">
+        <div class="kit-title">СОСТАВ КОМПЛЕКТА</div>
+        <div class="kit-items"><div class="kit-item"><span class="kit-item-name">Конус 100 мм L300</span><span class="kit-item-price">4 811 ₽ <span class="kit-item-qty">×1</span></span></div>
+<div class="kit-item"><span class="kit-item-name">Вал ВОМ 38 мм 8-шлицов</span><span class="kit-item-price">2 500 ₽ <span class="kit-item-qty">×1</span></span></div>
+<div class="kit-item"><span class="kit-item-name">Подшипник UCP-207</span><span class="kit-item-price">1 473 ₽ <span class="kit-item-qty">×2</span></span></div>
+<div class="kit-item"><span class="kit-item-name">Шкив маховик D240 проф.А</span><span class="kit-item-price">6 623 ₽ <span class="kit-item-qty">×1</span></span></div>
+<div class="kit-item"><span class="kit-item-name">Ремень проф.А L1650</span><span class="kit-item-price">402 ₽ <span class="kit-item-qty">×2</span></span></div>
+<div class="kit-item"><span class="kit-item-name">Крепёж и метизы</span><span class="kit-item-price" style="color:var(--green)">В комплекте</span></div>
+</div>
+        <div class="kit-total"><span>Итого по отдельности</span><span>~17 684 ₽</span></div>
+      </div>
+      <div>
+        <div class="price-row">
+          <span class="price-main">16 900 ₽</span>
+          
+        </div>
+        <div class="online-discount-badge">🔥 Онлайн — <b>15 210 ₽</b> &nbsp;−10%</div>
+        <div class="price-note">Обычная цена: 16 900 ₽ · При получении — без доп. скидки</div>
+        <div class="stock"><span class="stock-dot"></span> Уточните наличие · 8 (922) 035-28-87</div>
+      </div>
+      <div>
+        <button class="btn-buy" onclick="handleBuy('ВОМ 38 мм / 100 мм','15 210 ₽')">Купить — 15 210 ₽</button>
+        <button class="btn-ask">Задать вопрос по комплекту →</button>
+      </div>
+      <div>
+        <div class="messenger-strip">
+          <button class="ms-btn ms-sms">💬 SMS</button>
+          <button class="ms-btn ms-tg">✈️ Telegram</button>
+          <button class="ms-btn ms-max">💜 MAX</button>
+        </div>
+        <div class="ms-hint">Пришлите марку трактора — подберём точный комплект</div>
+      </div>
+      <div class="delivery-strip">
+        <div class="del-item"><span class="del-icon">🚚</span><div><div class="del-title">СДЭК / DPD</div><div class="del-sub">По всей России и СНГ</div></div></div>
+        <div class="del-item"><span class="del-icon">🔵</span><div><div class="del-title">Ozon Rocket</div><div class="del-sub">Быстрая доставка</div></div></div>
+        <div class="del-item"><span class="del-icon">📬</span><div><div class="del-title">Почта России</div><div class="del-sub">В любой город</div></div></div>
+        <div class="del-item"><span class="del-icon">💳</span><div><div class="del-title">Оплата при получении</div><div class="del-sub">После осмотра в ТК</div></div></div>
+        <div class="del-item"><span class="del-icon">🛡️</span><div><div class="del-title">Гарантия 12 мес.</div><div class="del-sub">На весь комплект</div></div></div>
+        <div class="del-item"><span class="del-icon">🏭</span><div><div class="del-title">🇷🇺 Урал, Екб</div><div class="del-sub">Верхняя Пышма</div></div></div>
+      </div>
+      <div class="trust-strip">
+        <div class="trust-item"><span class="trust-icon">⚙️</span><span class="trust-text">ЧПУ<br>обработка</span></div>
+        <div class="trust-item"><span class="trust-icon">💎</span><span class="trust-text">Сталь 45<br>+ ТВЧ</span></div>
+        <div class="trust-item"><span class="trust-icon">🔩</span><span class="trust-text">2 захода<br>резьбы</span></div>
+        <div class="trust-item"><span class="trust-icon">📦</span><span class="trust-text">Всё в одной<br>коробке</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="tabs-section">
+    <div class="tabs-nav-wrap">
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab(this,'specs')">Характеристики</button>
+        <button class="tab-btn" onclick="switchTab(this,'fit')">Подойдёт ли мне?</button>
+        <button class="tab-btn" onclick="switchTab(this,'desc')">Описание</button>
+      </div>
+    </div>
+    <div class="tab-content active" id="tab-specs">
+      <table class="specs-table">        <tr><td>Вал ВОМ</td><td>Наружный Ø38 мм, 8 шлицов</td></tr>
+        <tr><td>Конус</td><td>100 мм, двухзаходная, Ст45+ТВЧ</td></tr>
+        <tr><td>Подшипники</td><td>UCP-207 — 2 шт</td></tr>
+        <tr><td>Шкив ведомый</td><td>D240 мм, профиль А</td></tr>
+        <tr><td>Ремни</td><td>Профиль А, L1650 — 2 шт</td></tr>
+        <tr><td>Макс. диаметр чурбака</td><td>до 70 см</td></tr>
+        <tr><td>Совместимость</td><td>МТЗ-1221, ХТЗ-17021, Беларус 920 и др.</td></tr>
+        <tr><td>Гарантия</td><td>12 месяцев</td></tr></table>
+    </div>
+    <div class="tab-content" id="tab-fit">
+      <div class="fit-grid">
+        <div class="fit-yes"><div class="fit-title">✅ Подойдёт, если:</div><ul class="fit-list">            <li>Мощный трактор с ВОМ 38 мм 8 шлицов</li>
+            <li>Дуб, акация, вяз крупные чурбаки до 70 см</li>
+            <li>Коммерческая заготовка дров</li>
+            <li>Хозяйство, ферма, лесозаготовка</li></ul></div>
+        <div class="fit-no"><div class="fit-title">❌ Лучше другой, если:</div><ul class="fit-list">            <li>Нужен конус 75 мм — есть ВОМ 38/75</li>
+            <li>ВОМ 35 мм — нужен комплект VOM35</li>
+            <li>Небольшой объём — избыточно</li></ul></div>
+      </div>
+    </div>
+    <div class="tab-content" id="tab-desc">
+      <div class="desc-body">
+        <p>Самый мощный ВОМ-комплект ODROVA. Конус 100 мм на тракторе с ВОМ 38 мм берёт дуб, акацию и вяз диаметром до 70 см. Для хозяйства, фермы и коммерческой заготовки дров.</p>
+        <div class="desc-highlight">«Делаем тяжёлую работу лёгкой» — каждый комплект проходит сборку и проверку на нашем заводе перед отправкой.</div>
+        <h3>Гарантия</h3>
+        <p>Гарантия 12 месяцев. Консультации по сборке — 8 (922) 035-28-87.</p>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:48px">
+    <div style="font-family:'Russo One',sans-serif;font-size:22px;margin-bottom:20px">Также берут с этим</div>
+    <div class="related-grid"><div class="related-card">
+        <div class="related-img">🚜</div>
+        <div class="related-body"><div class="related-name">ВОМ 38 мм / 75 мм</div><div class="related-price">~14 900 ₽</div>
+        <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button></div></div>
+<div class="related-card">
+        <div class="related-img">🚜</div>
+        <div class="related-body"><div class="related-name">ВОМ 35 мм / 75 мм</div><div class="related-price">~14 900 ₽</div>
+        <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button></div></div>
+<div class="related-card">
+        <div class="related-img">🔩</div>
+        <div class="related-body"><div class="related-name">Конус 100 мм L300</div><div class="related-price">4 811 ₽</div>
+        <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button></div></div>
+<div class="related-card">
+        <div class="related-img">⚙️</div>
+        <div class="related-body"><div class="related-name">МотоКолун</div><div class="related-price">23 500 ₽</div>
+        <button class="related-btn" onclick="updateCart(cartItems+1)">В корзину</button></div></div>
+</div>
+  </div>
+  <div class="contact-cta">
+    <div class="contact-cta-text">
+      <h3>Свяжитесь с ODROVA</h3>
+      <p>Подберём комплект под ваш двигатель, объясним по сборке.</p>
+    </div>
+    <div class="contact-cta-btns">
+      <button class="cta-btn cta-call">Позвонить</button>
+      <button class="cta-btn cta-max">MAX</button>
+      <button class="cta-btn cta-tg">Telegram</button>
+      <button class="cta-btn cta-sms">SMS</button>
+    </div>
+  </div>
+</div>
+<div class="mobile-buy">
+  <div>
+    <div style="display:flex;align-items:baseline;gap:8px">
+      <div class="mobile-buy-price">15 210 ₽</div>
+      <div style="font-size:13px;color:var(--steel);text-decoration:line-through">16 900 ₽</div>
+    </div>
+    <div class="mobile-buy-sub">При онлайн-оплате</div>
+  </div>
+  <button class="mobile-buy-btn" onclick="handleBuy('ВОМ 38 мм / 100 мм','15 210 ₽')">Купить</button>
+</div>
+<script>
+let cartItems=0;
+function updateCart(n){cartItems=n;const el=document.getElementById('cartCount');if(el)el.textContent=cartItems===0?'🔥':cartItems;}
+function handleBuy(title,price){updateCart(cartItems+1);alert('Добавлено в корзину:\n'+title+' — '+price);}
+function switchTab(btn,id){document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));btn.classList.add('active');document.getElementById('tab-'+id).classList.add('active');}
+function setThumb(el,src){document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.getElementById('mainImg').src=src;}
+</script>
+</body>
+</html>
