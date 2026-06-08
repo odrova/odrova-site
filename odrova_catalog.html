@@ -57,7 +57,9 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
 
 /* SEARCH */
 .catalog-search-wrap{background:var(--graphite-mid);border-bottom:1px solid var(--border);padding:12px 24px;}
-.catalog-search-inner{max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center;}
+.catalog-search-inner{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+.catalog-search-row{display:flex;gap:10px;align-items:center;max-width:480px;}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
 .catalog-search{
   flex:1;display:flex;align-items:center;
   background:var(--graphite-light);border:1.5px solid rgba(255,255,255,.1);
@@ -69,7 +71,6 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
 }
 .catalog-search input::placeholder{color:var(--steel);}
 .catalog-search-btn{background:var(--yellow);border:none;padding:10px 16px;cursor:pointer;font-size:14px;color:var(--black);}
-.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
 .filter-btn{
   padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;
   background:transparent;color:var(--steel-light);
@@ -165,6 +166,10 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
   .sidebar-section{flex:1;min-width:140px;}
   .products-grid{grid-template-columns:repeat(2,1fr);}
   .catalog-stats{gap:16px;}
+  .catalog-search-inner{flex-direction:column;align-items:stretch;gap:12px;}
+  .catalog-search{width:100%;}
+  .filter-btns{flex-wrap:wrap;gap:8px;}
+  .filter-btn{flex-shrink:0;padding:8px 14px;border-radius:20px;font-size:12px;}
 }
 @media(max-width:480px){.products-grid{grid-template-columns:1fr;}}
 </style>
@@ -204,9 +209,11 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
 <!-- SEARCH -->
 <div class="catalog-search-wrap">
   <div class="catalog-search-inner">
-    <div class="catalog-search">
-      <input type="text" placeholder="Поиск по каталогу..." oninput="filterCards(this.value)">
-      <button class="catalog-search-btn">🔍</button>
+    <div class="catalog-search-row">
+      <div class="catalog-search">
+        <input type="text" placeholder="Поиск по каталогу..." oninput="filterCards(this.value)">
+        <button class="catalog-search-btn">🔍</button>
+      </div>
     </div>
     <div class="filter-btns">
       <button class="filter-btn active" onclick="filterSection(this,'all')">Все</button>
