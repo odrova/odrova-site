@@ -1035,6 +1035,23 @@ tabsWrap && tabsWrap.style.setProperty('--fade','1');
   nav.addEventListener('touchstart', () => { triggered = true; }, {once:true});
   nav.addEventListener('mousedown', () => { triggered = true; }, {once:true});
 })();
+
+// Автовыбор посадки из URL (?posadka=25)
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const posadka = params.get('posadka');
+  if (!posadka) return;
+  const buttons = document.querySelectorAll('.shaft-btn');
+  for (const btn of buttons) {
+    const num = btn.textContent.replace(/\D/g, '');
+    if (num === posadka) {
+      btn.click();
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      break;
+    }
+  }
+})();
+
 </script>
 </body>
 </html>

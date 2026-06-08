@@ -1001,7 +1001,7 @@ function updateBuyBtn(name, price, shaft) {
   btn.textContent = `Купить / Ø${cones[currentCone].diameter} мм / L${cones[currentCone].length} мм / посадка ${shaft} мм / ${price}`;
   btn.style.opacity = '1';
   btn.style.cursor = 'pointer';
-  btn.onclick = function() { window.location.href = cones[currentCone].url; };
+  btn.onclick = function() { window.location.href = cones[currentCone].url + '?posadka=' + shaft; };
   // shake first, then fire
   btn.classList.remove('shake','fire','ready');
   void btn.offsetWidth;
