@@ -363,6 +363,7 @@ nav {
   position: relative; overflow: hidden; cursor: pointer;
   transition: border-color .2s, transform .2s, box-shadow .2s;
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  display: block; text-decoration: none; color: inherit;
 }
 .scenario-card:hover {
   border-color: var(--yellow);
@@ -926,30 +927,30 @@ footer {
       <p class="section-sub">Выберите сценарий — покажем подходящие дровоколы, конусы и комплекты.</p>
     </div>
     <div class="scenario-grid">
-      <div class="scenario-card">
+      <a href="odrova_buravodrov220.html" class="scenario-card">
         <div class="scenario-icon">⚡</div>
         <div class="scenario-title">220В</div>
         <div class="scenario-text">Для дома, бани и дачи. Готовые электрические дровоколы и комплекты под бытовой двигатель.</div>
-        <a href="odrova_buravodrov220.html" class="scenario-link">Смотреть 220В</a>
-      </div>
-      <div class="scenario-card">
+        <span class="scenario-link">Смотреть 220В</span>
+      </a>
+      <a href="odrova_benzokol.html" class="scenario-card">
         <div class="scenario-icon">🔥</div>
         <div class="scenario-title">Бензиновый</div>
         <div class="scenario-text">Для большого объёма и работы там, где нет электричества. Подходит для участка и фермы.</div>
-        <a href="odrova_benzokol.html" class="scenario-link">Смотреть бензиновые</a>
-      </div>
-      <div class="scenario-card">
+        <span class="scenario-link">Смотреть бензиновые</span>
+      </a>
+      <a href="odrova_vom35.html" class="scenario-card">
         <div class="scenario-icon">🚜</div>
         <div class="scenario-title">ВОМ / трактор</div>
         <div class="scenario-text">Для МТЗ, мини-трактора и хозяйства. Решения под ВОМ 35 мм, 38 мм и тракторные задачи.</div>
-        <a href="odrova_vom35.html" class="scenario-link">Смотреть ВОМ</a>
-      </div>
-      <div class="scenario-card">
+        <span class="scenario-link">Смотреть ВОМ</span>
+      </a>
+      <a href="odrova_mini75.html" class="scenario-card">
         <div class="scenario-icon">🔧</div>
         <div class="scenario-title">Собрать самому</div>
         <div class="scenario-text">Конусы, валы, шкивы, подшипники, ремни и готовые комплекты для самостоятельной сборки.</div>
-        <a href="odrova_mini75.html" class="scenario-link">Собрать комплект</a>
-      </div>
+        <span class="scenario-link">Собрать комплект</span>
+      </a>
     </div>
   </div>
 </section>
