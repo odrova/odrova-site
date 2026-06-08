@@ -26,7 +26,7 @@ html { overflow-x:hidden; }
 .logo span{color:var(--yellow);}
 .header-since{font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap;}
 .header-since span{color:var(--yellow);}
-.cart-btn{display:flex;align-items:center;gap:6px;background:var(--graphite-light);border:1px solid var(--border);color:var(--white-pure);padding:6px 12px;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif;}
+.cart-btn{display:flex;align-items:center;gap:6px;background:var(--graphite-light);border:1px solid var(--border);color:var(--white-pure);padding:6px 12px;font-size:13px;cursor:pointer;font-family:'PT Sans',sans-serif; text-decoration:none;}
 .cart-count{background:var(--yellow);color:var(--black);width:16px;height:16px;border-radius:50%;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .header-calc-btn{display:flex;align-items:center;gap:5px;background:var(--graphite-light);color:var(--steel-light);border:1px solid var(--border);text-decoration:none;padding:5px 10px;font-size:11px;font-weight:700;font-family:'Fira Mono',monospace;white-space:nowrap;letter-spacing:.05em;clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));transition:color .2s,border-color .2s;}
 .header-calc-btn:hover{color:var(--yellow);border-color:var(--yellow);}
@@ -150,7 +150,7 @@ html { overflow-x:hidden; }
     <div style="display:flex;align-items:baseline;gap:8px;margin-left:12px">
       <span class="header-since">точим с <span>2014</span> г.</span>
     </div>
-    <button class="cart-btn" style="margin-left:auto">🛒 <span class="cart-count" id="cartCount">🔥</span></button>
+    <a href="odrova_cart.html" class="cart-btn" style="margin-left:auto">🛒 <span class="cart-count" id="cartCount">🔥</span></a>
   </div>
   <div class="header-bottom">
     <a href="odrova_calculator.html" class="header-calc-btn">⚙️ Калькуляторы</a>
