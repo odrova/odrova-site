@@ -24,7 +24,9 @@
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black); }
+body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black);  overflow-x:hidden; max-width:100%; }
+html { overflow-x:hidden; }
+* { min-width:0; }
 
 /* ── HEADER ── */
 .header {
@@ -487,7 +489,7 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
 <header class="header">
   <div class="header-top">
     <div style="display:flex;align-items:baseline;gap:8px">
-      <a href="#" class="logo">o<span class="logo-accent">DROVA</span><span>.RU</span></a>
+      <a href="odrova_main.html" class="logo">o<span class="logo-accent">DROVA</span><span>.RU</span></a>
       <span style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.06em;white-space:nowrap">точим с <span style="color:var(--yellow)">2014</span> г.</span>
     </div>
     <button class="cart-btn">🛒 <span class="cart-count" id="cartCount">🔥</span></button>

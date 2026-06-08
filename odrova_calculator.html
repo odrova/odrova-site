@@ -22,7 +22,9 @@
   --border: rgba(255,255,255,0.08);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black); }
+body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--black);  overflow-x:hidden; max-width:100%; }
+html { overflow-x:hidden; }
+* { min-width:0; }
 
 /* HEADER */
 .header {
@@ -326,6 +328,10 @@ body { font-family:'PT Sans',sans-serif; background:var(--white); color:var(--bl
   .fit-grid { grid-template-columns:1fr; }
   .info-boxes { grid-template-columns:1fr; }
   .cone-detail-header { grid-template-columns:1fr; }
+  .tabs { overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { flex:0 0 auto; min-width:110px; padding:14px 12px; font-size:13px; }
+  .tab-icon { font-size:18px; }
 }
 </style>
 </head>
