@@ -1047,7 +1047,7 @@ tabsWrap && tabsWrap.style.setProperty('--fade','1');
 })();
 
 // Автовыбор посадки из URL (?posadka=25)
-(function() {
+window.addEventListener('load', function() {
   const params = new URLSearchParams(window.location.search);
   const posadka = params.get('posadka');
   if (!posadka) return;
@@ -1056,11 +1056,11 @@ tabsWrap && tabsWrap.style.setProperty('--fade','1');
     const num = btn.textContent.replace(/\D/g, '');
     if (num === posadka) {
       btn.click();
-      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function(){ btn.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
       break;
     }
   }
-})();
+});
 </script>
 </body>
 </html>
