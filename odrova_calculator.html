@@ -712,7 +712,7 @@ const pulleys = [
 
 const cones = {
   60: {
-    name:'Конус винтовой 60 мм L165',
+    name:'Конус винтовой 60 мм L165', url:'odrova_konus60.html',
     diameter:60, thread:'2-заходная упорная', length:165,
     shafts:[19,20,22,24,25,28,30,32,34,35],
     shaftNote:'под заказ: правая резьба в любом размере',
@@ -724,7 +724,7 @@ const cones = {
     also:'Вал 30 мм, UCP206, шкив маховик D240'
   },
   75: {
-    name:'Конус винтовой 75 мм L300',
+    name:'Конус винтовой 75 мм L300', url:'odrova_product.html',
     diameter:75, thread:'2-заходная упорная', length:300,
     shafts:[19,20,22,24,25,28,30,32,34,35,38,40,42,45],
     shaftNote:'левая — в наличии; правая — под заказ 3–7 дн.',
@@ -736,7 +736,7 @@ const cones = {
     also:'Вал 30 мм, UCP206, шкив D240, ремень профиль А'
   },
   90: {
-    name:'Конус винтовой 72 мм L230',
+    name:'Конус винтовой 72 мм L230', url:'odrova_konus72.html',
     diameter:72, thread:'2-заходная упорная', length:230,
     shafts:[19,20,22,24,25,28,30,32,34,35],
     shaftNote:'уточнять наличие; правая — под заказ',
@@ -748,7 +748,7 @@ const cones = {
     also:'Вал 30 мм, UCP206, шкив D240'
   },
   100: {
-    name:'Конус винтовой 100 мм L300',
+    name:'Конус винтовой 100 мм L300', url:'odrova_konus100.html',
     diameter:100, thread:'2-заходная упорная', length:300,
     shafts:[19,20,22,24,25,28,30,32,34,35,38,40,42,45,48,50,55],
     shaftNote:'левая — в наличии; правая — под заказ 3–7 дн.',
@@ -826,6 +826,7 @@ function orderShkiv() {
   const bore = document.getElementById('sh_bore').value;
   const total = document.getElementById('shkivVal').textContent;
   alert(`Заказ шкива под заказ:\nДиаметр: ${diam} мм\nПосадка: ${bore} мм\nРучьёв: ${shOpts.sh_ruchei}\nПрофиль: ${shOpts.sh_profil}\nШпонка: ${shOpts.sh_shponka==='yes'?'Да':'Нет'}\nСтупица: ${shOpts.sh_stupica==='yes'?'Да':'Нет'}\n\nСтоимость: ${total}\n\nМы свяжемся с вами для подтверждения!`);
+  window.location.href = 'odrova_shkiv_zakaz.html';
 }
 
 // ──── BELT CALC ────
@@ -1000,6 +1001,7 @@ function updateBuyBtn(name, price, shaft) {
   btn.textContent = `Купить / Ø${cones[currentCone].diameter} мм / L${cones[currentCone].length} мм / посадка ${shaft} мм / ${price}`;
   btn.style.opacity = '1';
   btn.style.cursor = 'pointer';
+  btn.onclick = function() { window.location.href = cones[currentCone].url; };
   // shake first, then fire
   btn.classList.remove('shake','fire','ready');
   void btn.offsetWidth;
