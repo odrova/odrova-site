@@ -218,6 +218,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
     <div class="filter-btns">
       <button class="filter-btn active" onclick="filterSection(this,'all')">Все</button>
       <button class="filter-btn" onclick="filterSection(this,'stanki')">Станки</button>
+      <button class="filter-btn" onclick="filterSection(this,'electro')">⚡ Электрические</button>
       <button class="filter-btn" onclick="filterSection(this,'konusy')">Конусы</button>
       <button class="filter-btn" onclick="filterSection(this,'komplekty')">Комплекты</button>
       <button class="filter-btn" onclick="filterSection(this,'traktor')">На трактор</button>
@@ -360,7 +361,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
       </div>
       <div class="products-grid">
 
-        <a href="odrova_buravodrov220.html" class="prod-card">
+        <a href="odrova_buravodrov220.html" class="prod-card" data-electro="1">
           <div class="prod-card-img">⚡<div class="prod-card-badge">ГОТОВЫЙ СТАНОК</div></div>
           <div class="prod-card-body">
             <div class="prod-card-specs"><span class="prod-card-spec">220В</span><span class="prod-card-spec">2.2 кВт</span><span class="prod-card-spec">конус 60 мм</span><span class="prod-card-spec">35 кг</span></div>
@@ -425,7 +426,7 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
           </div>
         </a>
 
-        <a href="odrova_sdve1.html" class="prod-card">
+        <a href="odrova_sdve1.html" class="prod-card" data-electro="1">
           <div class="prod-card-img">⚡<div class="prod-card-badge">ПРОФЕССИОНАЛЬНЫЙ</div></div>
           <div class="prod-card-body">
             <div class="prod-card-specs"><span class="prod-card-spec">4 кВт</span><span class="prod-card-spec">380В</span><span class="prod-card-spec">маховик 9 кг</span></div>
@@ -987,6 +988,23 @@ body{font-family:'PT Sans',sans-serif;background:var(--white);color:var(--black)
 function filterSection(btn, cat) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
+
+  if (cat === 'electro') {
+    // Показываем только секцию станков и в ней только электрические карточки
+    document.querySelectorAll('.catalog-section').forEach(s => {
+      s.style.display = (s.dataset.cat === 'stanki') ? 'block' : 'none';
+    });
+    const stanki = document.querySelector('.catalog-section[data-cat="stanki"]');
+    if (stanki) {
+      stanki.querySelectorAll('.prod-card').forEach(c => {
+        c.style.display = c.dataset.electro === '1' ? '' : 'none';
+      });
+    }
+    return;
+  }
+
+  // Обычные фильтры — сбрасываем скрытие карточек
+  document.querySelectorAll('.prod-card').forEach(c => { c.style.display = ''; });
   document.querySelectorAll('.catalog-section').forEach(s => {
     s.style.display = (cat === 'all' || s.dataset.cat === cat) ? 'block' : 'none';
   });
@@ -1004,6 +1022,17 @@ function filterCards(query) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   }
 }
+
+// Применить фильтр из якоря URL (#electro)
+window.addEventListener('load', function() {
+  if (window.location.hash === '#electro') {
+    const btn = document.querySelector('.filter-btn[onclick*="electro"]');
+    if (btn) {
+      filterSection(btn, 'electro');
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+});
 </script>
 </body>
 </html>
