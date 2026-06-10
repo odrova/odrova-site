@@ -1,0 +1,337 @@
+/* ============================================================
+   ODROVA — фирменный стиль (добавить в custom.scss)
+   Industrial Marketplace: жёлтый + графит + угловатость
+   ============================================================ */
+
+/* --- Фирменные переменные --- */
+:root {
+  --od-yellow: #f5c800;
+  --od-yellow-dark: #d4a800;
+  --od-black: #111;
+  --od-graphite: #1e1e1e;
+  --od-graphite-mid: #252525;
+  --od-green: #16a34a;
+  --od-steel: #6b7280;
+}
+
+/* --- Подключение фирменных шрифтов --- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap');
+
+/* ============ КНОПКИ ============ */
+.button-buy,
+.button.is-primary,
+button[data-item-add],
+.product-button.is-primary {
+  background: var(--od-yellow) !important;
+  color: var(--od-black) !important;
+  border: none !important;
+  font-family: 'PT Sans', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  /* угловатый срез */
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: background 0.2s, transform 0.2s;
+}
+.button-buy:hover,
+.button.is-primary:hover,
+button[data-item-add]:hover,
+.product-button.is-primary:hover {
+  background: var(--od-yellow-dark) !important;
+  transform: translateY(-1px);
+}
+
+/* ============ КАРТОЧКА ТОВАРА В КАТАЛОГЕ ============ */
+.product-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+.product-card .card-title a,
+.product-card .product-link {
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 700;
+  color: var(--od-black);
+}
+.product-card .card-title a:hover {
+  color: var(--od-yellow-dark);
+}
+
+/* Цена в карточке — фирменный шрифт */
+.product-card-price .price.in-card,
+.product-prices .price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: var(--od-black);
+  letter-spacing: 0.5px;
+}
+
+/* ============ ЗАГОЛОВКИ ============ */
+.page-title,
+h1.title,
+.product-title,
+.collection-title {
+  font-family: 'Russo One', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============ ПЛАШКА «ОНЛАЙН −10%» ============ */
+.od-online-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--od-green);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  margin-top: 6px;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.od-online-badge::before { content: '●'; color: var(--od-green); }
+
+/* ============ ШАПКА / АКЦЕНТЫ ============ */
+.contact-link.tel,
+.top-panel .phone {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* Акцентная полоса под шапкой */
+.header-wrapper {
+  border-bottom: 3px solid var(--od-yellow);
+}
+
+/* ============ ЛОГОТИП ============ */
+.logo-text,
+.logotype {
+  font-family: 'Bebas Neue', sans-serif !important;
+  letter-spacing: 1px;
+}
+
+/* ============ ССЫЛКИ ============ */
+a { transition: color 0.2s; }
+
+/* ============ МОБИЛЬНАЯ АДАПТАЦИЯ ============ */
+@media (max-width: 768px) {
+  .product-card-price .price.in-card { font-size: 1.4rem; }
+}
+
+/* ============ ВЫБОР ПОСАДКИ И РЕЗЬБЫ (перекрытие синего на жёлтый) ============ */
+
+/* Активная кнопка посадки (диаметр) */
+.option-value.is-active.is-diametr {
+  border: 1px solid var(--od-yellow) !important;
+  background: var(--od-yellow) !important;
+  color: var(--od-black) !important;
+  box-shadow: 0 0 0 3px rgba(245, 200, 0, 0.25);
+}
+.option-value.is-active.is-diametr .line-diametr { background: var(--od-yellow) !important; }
+.option-value.is-diametr:hover {
+  border: 1px solid var(--od-yellow) !important;
+  background: #fff !important;
+}
+.option-value.is-diametr:hover .line-diametr { background: var(--od-yellow-dark) !important; }
+
+/* Активная кнопка резьбы (левая/правая) */
+.option-value.is-active.is-span {
+  background: var(--od-yellow) !important;
+  color: var(--od-black) !important;
+}
+
+/* Старая цена и артикул — контрастнее */
+.product-prices .price.old,
+.price-old,
+del .price {
+  color: #9ca3af !important;
+}
+.js-product-sku,
+.product-sku {
+  color: var(--od-graphite) !important;
+  font-weight: 700;
+}
+
+/* ============ ПЛАШКИ-ЛЕЙБЛЫ ТОВАРА ============ */
+/* Обычные текстовые плашки ("Для большого объёма") — в графит */
+.label {
+  background-color: var(--od-graphite) !important;
+  color: #fff !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 11px !important;
+  letter-spacing: 0.5px;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+/* Скидочные бейджи "Акция %" — оставляем красными (уместно) */
+.label.is-discount {
+  background-color: #ef4444 !important;
+}
+/* Бандл-плашки */
+.label.is-bundle,
+.label.is-bundle-discount {
+  background-color: var(--od-yellow) !important;
+  color: var(--od-black) !important;
+}
+
+/* ============ САЙДБАР КАТАЛОГА ============ */
+/* Заголовок "КАТАЛОГ" */
+.sidebar-block-heading {
+  font-family: 'Russo One', sans-serif !important;
+  color: var(--od-black) !important;
+  border-left: 3px solid var(--od-yellow);
+  padding-left: 10px !important;
+  text-transform: uppercase;
+}
+.sidebar-block-heading a { color: var(--od-black) !important; }
+
+/* Ссылки категорий */
+.sidebar-menu-link,
+.sidebar-menu .menu-link {
+  color: var(--od-graphite) !important;
+  transition: color 0.2s, padding-left 0.2s;
+}
+.sidebar-menu-link:hover,
+.sidebar-menu .menu-link:hover {
+  color: var(--od-yellow-dark) !important;
+  padding-left: 4px;
+}
+/* Активная категория */
+.sidebar-menu .menu-item.is-current > .menu-item-controls > .menu-link,
+.sidebar-menu-link.is-current,
+.sidebar-menu .menu-link.active {
+  color: var(--od-yellow-dark) !important;
+  font-weight: 700 !important;
+}
+
+/* Телефон в сайдбаре */
+.sidebar-block a[href^="tel"] {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  color: var(--od-black) !important;
+  letter-spacing: 1px;
+}
+
+/* ============ ХЛЕБНЫЕ КРОШКИ ============ */
+.breadcrumbs a,
+.breadcrumb a {
+  color: var(--od-yellow-dark) !important;
+}
+.breadcrumbs,
+.breadcrumb { color: var(--od-steel) !important; }
+
+/* ============ КОРЗИНА ============ */
+.cart-item .item-title {
+  color: var(--od-black) !important;
+  font-weight: 700;
+}
+.cart-item .item-title:hover { color: var(--od-yellow-dark) !important; }
+.cart-total-price,
+.cart-summary .total {
+  font-family: 'Bebas Neue', sans-serif;
+  color: var(--od-black) !important;
+}
+
+/* ============ ФИРМЕННЫЙ ЛОГОТИП oDROVA (CSS-only) ============ */
+/* Прячем исходный текст ссылки и рисуем свой логотип */
+.logotext a {
+  font-size: 0 !important;           /* спрятать "oDrova.ru" */
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+.logotext a::before {
+  content: "o";
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: #fff;
+  letter-spacing: 0;
+  margin-right: -3px;
+}
+.logotext a::after {
+  content: "DROVA.RU";
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  color: var(--od-yellow);
+  letter-spacing: 3px;
+}
+
+@media (max-width: 768px) {
+  .logotext a::before { font-size: 1.15rem; }
+  .logotext a::after  { font-size: 1.8rem; }
+}
+
+/* ============ ШАПКА НА ВСЮ ШИРИНУ (логотип к краю) ============ */
+.header-wrapper .container,
+.top-panel-wrapper .container {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 32px !important;
+  padding-right: 32px !important;
+}
+
+@media (max-width: 768px) {
+  .header-wrapper .container,
+  .top-panel-wrapper .container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+}
+
+/* ============ ТЁМНАЯ ТЕМА — БАЗА (этап 1) ============ */
+/* Фон всего сайта */
+body.fhg-body {
+  background-color: var(--od-black) !important;
+  color: #e5e5e5 !important;
+}
+.content-wrapper,
+.co-section--content_wrapper,
+.fhg-content {
+  background-color: var(--od-black) !important;
+}
+
+/* Заголовки на тёмном — белые */
+.page-title, h1, h2, h3,
+.product-title, .collection-title,
+.card-title a {
+  color: #fff !important;
+}
+
+/* Текст описаний */
+p, .description, .product-description, li, td, span, label {
+  color: #d1d5db;
+}
+
+/* Карточки товаров — графитовые */
+.product-card {
+  background: var(--od-graphite) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+}
+.product-card .card-title a { color: #fff !important; }
+.product-card .product-card-price .price.in-card { color: #fff !important; }
+
+/* Цена на странице товара */
+.product-prices .price,
+.price.actual { color: #fff !important; }
+
+/* Блоки-аккордеоны (доставка, оплата) */
+.product-accordion,
+.accordion-item,
+.spoiler {
+  background: var(--od-graphite) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Ссылки */
+a { color: var(--od-yellow); }
+a:hover { color: var(--od-yellow-dark); }
+
+/* Поля ввода */
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="number"], textarea, select {
+  background: var(--od-graphite-mid) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  color: #fff !important;
+}
