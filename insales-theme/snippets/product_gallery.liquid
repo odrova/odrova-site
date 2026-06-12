@@ -1,0 +1,96 @@
+<div class="product-gallery">
+  <div class="gallery-main-wrapper">
+    {% assign image_title = product.first_image.title | default: product.title %}
+
+    <a href="{{ product.first_image.original_url }}" class="image-container"  id="gallery"  title="{{ image_title }}" data-gallery-count="1">
+      <img src="{{ product.first_image.medium_url }}" alt="{{ image_title }}" title="{{ image_title }}" class="slide-image" >
+    </a>
+  </div>
+  <!-- Для тыкалок js -->
+  {% if product.images.size > 1 %}
+    <div class="gallery-thumbs-wrapper  hidden-sm">
+      <div class="gallery-thumbs" data-slider="gallery-thumbs">
+        {% if product.images.size > 3 %}
+          <div class="product-slider-controls gallery-controls controls-above-gallery" data-slider-controls>
+            <button class="product-slider-prev" data-slider-prev></button>
+            <button class="product-slider-next" data-slider-next></button>
+          </div>
+        {% endif %}
+
+        {% for image in product.images  %}
+          <div data-slider-slide >
+            {% assign image_title = image.title | default: product.title %}
+            <a class="slide-inner image-container is-square js-copy-src"   href="{{ image.original_url }}" data-gallery-count="{{ forloop.index }}" data-image-large="{{ image.medium_url }}"  title="{{ image_title }}" >
+              <img src="{{ image.medium_url }}" class="slide-image">
+            </a>
+          </div>
+        {% endfor %}
+        {% for video in product.video_links  %}
+         <div data-slider-slide >
+            <a class="slide-inner image-container is-square fancybox slide-video" data-fancybox  href="{{video.url}}" data-gallery-count="{{ forloop.index }}"  title="{{ image_title }}" >
+              {% if video.url contains 'youtu' %}
+              <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
+              {% else %}
+              <span class="od-video-thumb"></span>
+              {% endif %}
+              <i class="fa fa-play"></i>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+<!-- Для планшетов -->
+  {% if product.images.size > 0 %}
+    <div class="gallery-thumbs-wrapper mobile-wrapper hidden shown-sm">
+      <div class="gallery-thumbs" data-slider="gallery-thumbs-mobile">
+        <div class="product-slider-controls gallery-controls" data-slider-controls>
+          <button class="product-slider-prev" data-slider-prev></button>
+          <button class="product-slider-next" data-slider-next></button>
+        </div>
+
+        {% for image in product.images %}
+          <div data-slider-slide >
+            {% assign image_title = image.title | default: product.title %}
+            <a class="slide-inner image-container"
+                data-fancybox="gallery"
+                href="{{ image.original_url }}"
+                title="{{ image_title }}"
+                data-caption="{{ image_title }}"
+                data-slide-number="{{ forloop.index }}"
+            >
+              <img src="{{ image.large_url }}"
+                class="slide-image"
+              >
+            </a>
+          </div>
+        {% endfor %}
+		{% for video in product.video_links  %}
+ <div data-slider-slide >
+	<a class="slide-inner image-container fancybox slide-video"  data-fancybox="gallery"  href="{{video.url}}" data-gallery-count="{{ forloop.index }}"  title="{{ image_title }}" >
+	  {% if video.url contains 'youtu' %}
+	  <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
+	  {% else %}
+	  <span class="od-video-thumb"></span>
+	  {% endif %}
+       <i class="fa fa-play"></i>
+	</a>
+  </div>
+{% endfor %}
+      </div>
+    </div>
+
+  {% else %}
+  <a class="slide-inner image-container is-rectangle hidden shown-sm"  data-fancybox="gallery" href="{{ product.first_image.large_url }}"   title="{{ image_title }}" data-caption="{{ image_title }}" data-slide-number="{{ forloop.index }}">
+    <img src="{{ product.first_image.large_url }}" alt="{{ image_title }}"  class="slide-image">
+  </a>
+  {% endif %}
+  
+  {% comment %} ODROVA 12.06.2026: аккордеон product-card-benefits убран —
+       доставка/оплата/преимущества теперь в блоках od-delivery и od-tiles справа {% endcomment %}
+
+</div>
+
+{% assign image = null %}
+{% assign image_title = null %}

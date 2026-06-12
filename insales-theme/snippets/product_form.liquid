@@ -1,0 +1,156 @@
+<form class="product-form" action="{{ cart_url }}" data-product-id="{{ product.id }}" data-main-form>
+
+  <div class="product-option-selectors option-selectors">
+    {% if product.show_variants? %}
+    <select name="variant_id" data-product-variants style="display: none;">
+      {% for variant in product.variants %}
+      <option value="{{ variant.id }}">{{ variant.title | escape }}</option>
+      {% endfor %}
+    </select>
+    {% else %}
+    <input type="hidden" name="variant_id" value="{{ product.variants.first.id }}">
+    {% endif %}
+  </div>
+
+  <div class="product-sku-wrapper js-product-sku-wrapper">
+    <span class="label-article">{{ messages.label_article }}:</span>
+    <span class="js-product-sku">{{ product.variants.first.sku }}</span>
+  </div>
+
+
+  <div class="product-prices on-page">
+    <div class="old-price js-product-old-price on-page">
+      {% if product.old_price > product.price %}
+      {{ product.old_price | money }}
+      {% endif %}
+    </div>
+    <div class="price js-product-price on-page">{{ product.price | money }}</div>
+  </div>
+
+  {% include 'review_link' %}
+
+
+  <div class="product-control on-page" data-compare="{{ product.id }}">
+    
+	{% if product.id != 279046661 %}
+    <div class="main-controls">
+
+      {% comment %} ODROVA 12.06.2026: счётчик количества убран — количество меняется в корзине {% endcomment %}
+
+      <button class="product-button button is-primary  js-variant-shown" type="submit" data-item-add>
+		<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <span class="button-text">
+          Купить
+        </span>
+      </button>
+
+    </div>
+    {% endif %}
+
+<div class="product__area-marketplaces" style="display: flex; width: 100%; justify-content: flex-start;">
+      {% if product.fields.wtb_ozon.value != '' %}
+      <div class="marketplace marketplace_ozon" style="margin-top: 10px; margin-right: 10px;">
+          <a onclick="ym(30038354,'reachGoal','perehod_na_marketpleis'); return true;"
+            href="{{product.fields.wtb_ozon.value}}"
+            class="button add-cart-counter__btn"
+            target="_blank"
+            style="background-color: #157AF6; color: white;"
+            >OZON</a
+          >
+      </div>
+      {% endif %}
+      {% if product.fields.wtb_ym.value != '' %}
+      <div class="marketplace marketplace_ym" style="margin-top: 10px; margin-right: 10px;">
+          <a onclick="ym(30038354,'reachGoal','perehod_na_marketpleis'); return true;"
+            href="{{product.fields.wtb_ym.value}}"
+            class="button  add-cart-counter__btn"
+            target="_blank"
+            style="background-color: #fff500; color: black;"
+            >Яндекс.Маркет</a
+          >
+      </div>
+      {% endif %}
+      {% if product.fields.wtb_wb.value != '' %}
+      <div class="marketplace marketplace_wb" style="margin-top: 10px;">
+          <a onclick="ym(30038354,'reachGoal','perehod_na_marketpleis'); return true;"
+            href="{{product.fields.wtb_wb.value}}"
+            class="button add-cart-counter__btn"
+            target="_blank"
+            style="background: linear-gradient(to right,#cb11ab 0,#481173 100%) no-repeat; color: white;"
+            >Wildberries</a
+          >
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="notice is-info js-variant-hidden" style="display: none;">
+      {{ messages.product_not_available }}
+    </div>
+
+    <button class="product-button button is-secondary js-variant-preorder"
+            type="button" style="display: none;"
+            >
+
+      <span class="button-text">
+        {{ messages.button_preorder }}
+      </span>
+    </button>
+
+    <div class="second_buttons-wrapper">
+      {% if account.quick_checkout.enabled %}
+      {% include 'fast-checkout' %}
+      {% endif %}
+      {% comment %} ODROVA 12.06.2026: кнопка «В избранное» убрана с карточки
+           (иконка избранного в шапке и js-favorites-card в product.liquid не тронуты) {% endcomment %}
+    </div>
+
+    {% unless settings.product_compare_hide %}
+    {% unless product.is_bundle %}
+    <div class="compare-control">
+      <button class="compare-link js-compare-add " data-compare-add="{{ product.id }}">
+
+        <span class="link-text">
+          {{ messages.button_add_comparison }}
+        </span>
+      </button>
+
+      <button class="compare-link js-compare-delete hide" data-compare-delete="{{ product.id }}">
+
+        <span class="link-text">
+          {{ messages.button_remove_comparison }}
+        </span>
+      </button>
+    </div>
+    {% endunless %}
+    {% endunless %}
+
+  </div>
+  
+  {% if product.collections.size > 1 %}
+  
+  <style>
+    .product-collections span {
+    	color:gray;
+    }
+    .product-collections {
+    	font-size:12px;
+      	line-height:18px;
+    }
+    .product-collections a {
+    	text-decoration:none;
+      	color:black;
+      margin-left: 5px;
+    }
+    .product-collections {
+    	margin-bottom:10px;
+    }
+  </style>	
+  
+    <div class="product-collections">
+      <span>Категории:</span>
+      {% for collection in product.collections %}<a href="{{ collection.url }}">{{ collection.title }}</a>{% unless forloop.last %},{% endunless %}{% endfor %}
+    </div>
+  
+  {% endif %}
+
+</form>

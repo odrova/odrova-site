@@ -1,0 +1,326 @@
+{% comment %} ============================================================
+  ODROVA — карточка товара под прототип odrova.ru (v1, светлая)
+  Механика demo-smart сохранена: product_labels, product_gallery,
+  product_form, Products.setConfig + шаблоны опций — без изменений.
+  Новое: обёртка .od-product-page (светлая зона), кикер, теги из
+  метаполя od-tags, плашка «онлайн −10%», мессенджеры, блок доставки,
+  плитки преимуществ, заголовок «Обычно берут вместе».
+============================================================ {% endcomment %}
+
+<div class="od-product-page">
+
+{%- comment -%} Крошки рендерим сами (page_header на товаре отключён в layout) {%- endcomment -%}
+{% include "breadcrumb", home_title: 'Главная' %}
+
+<div class="row custom-padding od-product">
+
+  {%- comment -%} ===== ЛЕВАЯ КОЛОНКА: фото + плашки ===== {%- endcomment -%}
+  <div class="product-gallery-wrapper od-product__gallery cell-6 cell-6-md cell-12-sm">
+    {% include "product_labels", product: product %}
+    {% include "product_gallery" %}
+  </div>
+
+  {%- comment -%} ===== ПРАВАЯ КОЛОНКА ===== {%- endcomment -%}
+  <div class="od-product__info cell-6 cell-6-md cell-12-sm">
+
+    {%- comment -%} Кикер: категория · ODROVA.RU {%- endcomment -%}
+    <div class="od-kicker">
+      {%- if product.collections.first -%}
+        {{ product.collections.first.title }} · ODROVA.RU
+      {%- else -%}
+        ODROVA.RU
+      {%- endif -%}
+    </div>
+
+    <h1 class="od-product__title">{{ product.title }}</h1>
+
+    {%- comment -%}
+      Теги-характеристики из метаполя товара «od-tags».
+      Формат значения: ⌀ 75 мм; L 300 мм; 2 захода; 17.5° угол; Ст45 + ТВЧ; 24–28 HRC; 4.9 кг; от 2.2 кВт
+      У комплектующих — свои теги, у станков — свои. Нет метаполя — блок не выводится.
+    {%- endcomment -%}
+    {% if product.fields.od-tags.value != blank %}
+    <div class="od-spec-tags">
+      {% assign od_tags = product.fields.od-tags.value | split: ';' %}
+      {% for t in od_tags %}<span class="od-spec-tag">{{ t | strip }}</span>{% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="product-introtext on-page editor">
+      {{ product.short_description | editable }}
+    </div>
+
+    {%- comment -%} ЦЕНА + ВАРИАНТЫ + КНОПКА — родной сниппет, не трогаем {%- endcomment -%}
+    {% include "product_form" %}
+
+    {%- comment -%} Строка наличия: JS поставит её под ценой и обновит текст по варианту {%- endcomment -%}
+    <div class="od-availability js-od-availability">В наличии</div>
+
+    {%- comment -%} Плашка «онлайн −10%»: сумму подставит JS ниже {%- endcomment -%}
+    <div class="od-online-badge">
+      🔥 При онлайн-оплате — <b class="js-od-online-price"></b> (ещё −10%)
+      <span class="od-online-badge__note">При получении — без скидки</span>
+    </div>
+
+    {%- comment -%} Вопрос + мессенджеры {%- endcomment -%}
+    <div class="od-ask">
+      <a class="od-ask__link" href="#contact">Не уверены, что подойдёт? Спросить →</a>
+      <div class="od-messengers">
+        {%- comment -%} TODO: подставить реальные ссылки {%- endcomment -%}
+        <a class="od-msg od-msg--sms" href="sms:+79220352887">SMS</a>
+        <a class="od-msg od-msg--tg" href="https://t.me/odrova_ru" target="_blank" rel="noopener">Telegram</a>
+        <a class="od-msg od-msg--max" href="#" target="_blank" rel="noopener">MAX</a>
+      </div>
+      <div class="od-ask__hint">Пришлите фото вала — подберём посадку за 5 минут</div>
+    </div>
+
+    {%- comment -%} Скидочные блоки темы (если настроены) {%- endcomment -%}
+    {% if block_lists.cart-blocks.blocks.size > 0 %}
+    <div class="discount-container cell-12">
+      <div class="discount-container-content row">
+        {% for block in block_lists.cart-blocks.blocks limit:3 %}
+        <div class="discount-card cell-4">
+          <span class="result-percent">-&nbsp;{{ block.discount-field }}%</span>
+          <div class="discount-info-image"><i class="fa fa-info-circle"></i></div>
+          <span class="discount-info-text">{{ block.description-field }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% include "system_insales_widget-calculate_delivery" %}
+
+    {% if product.is_bundle %}
+      {% include 'bundle_products' %}
+    {% endif %}
+
+    {%- comment -%} Инфо-блок: доставка / оплата / гарантия {%- endcomment -%}
+    <div class="od-delivery">
+      <div class="od-delivery__item"><b>СДЭК / DPD</b><span>По всей России и СНГ</span></div>
+      <div class="od-delivery__item"><b>Ozon Rocket</b><span>Быстрая доставка Ozon</span></div>
+      <div class="od-delivery__item"><b>Почта России</b><span>В любой населённый пункт</span></div>
+      <div class="od-delivery__item"><b>Оплата при получении</b><span>После осмотра в пункте выдачи</span></div>
+      <div class="od-delivery__item"><b>Гарантия 12 мес.</b><span>На весь товар</span></div>
+      <div class="od-delivery__item"><b>Урал, Екб</b><span>Верхняя Пышма</span></div>
+    </div>
+
+    {%- comment -%} 4 тёмные плитки-преимущества {%- endcomment -%}
+    <div class="od-tiles">
+      <div class="od-tile">⚙️<span>ЧПУ обработка</span></div>
+      <div class="od-tile">💎<span>Сталь 45 + ТВЧ</span></div>
+      <div class="od-tile">🔩<span>2 захода резьбы</span></div>
+      <div class="od-tile">📦<span>Отправка сегодня</span></div>
+    </div>
+
+  </div>{%- comment -%} /.od-product__info {%- endcomment -%}
+
+</div>{%- comment -%} /.od-product {%- endcomment -%}
+
+
+{%- comment -%} ===== СКРИПТЫ ТЕМЫ: конфиг опций — БЕЗ ИЗМЕНЕНИЙ ===== {%- endcomment -%}
+<script>
+  $(()=>{
+    Products.setConfig({
+      options: {
+        'Направление резьбы стандартная': 'option-span',
+        'Диаметр вала (посадочное отверстие)': 'option-diametr',
+        'Внутренний Ø посадочного отверстия или размер вашего вала Выберите здесь':'option-diametr',
+        'Посадочное отверстие в ведущем (маленьком) шкиву , или Ø вашего вала, Выберите здесь':'option-diametr',
+        'Диаметр конуса Ø мм': 'option-diametr'
+      }
+    });
+  })
+</script>
+
+<script type="text/template" data-template-id="option-diametr">
+  <div class="<%= classes.option %> is-diametr">
+    <label class="<%= classes.label %>"><%= title %></label>
+    <div class="<%= classes.values %>">
+      <% _.forEach(values, function (value){ %>
+        <button class="<%= value.classes.all %> is-diametr"
+          <%= value.controls %>
+          <%= value.state %>
+        ><span class="line-diametr"></span>
+          <span class="diametr-text"><%= value.title %></span>
+  </button>
+      <% }) %>
+  </div>
+  </div>
+</script>
+
+<script type="text/template" data-template-id="option-span">
+  <div class="<%= classes.option %> is-span">
+    <label class="<%= classes.label %>"><%= title %></label>
+    <div class="<%= classes.values %>">
+      <% _.forEach(values, function (value){ %>
+        <button class="<%= value.classes.all %> is-span           <% if ( value.title == 'Левая' ) { %>left<% } else { %> right <% } %>
+"
+          <%= value.controls %>
+          <%= value.state %>
+        >
+          <%= value.title %>
+  </button>
+      <% }) %>
+  </div>
+  </div>
+</script>
+
+{%- comment -%}
+  Новый JS ODROVA: цена в кнопке «Купить — Х ₽» и сумма в плашке «онлайн −10%».
+  Без привязки к событиям темы: MutationObserver следит за блоком цены,
+  поэтому работает при любой смене варианта.
+{%- endcomment -%}
+<script>
+  $(function () {
+    try {
+      var $price = $('.od-product .js-product-price').first();
+      if (!$price.length) $price = $('.od-product .product-prices .price').first();
+      var $btn = $('.od-product button[data-item-add]').first();
+
+      function parsePrice(text) {
+        var n = (text || '').replace(/[^\d.,]/g, '').replace(/\s/g, '').replace(',', '.');
+        return parseFloat(n) || 0;
+      }
+      function fmt(n) {
+        return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u202F') + '\u00A0₽';
+      }
+      // пишем текст ТОЛЬКО если он изменился — иначе наблюдатель будит сам себя
+      function setText($el, val) {
+        if ($el.length && $el.text() !== val) $el.text(val);
+      }
+
+      function syncAll() {
+        try {
+          var p = parsePrice($price.text());
+          if (!p) return;
+          // цена в кнопке «Купить — Х ₽» — онлайн-цена (−10%), как в прототипе
+          if ($btn.length) {
+            var $t = $btn.find('.js-od-btn-price');
+            if (!$t.length) $t = $('<span class="js-od-btn-price"></span>').appendTo($btn.find('.button-text').length ? $btn.find('.button-text') : $btn);
+            setText($t, ' — ' + fmt(p * 0.9));
+          }
+          // сумма в плашке «онлайн −10%»
+          setText($('.js-od-online-price'), fmt(p * 0.9));
+          // липкая панель: цена и онлайн-цена
+          setText($('.js-od-sticky-price'), fmt(p));
+          setText($('.js-od-sticky-online'), 'онлайн ' + fmt(p * 0.9));
+          // статус наличия: «Под Заказ» в названии варианта или кнопка предзаказа темы
+          var vTitle = $('.od-product select[data-product-variants] option:selected').text() || '';
+          var preorderShown = /под\s*заказ/i.test(vTitle) || $('.od-product .js-variant-preorder').is(':visible');
+          // текст отправки по времени Екатеринбурга (UTC+5), сб/вс — выходные
+          function odShipText() {
+            var now = new Date();
+            var ekb = new Date(now.getTime() + now.getTimezoneOffset() * 60000 + 5 * 3600000);
+            var day = ekb.getDay(); // 0 вс ... 6 сб
+            if (day === 0 || day === 6) return 'отправка в понедельник';
+            if (ekb.getHours() < 16) return 'отправка сегодня до 16:00';
+            return (day === 5) ? 'отправка в понедельник' : 'отправка завтра';
+          }
+          var $av = $('.js-od-availability');
+          if (preorderShown) {
+            setText($av, 'Под заказ · изготовим за 3–7 дней');
+            $av.addClass('is-preorder');
+          } else {
+            setText($av, 'В наличии · ' + odShipText());
+            $av.removeClass('is-preorder');
+          }
+          // красный бейдж «−X%»
+          var oldP = parsePrice($('.od-product .js-product-old-price').first().text());
+          if (oldP > p) {
+            var $b = $('.js-od-sale-badge');
+            if (!$b.length) $b = $('<span class="js-od-sale-badge od-sale-badge"></span>').insertAfter($price);
+            setText($b, '−' + Math.round((1 - p / oldP) * 100) + '%');
+          } else {
+            $('.js-od-sale-badge').remove();
+          }
+        } catch (e) { /* не роняем скрипты темы */ }
+      }
+
+      if ($price.length) {
+        // плашка «онлайн −10%» — над строкой с кнопкой «Купить» (.main-controls)
+        var $buyRow = $btn.closest('.main-controls');
+        if (!$buyRow.length) $buyRow = $btn.parent();
+        $('.od-online-badge').insertBefore($buyRow);
+
+        // строка наличия — сразу под рядом цены
+        var $prices = $price.closest('.product-prices');
+        if ($prices.length) $('.js-od-availability').insertAfter($prices);
+
+        // липкая мобильная панель покупки
+        var $bar = $('<div class="od-sticky-buy">' +
+          '<div class="od-sticky-buy__prices"><b class="js-od-sticky-price"></b>' +
+          '<span class="js-od-sticky-online"></span></div>' +
+          '<button type="button" class="od-sticky-buy__btn">Купить</button></div>').appendTo('body');
+        $bar.find('.od-sticky-buy__btn').on('click', function () {
+          if ($btn.is(':visible')) { $btn.trigger('click'); }
+          else { $('html,body').animate({ scrollTop: $('.od-product').offset().top }, 300); }
+        });
+
+        syncAll();
+        // наблюдаем за обёрткой цен; setText с проверкой исключает зацикливание
+        var target = $price.closest('.product-prices').get(0) || $price.get(0);
+        new MutationObserver(syncAll).observe(target, { childList: true, subtree: true, characterData: true });
+        // статус наличия зависит от выбранного варианта — следим за переключателем кнопок темы
+        var $preorder = $('.od-product .js-variant-preorder').first();
+        if ($preorder.length) {
+          new MutationObserver(syncAll).observe($preorder.get(0), { attributes: true, attributeFilter: ['style'] });
+        }
+        // цена у вариантов может совпадать — ловим смену варианта по селекту и артикулу
+        $(document).on('change', '.od-product select[data-product-variants]', function () { setTimeout(syncAll, 50); });
+        var $sku = $('.od-product .js-product-sku').first();
+        if ($sku.length) {
+          new MutationObserver(syncAll).observe($sku.get(0), { childList: true, subtree: true, characterData: true });
+        }
+      }
+    } catch (e) { /* не роняем скрипты темы */ }
+  });
+</script>
+
+<div style="display:none;" class="js-favorites-card">
+  <div class="product-card-wrapper in-collection cell-4 cell-4-md cell-12-xs cell-12-mc">
+    {% include 'product_card' %}
+  </div>
+</div>
+
+{%- comment -%} ===== ТАБЫ + ПЛАВАЮЩАЯ КАРТОЧКА — логика темы без изменений ===== {%- endcomment -%}
+{% if product.fields.floating-card.value != blank %}
+<div class="row ">
+  <div class="cell-9  custom-padding cell-12-xs cell-12-mc ">
+    {% include "product_tabs_for_ticket_507479" %}
+  </div>
+  <div style="margin-top: 76px;" class="cell-3 hidden-xs js-pin-floatproduct-container  custom-padding">
+    {% include "floating-product" %}
+  </div>
+</div>
+{% else %}
+  {% include "product_tabs_for_ticket_507479" %}
+{% endif %}
+
+{%- comment -%} «Обычно берут вместе» = сопутствующие товары {%- endcomment -%}
+{% include "product_slider", slider_products: product.related_products, slider_class: 'related-products', slider_heading: 'Обычно берут вместе' %}
+
+{% include "product_slider", slider_products: product.similar_products, slider_class: 'similar-products', slider_heading: messages.similar_products %}
+
+<script type="text/javascript">
+  $( document ).ready(function() {
+    $('.review-manager_reply').each(function() {
+      var text = $( this ).text();
+      var link; var link_text;
+      if (text.includes('http')) {
+        if (text.includes('youtu')) {
+          var utID = text.split('/').pop();
+          link = '<iframe src="//www.youtube.com/embed/'+utID+'" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>'
+          link_text = text.split('https://')[0]+link
+          $( this ).html(link_text);
+        } else {
+          link = '<a href="http://'+text.split('://').pop().trim()+'">'+text.split('://').pop().trim()+'</a>'
+          link_text = text.split('://')[0].replace("http", "").replace("https", "")+link;
+          $( this ).html(link_text);
+        }
+      }
+    });
+  });
+</script>
+
+</div>{%- comment -%} /.od-product-page {%- endcomment -%}

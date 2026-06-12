@@ -1,0 +1,56 @@
+<header class="header">
+  <div class="row flex-center-sm flex-middle">
+
+    <div class="logotype-wrapper cell-2 cell-7-md cell-12-sm hidden-sm ">
+<div class="logotext">
+        <a href="/" class="od-logo">
+          <span class="od-logo-o">o</span><span class="od-logo-drova">DROVA</span><span class="od-logo-ru">.RU</span>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="header-block header-search cell-5 hidden-sm about">
+      {{ account.title }}
+    </div>
+
+    <div class="header-block js-contacts-header cell-3 hidden-md">
+      <div class="phone text-center text-center-sm">
+        {% case settings.phone %}
+          {% when 'from_settings' %}
+              <a href="tel:{{ account.phone | strip_html }}" class="contact-link tel"> {{ account.phone | strip_html | editable }}</a>
+          {% when 'edited_block' %}
+            <span class="editor">
+              {{ blocks.phone.content | editable }}
+            </span>
+        {% endcase %}
+        
+        {% comment %} ODROVA 11.06.2026: Envybox удалён. Временно — прямой звонок (tel:).
+             Для возврата штатной модалки темы: href="#callbackwidget", класс callback-toggler
+             и раскомментировать скрипт внизу. {% endcomment %}
+        <a class="od-callback-btn product-button button is-primary" style="display: block; margin: 0 auto; margin-top: .5rem; padding: .5rem;" href="tel:+79220352887">Заказать звонок</a>
+      </div>
+    </div>
+{% comment %}
+    <div class="header-block cell-2 hidden-md">
+      <a class="red-btn" href="/new_order">Оформить заказ</a>
+    </div>
+{% endcomment %}
+  </div>
+</header>
+
+<script>
+  $(function() {
+    $('.od-callback-btn').on('click', function() {
+      ym(30038354, 'reachGoal', 'zakazat-zvonok');
+    });
+  });
+  {% comment %}
+  // штатная модалка темы — включить при отказе от tel:
+  // $('.callback-toggler').on('click', function(e) {
+  //   e.preventDefault();
+  //   ym(30038354, 'reachGoal', 'zakazat-zvonok');
+  //   $.fancybox.open({ src: '#callback', type: 'inline', touch: false });
+  // });
+  {% endcomment %}
+</script>

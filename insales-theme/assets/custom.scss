@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap');
+
 /* ============================================================
    ODROVA — фирменный стиль (добавить в custom.scss)
    Industrial Marketplace: жёлтый + графит + угловатость
@@ -14,8 +16,7 @@
   --od-steel: #6b7280;
 }
 
-/* --- Подключение фирменных шрифтов --- */
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&family=PT+Sans:wght@400;700&family=Fira+Mono:wght@400;500&display=swap');
+/* --- Фирменные шрифты подключены @import'ом в ПЕРВОЙ строке файла (иначе браузер игнорирует) --- */
 
 /* ============ КНОПКИ ============ */
 .button-buy,
@@ -120,27 +121,9 @@ a { transition: color 0.2s; }
   .product-card-price .price.in-card { font-size: 1.4rem; }
 }
 
-/* ============ ВЫБОР ПОСАДКИ И РЕЗЬБЫ (перекрытие синего на жёлтый) ============ */
-
-/* Активная кнопка посадки (диаметр) */
-.option-value.is-active.is-diametr {
-  border: 1px solid var(--od-yellow) !important;
-  background: var(--od-yellow) !important;
-  color: var(--od-black) !important;
-  box-shadow: 0 0 0 3px rgba(245, 200, 0, 0.25);
-}
-.option-value.is-active.is-diametr .line-diametr { background: var(--od-yellow) !important; }
-.option-value.is-diametr:hover {
-  border: 1px solid var(--od-yellow) !important;
-  background: #fff !important;
-}
-.option-value.is-diametr:hover .line-diametr { background: var(--od-yellow-dark) !important; }
-
-/* Активная кнопка резьбы (левая/правая) */
-.option-value.is-active.is-span {
-  background: var(--od-yellow) !important;
-  color: var(--od-black) !important;
-}
+/* ============ ВЫБОР ПОСАДКИ И РЕЗЬБЫ ============ */
+/* (старые жёлтые состояния удалены — новые правила в блоке
+   «КАРТОЧКА ТОВАРА — СВЕТЛАЯ ЗОНА» в конце файла) */
 
 /* Старая цена и артикул — контрастнее */
 .product-prices .price.old,
@@ -334,4 +317,840 @@ input[type="number"], textarea, select {
   background: var(--od-graphite-mid) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
   color: #fff !important;
+}
+
+/* ============ ТЁМНАЯ ТЕМА — ЭТАП 2 (контраст текста, фон картинок) ============ */
+/* Описание товара — светлее, читаемо */
+.product-description,
+.product-description *,
+.description,
+.description *,
+.product-text,
+.tab-content,
+.tab-content * {
+  color: #d1d5db !important;
+}
+.product-description strong,
+.product-description b,
+.description strong,
+.description b { color: #fff !important; }
+
+/* Заголовки внутри описания */
+.product-description h1, .product-description h2, .product-description h3,
+.product-description h4, .description h3, .description h4 {
+  color: #fff !important;
+}
+
+/* Артикул */
+.js-product-sku, .product-sku, .product-article,
+.label-article, [class*="article"] {
+  color: #e5e5e5 !important;
+}
+
+/* Фото товара — убрать белую подложку */
+.product-image, .product-gallery,
+.product-card-image, .preview-image,
+.gallery-image, .image-wrapper {
+  background: transparent !important;
+}
+/* В карточках каталога фото на белом — оставим белый только под фото если нужно,
+   но контейнер карточки графитовый */
+.product-card .product-card-image,
+.product-card .preview {
+  background: #fff !important;  /* фото товаров часто на белом фоне — оставляем */
+}
+
+/* Списки преимуществ */
+.product-description ul li,
+.description ul li { color: #d1d5db !important; }
+
+/* Спойлеры/аккордеоны — текст внутри */
+.spoiler-body, .accordion-body, .spoiler-content {
+  color: #d1d5db !important;
+}
+
+/* ============ ТЁМНАЯ ТЕМА — убрать белые полосы по краям ============ */
+html {
+  background-color: var(--od-black) !important;
+}
+body, body.fhg-body {
+  background-color: var(--od-black) !important;
+}
+/* Все обёртки контента — тёмные */
+.wrapper, .page-wrapper, .site-wrapper,
+.content-wrapper, .main-wrapper,
+#wrapper, #page, .page,
+.row, .container {
+  background-color: transparent !important;
+}
+/* Если есть отдельный фон-контейнер страницы */
+.fhg-content, .co-section--content_wrapper,
+[class*="wrapper"] {
+  background-color: transparent !important;
+}
+
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  ODROVA — КАРТОЧКА ТОВАРА (product) — СВЕТЛАЯ ЗОНА        ║
+   ║  Консолидированный блок v1–v4. Скоуп: .od-product-page    ║
+   ╚══════════════════════════════════════════════════════════╝ */
+
+/* --- Светлый «лист» страницы товара поверх тёмной темы --- */
+.od-product-page {
+  background: #f4f4f4;
+  color: var(--od-black);
+  padding: 8px 0 32px;
+
+  p, span, li, td, label, .description, .product-description,
+  .product-description *, .product-text { color: #333 !important; }
+  h1, h2, h3, h4, .product-title { color: var(--od-black) !important; }
+  .product-introtext { color: #555 !important; }
+  input[type="text"], input[type="number"], select, textarea {
+    background: #fff !important;
+    color: var(--od-black) !important;
+    border: 1px solid #d5d5d5 !important;
+  }
+}
+
+/* --- Кикер над названием --- */
+.od-product-page .od-kicker {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--od-yellow-dark);
+  margin: 4px 0 6px;
+}
+
+/* --- Теги-характеристики (метаполе od-tags) --- */
+.od-spec-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 14px; }
+.od-spec-tag {
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.72rem;
+  padding: 4px 9px;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #444 !important;
+  white-space: nowrap;
+}
+
+/* --- Цена: .product-prices > .old-price + .price.js-product-price --- */
+.od-product-page .product-prices {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.od-product-page .js-product-price {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 2.7rem !important;
+  font-weight: 400 !important;
+  color: var(--od-black) !important;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.od-product-page .old-price.js-product-old-price {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 1.3rem !important;
+  color: var(--od-steel) !important;
+  text-decoration: line-through;
+  line-height: 1;
+}
+
+/* красный бейдж «−X%» (создаёт JS в product.liquid) */
+.od-sale-badge {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+  padding: 3px 8px;
+  background: #e02424;
+  color: #fff !important;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* --- Артикул --- */
+.od-product-page .product-sku-wrapper { margin: 6px 0; }
+.od-product-page .label-article,
+.od-product-page .js-product-sku {
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--od-steel) !important;
+  font-weight: 400 !important;
+}
+
+/* --- Кнопки вариантов: база — белый прямоугольник --- */
+.option-value.is-diametr,
+.is-span .option-value {
+  background: #fff !important;
+  border: 1px solid #d5d5d5 !important;
+  color: var(--od-black) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: 'PT Sans', sans-serif !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+.option-value.is-diametr {
+  width: auto !important;
+  height: auto !important;
+  min-width: 56px;
+  padding: 8px 12px;
+  margin: 0 6px 6px 0;
+  line-height: 1.2 !important;
+}
+.option-value.is-diametr .line-diametr { display: none !important; }
+.option-value.is-diametr .diametr-text { white-space: nowrap; }
+.option-value.left,
+.option-value.right {
+  padding: 12px 22px !important;
+  margin: 0 8px 6px 0;
+  display: inline-block;
+}
+.option-value.is-diametr:hover,
+.is-span .option-value:hover {
+  border-color: var(--od-yellow) !important;
+  background: #fff !important;
+}
+
+/* выбранное: чёрный + жёлтый текст, как в прототипе */
+.option-value.is-active.is-diametr,
+.is-span .option-value.is-active,
+.option-value.is-active.left,
+.option-value.is-active.right {
+  background: var(--od-black) !important;
+  border-color: var(--od-black) !important;
+  color: var(--od-yellow) !important;
+  box-shadow: none !important;
+}
+.option-value.is-active.is-diametr .diametr-text { color: var(--od-yellow) !important; }
+
+/* подписи к опциям */
+.od-product-page .od-product__info label {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--od-steel) !important;
+}
+
+/* --- Кнопка «Купить — Х ₽» --- */
+.od-product-page .product-button.is-primary {
+  width: 100%;
+  font-size: 1.05rem;
+  padding: 16px 20px;
+}
+.od-product-page .product-button.is-primary .button-text { text-transform: uppercase; }
+
+/* --- «В избранное» — вторичная (перебивает жёлтую .button-buy) --- */
+.od-product-page .add-to-favourites,
+.od-product-page span[data-favorite] {
+  background: #fff !important;
+  border: 1px solid #ccc !important;
+  color: var(--od-black) !important;
+  clip-path: none !important;
+  transform: none !important;
+}
+.od-product-page .add-to-favourites:hover { border-color: var(--od-yellow) !important; }
+.od-product-page .add-to-favourites .fa-heart { color: #e02424; }
+
+/* --- Сравнение --- */
+.od-product-page .compare-link,
+.od-product-page .compare-link .link-text {
+  color: var(--od-steel) !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 0.8rem;
+}
+.od-product-page .compare-link:hover .link-text { color: var(--od-black) !important; }
+
+/* --- Плашка «онлайн −10%» --- */
+.od-product-page .od-online-badge {
+  display: block !important;
+  width: 100% !important;
+  box-sizing: border-box;
+  background: #fff7d6;
+  border: 1px solid var(--od-yellow);
+  padding: 10px 14px;
+  margin: 12px 0 !important;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--od-black) !important;
+}
+.od-product-page .od-online-badge b { color: var(--od-black) !important; }
+.od-product-page .od-online-badge__note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--od-steel) !important;
+  margin-top: 3px;
+}
+
+/* --- Спросить + мессенджеры --- */
+.od-ask { margin: 14px 0 18px; }
+.od-ask__link {
+  display: block;
+  text-align: center;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 12px;
+  font-weight: 700;
+  color: var(--od-black) !important;
+  text-decoration: none;
+  margin-bottom: 10px;
+}
+.od-ask__link:hover { border-color: var(--od-yellow); }
+.od-messengers { display: flex; gap: 8px; }
+.od-msg {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff !important;
+  text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.od-msg--sms { background: #2b5cd9; }
+.od-msg--tg  { background: #29a9eb; }
+.od-msg--max { background: #8b5cf6; }
+.od-msg:hover { opacity: .88; }
+.od-ask__hint {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--od-steel) !important;
+}
+
+/* --- Инфо-блок доставки --- */
+.od-delivery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #e3e3e3;
+  border: 1px solid #e3e3e3;
+  margin: 18px 0;
+}
+.od-delivery__item { background: #fff; padding: 10px 12px; }
+.od-delivery__item b { display: block; font-size: 0.8rem; color: var(--od-black) !important; }
+.od-delivery__item span { font-size: 0.72rem; color: var(--od-steel) !important; }
+
+/* --- Плитки преимуществ --- */
+.od-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 6px 0 14px;
+}
+.od-tile {
+  background: var(--od-graphite);
+  color: #cfcfcf !important;
+  text-align: center;
+  padding: 14px 8px;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.od-tile span { display: block; margin-top: 6px; color: #cfcfcf !important; }
+
+/* --- Табы: button.tab-toggle + .tab-block --- */
+.od-product-page .tab-toggle {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  border-radius: 0 !important;
+  color: #666 !important;
+  font-family: 'PT Sans', sans-serif !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 12px 16px !important;
+  cursor: pointer;
+  box-shadow: none !important;
+}
+.od-product-page .tab-toggle:hover { color: var(--od-black) !important; }
+.od-product-page .tab-toggle.is-active,
+.od-product-page .tab-toggle.is-opened {
+  color: var(--od-black) !important;
+  border-bottom-color: var(--od-yellow) !important;
+  background: transparent !important;
+}
+.od-product-page .tab-toggle .fa { color: var(--od-yellow-dark) !important; }
+
+/* содержимое вкладок на светлом */
+.od-product-page .tab-block { background: #fff !important; }
+.od-product-page .tab-block-inner,
+.od-product-page .tab-block-inner * { color: #333 !important; }
+.od-product-page .tab-block-inner b,
+.od-product-page .tab-block-inner strong { color: var(--od-black) !important; }
+.od-product-page .tab-block-inner table tr:nth-child(even) td { background: #fafafa !important; }
+
+/* --- Бейдж акции на фото: прямоугольный красный --- */
+.od-product-page .product-gallery-wrapper .label,
+.od-product-page .product-gallery-wrapper [class*="label"],
+.od-product-page .product-gallery-wrapper [class*="sale"] {
+  border-radius: 0 !important;
+  background: #e02424 !important;
+  color: #fff !important;
+  font-family: 'PT Sans', sans-serif !important;
+  font-weight: 700;
+  width: auto !important;
+  height: auto !important;
+  padding: 4px 10px !important;
+  line-height: 1.3 !important;
+}
+
+/* --- Кнопки маркетплейсов: фирменная угловатость --- */
+.od-product-page .product__area-marketplaces .button {
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  font-weight: 700;
+}
+
+/* --- Категории --- */
+.od-product-page .product-collections a { color: #555 !important; }
+
+/* --- Мобильная адаптация карточки --- */
+@media (max-width: 760px) {
+  .od-delivery { grid-template-columns: repeat(2, 1fr); }
+  .od-tiles { grid-template-columns: repeat(2, 1fr); }
+  .od-product-page .js-product-price { font-size: 2.2rem !important; }
+}
+
+/* --- Строка покупки: счётчик + кнопка в один ряд (не давим счётчик) --- */
+.od-product-page .main-controls {
+  display: flex !important;
+  align-items: stretch;
+  gap: 10px;
+}
+.od-product-page .main-controls .product-button.is-primary {
+  width: auto !important;
+  flex: 1 1 auto;
+}
+
+
+/* ============================================================
+   ODROVA — карточка товара, доводка по скриншоту 11.06:
+   специфичность кнопок вариантов, зачёркивание, псевдоэлементы,
+   старая цена. (Шрифтовой @import перенесён в начало файла.)
+   ============================================================ */
+
+/* --- Кнопки вариантов: усиленная специфичность против темы --- */
+.od-product-page .option-value.is-diametr,
+.od-product-page .is-span .option-value {
+  background: #fff !important;
+  border: 1px solid #d5d5d5 !important;
+  color: var(--od-black) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+  transform: none !important;
+  clip-path: none !important;
+}
+.od-product-page .option-value.is-diametr {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: auto !important;
+  height: auto !important;
+  min-width: 64px;
+  padding: 8px 12px !important;
+  margin: 0 6px 6px 0 !important;
+}
+/* подпись внутри кнопки — в поток, без зачёркивания */
+.od-product-page .option-value.is-diametr .diametr-text {
+  position: static !important;
+  transform: none !important;
+  text-decoration: none !important;
+  color: inherit !important;
+  white-space: nowrap;
+}
+.od-product-page .option-value.is-diametr *,
+.od-product-page .is-span .option-value * {
+  text-decoration: none !important;
+}
+
+/* выбранное: чёрный + жёлтый (повтор с усилением) */
+.od-product-page .option-value.is-active.is-diametr,
+.od-product-page .is-span .option-value.is-active {
+  background: var(--od-black) !important;
+  border-color: var(--od-black) !important;
+  color: var(--od-yellow) !important;
+}
+.od-product-page .option-value.is-active.is-diametr .diametr-text { color: var(--od-yellow) !important; }
+
+/* Левая/Правая: убрать декоративные треугольники и скосы темы */
+.od-product-page .option-value.left,
+.od-product-page .option-value.right {
+  background: #fff !important;
+  border: 1px solid #d5d5d5 !important;
+  color: var(--od-black) !important;
+  padding: 12px 22px !important;
+  margin: 0 8px 6px 0 !important;
+  transform: none !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  text-align: center;
+}
+.od-product-page .option-value.left::before,
+.od-product-page .option-value.left::after,
+.od-product-page .option-value.right::before,
+.od-product-page .option-value.right::after {
+  display: none !important;
+  content: none !important;
+}
+.od-product-page .option-value.left.is-active,
+.od-product-page .option-value.right.is-active {
+  background: var(--od-black) !important;
+  color: var(--od-yellow) !important;
+  border-color: var(--od-black) !important;
+}
+
+/* --- Ряд цены: новая → старая → бейдж, всё видимое --- */
+.od-product-page .product-prices {
+  display: flex !important;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.od-product-page .js-product-price { order: 1; }
+.od-product-page .old-price.js-product-old-price {
+  order: 2;
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.od-product-page .od-sale-badge,
+.od-product-page .js-od-sale-badge { order: 3; margin-left: 0; }
+
+/* --- Артикул: видимый --- */
+.od-product-page .product-sku-wrapper,
+.od-product-page .label-article,
+.od-product-page .js-product-sku {
+  display: inline-block !important;
+  visibility: visible !important;
+  text-decoration: none !important;
+}
+
+/* ============================================================
+   ODROVA — страница товара: светлая ЦЕЛИКОМ под шапкой
+   (как в прототипе: тёмная только шапка).
+   body:has() — поддерживается всеми актуальными браузерами.
+   ============================================================ */
+body:has(.od-product-page) {
+  background-color: #f4f4f4 !important;
+}
+body:has(.od-product-page) .wrapper,
+body:has(.od-product-page) .content-wrapper,
+body:has(.od-product-page) .fhg-content,
+body:has(.od-product-page) #wrapper {
+  background-color: #f4f4f4 !important;
+}
+
+/* Заголовок страницы и крошки — тёмным по светлому */
+body:has(.od-product-page) h1,
+body:has(.od-product-page) .page-title {
+  color: var(--od-black) !important;
+  font-family: 'Russo One', sans-serif !important;
+}
+body:has(.od-product-page) .breadcrumbs,
+body:has(.od-product-page) .breadcrumb,
+body:has(.od-product-page) .breadcrumbs a,
+body:has(.od-product-page) .breadcrumb a {
+  color: #777 !important;
+}
+body:has(.od-product-page) .breadcrumbs a:hover,
+body:has(.od-product-page) .breadcrumb a:hover {
+  color: var(--od-yellow-dark) !important;
+}
+
+/* сам «лист» сливаем с фоном страницы */
+.od-product-page { background: transparent; }
+
+/* ============================================================
+   ODROVA — страница товара: шапка остаётся ГРАФИТОВОЙ
+   (фикс: body стал светлым, прозрачная шапка побелела).
+   ============================================================ */
+body:has(.od-product-page) .header-wrapper,
+body:has(.od-product-page) .top-panel-wrapper,
+body:has(.od-product-page) .header,
+body:has(.od-product-page) .header-menu-wrapper {
+  background-color: var(--od-black) !important;
+}
+
+/* --- Рамки невыбранных диаметров и «Правая»: добивка специфичности --- */
+.od-product-page .od-product__info .option-value.is-diametr,
+.od-product-page .od-product__info .is-span .option-value {
+  background: #fff !important;
+  border: 1px solid #c9c9c9 !important;
+}
+.od-product-page .od-product__info .option-value.is-active.is-diametr,
+.od-product-page .od-product__info .is-span .option-value.is-active {
+  background: var(--od-black) !important;
+  border-color: var(--od-black) !important;
+  color: var(--od-yellow) !important;
+}
+
+/* ============================================================
+   ODROVA — строка наличия + липкая мобильная панель покупки
+   ============================================================ */
+.od-availability {
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #16a34a !important;
+  margin: 6px 0 2px;
+}
+.od-availability::before {
+  content: '●';
+  margin-right: 6px;
+  font-size: 0.7em;
+  vertical-align: 1px;
+}
+.od-availability.is-preorder { color: #d97706 !important; }
+
+.od-sticky-buy {
+  display: none;
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 900;
+  background: var(--od-black);
+  padding: 10px 14px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+}
+.od-sticky-buy__prices { display: flex; flex-direction: column; line-height: 1.15; }
+.od-sticky-buy__prices b {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  color: #fff !important;
+  letter-spacing: 1px;
+}
+.od-sticky-buy__prices span {
+  font-size: 0.75rem;
+  color: var(--od-yellow) !important;
+}
+.od-sticky-buy__btn {
+  background: var(--od-yellow);
+  color: var(--od-black);
+  border: none;
+  font-family: 'PT Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+@media (max-width: 760px) {
+  .od-sticky-buy { display: flex; }
+  body:has(.od-product-page) { padding-bottom: 64px; }
+}
+
+/* --- Рамки невыбранных вариантов: максимальная специфичность --- */
+.od-product-page .od-product__info form.product-form .option-value.is-diametr,
+.od-product-page .od-product__info form.product-form .is-span .option-value,
+body .od-product-page .product-option .option-value.is-diametr,
+body .od-product-page .product-option .is-span .option-value {
+  background: #fff !important;
+  border: 1px solid #c9c9c9 !important;
+  border-radius: 0 !important;
+}
+.od-product-page .od-product__info form.product-form .option-value.is-active.is-diametr,
+.od-product-page .od-product__info form.product-form .is-span .option-value.is-active,
+body .od-product-page .product-option .option-value.is-active.is-diametr,
+body .od-product-page .product-option .is-span .option-value.is-active {
+  background: var(--od-black) !important;
+  border-color: var(--od-black) !important;
+  color: var(--od-yellow) !important;
+}
+
+/* ============================================================
+   ODROVA — карточка: финальная косметика.
+   1) Контейнер плашек на фото — прозрачный (красным только сам бейдж).
+   2) Рамки невыбранных вариантов через outline (тема его не перебьёт).
+   ============================================================ */
+.od-product-page .product-gallery-wrapper [class*="labels"],
+.od-product-page .product-gallery-wrapper .product-labels,
+.od-product-page .product-gallery-wrapper .label-wrapper {
+  background: transparent !important;
+  padding: 0 !important;
+  width: auto !important;
+  line-height: normal !important;
+}
+
+.od-product-page .option-value.is-diametr,
+.od-product-page .is-span .option-value {
+  outline: 1px solid #c9c9c9 !important;
+  outline-offset: -1px;
+}
+.od-product-page .option-value.is-diametr:hover,
+.od-product-page .is-span .option-value:hover {
+  outline-color: var(--od-yellow) !important;
+}
+.od-product-page .option-value.is-active.is-diametr,
+.od-product-page .is-span .option-value.is-active {
+  outline-color: var(--od-black) !important;
+}
+
+/* липкая панель поверх служебной панели предпросмотра InSales */
+.od-sticky-buy { z-index: 10000; }
+
+/* ============================================================
+   ODROVA — галерея товара: мобильные стрелки и плашка видео
+   ============================================================ */
+/* на мобильном стрелки слайдера прячем — листание свайпом */
+@media (max-width: 760px) {
+  .od-product-page .product-slider-controls,
+  .od-product-page .product-slider-prev,
+  .od-product-page .product-slider-next {
+    display: none !important;
+  }
+}
+
+/* плашка для видео без YouTube-превью (Vimeo и т.п.) */
+.od-product-page .slide-video { position: relative; }
+.od-product-page .od-video-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 64px;
+  background: var(--od-graphite);
+}
+.od-product-page .slide-video .fa-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--od-yellow) !important;
+  font-size: 1.2rem;
+}
+
+/* --- H1 в правой колонке карточки (page_header на товаре отключён) --- */
+.od-product__title {
+  font-family: 'Russo One', sans-serif !important;
+  font-size: 1.7rem !important;
+  line-height: 1.25;
+  color: var(--od-black) !important;
+  margin: 2px 0 8px !important;
+  text-transform: none;
+}
+.od-product-page .breadcrumb,
+.od-product-page .breadcrumbs { margin: 6px 0 10px; }
+@media (max-width: 760px) {
+  .od-product__title { font-size: 1.35rem !important; }
+}
+
+/* ============================================================
+   ODROVA — крупная кнопка «Купить», как в прототипе:
+   на своей строке во всю ширину, счётчик количества над ней
+   ============================================================ */
+.od-product-page .main-controls {
+  flex-wrap: wrap !important;
+  gap: 8px;
+}
+.od-product-page .main-controls .product-button.is-primary {
+  flex: 1 1 100% !important;
+  width: 100% !important;
+  padding: 18px 24px !important;
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.od-product-page .main-controls .product-button.is-primary .fa-shopping-cart {
+  font-size: 1.1em;
+  margin-right: 8px;
+}
+@media (max-width: 760px) {
+  .od-product-page .main-controls .product-button.is-primary {
+    padding: 16px 18px !important;
+    font-size: 1.1rem !important;
+  }
+}
+
+/* ============================================================
+   ODROVA — кнопка «без отверстия»: бокс растёт по тексту
+   (тема задаёт кнопкам фиксированную ширину — снимаем её
+   на максимальной специфичности, контейнер — во flex)
+   ============================================================ */
+/* контейнер значений — гибкая обтекаемая сетка */
+.od-product-page div.is-diametr > div,
+.od-product-page .is-diametr .option-values {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px;
+}
+/* кнопка — по содержимому, без переноса текста */
+.od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .product-option .option-value.is-diametr {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  min-width: 64px;
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+  flex: 0 0 auto !important;
+  box-sizing: border-box;
+}
+.od-product-page .option-value.is-diametr .diametr-text {
+  position: static !important;
+  display: inline !important;
+  width: auto !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+/* ============================================================
+   ODROVA — блок выбора диаметра/резьбы крупнее, как в прототипе
+   ============================================================ */
+/* лейблы опций («ДИАМЕТР ВАЛА...», «НАПРАВЛЕНИЕ РЕЗЬБЫ») */
+.od-product-page .od-product__info .product-option > label,
+.od-product-page .od-product__info form.product-form label {
+  font-family: 'Fira Mono', monospace !important;
+  font-size: 0.82rem !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase;
+  color: var(--od-steel) !important;
+  margin: 14px 0 10px !important;
+  display: block;
+}
+
+/* кнопки диаметров — крупнее (как плитки прототипа) */
+.od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .product-option .option-value.is-diametr {
+  min-width: 86px;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+}
+/* контейнер — чуть просторнее */
+.od-product-page div.is-diametr > div,
+.od-product-page .is-diametr .option-values {
+  gap: 8px;
+}
+
+/* подсказка под сеткой диаметров */
+.od-product-page div.is-diametr::after {
+  content: 'Выберите диаметр вала вашего дровокола';
+  display: block;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--od-steel);
+  margin: 8px 0 4px;
+}
+
+/* Левая/Правая — тоже крупнее */
+.od-product-page .od-product__info form.product-form .option-value.left,
+.od-product-page .od-product__info form.product-form .option-value.right {
+  padding: 14px 28px !important;
+  font-size: 0.95rem !important;
 }
