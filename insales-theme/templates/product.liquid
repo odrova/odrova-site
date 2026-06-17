@@ -17,6 +17,10 @@
   {%- comment -%} ===== ЛЕВАЯ КОЛОНКА: фото + плашки ===== {%- endcomment -%}
   <div class="product-gallery-wrapper od-product__gallery cell-6 cell-6-md cell-12-sm">
     {% include "product_labels", product: product %}
+    {%- comment -%} Лента-метка из метаполя od-ribbon (напр. «2-ЗАХОДНАЯ РЕЗЬБА») {%- endcomment -%}
+    {% if product.fields.od-ribbon.value != blank %}
+    <div class="od-ribbon">{{ product.fields.od-ribbon.value }}</div>
+    {% endif %}
     {% include "product_gallery" %}
   </div>
 
@@ -35,20 +39,67 @@
     <h1 class="od-product__title">{{ product.title }}</h1>
 
     {%- comment -%}
-      Теги-характеристики из метаполя товара «od-tags».
+      Строка рейтинга НАД чипами: «★ 4.9 · N отзывов · читать».
+      Средний балл считаем ТОЛЬКО по отзывам с оценкой (rating > 0) — часть
+      отзывов InSales без звёзд (вопросы/комментарии), они не должны топить средний.
+      Количество показываем общее (product.reviews.size). Нет отзывов — строки нет.
+      Клик ведёт на вкладку «Отзывы» ниже (плавный скролл, JS).
+    {%- endcomment -%}
+    {% if product.reviews.size > 0 %}
+      {% assign od_rsum = 0 %}{% assign od_rcnt = 0 %}
+      {% for rv in product.reviews %}{% if rv.rating > 0 %}{% assign od_rsum = od_rsum | plus: rv.rating %}{% assign od_rcnt = od_rcnt | plus: 1 %}{% endif %}{% endfor %}
+      {% if od_rcnt > 0 %}{% assign od_avg = od_rsum | times: 10 | divided_by: od_rcnt %}{% else %}{% assign od_avg = 0 %}{% endif %}
+      <a href="#od-reviews-tab" class="od-rating-line js-od-rating-line">
+        <span class="od-rating-line__stars" aria-hidden="true">★★★★★</span>{% if od_avg > 0 %}<b class="od-rating-line__avg">{{ od_avg | divided_by: 10 }}.{{ od_avg | modulo: 10 }}</b>{% endif %}<span class="od-rating-line__sep">·</span><span class="od-rating-line__count">{{ product.reviews.size }}&nbsp;{% if product.reviews.size == 1 %}отзыв{% elsif product.reviews.size >= 2 and product.reviews.size <= 4 %}отзыва{% else %}отзывов{% endif %}</span><span class="od-rating-line__sep">·</span><span class="od-rating-line__read">читать</span>
+      </a>
+    {% endif %}
+
+    {%- comment -%}
+      Теги-характеристики из метаполя товара «od_tags» (пермалинк с подчёркиванием).
       Формат значения: ⌀ 75 мм; L 300 мм; 2 захода; 17.5° угол; Ст45 + ТВЧ; 24–28 HRC; 4.9 кг; от 2.2 кВт
       У комплектующих — свои теги, у станков — свои. Нет метаполя — блок не выводится.
     {%- endcomment -%}
-    {% if product.fields.od-tags.value != blank %}
+    {% if product.fields.od_tags.value != blank %}
     <div class="od-spec-tags">
-      {% assign od_tags = product.fields.od-tags.value | split: ';' %}
-      {% for t in od_tags %}<span class="od-spec-tag">{{ t | strip }}</span>{% endfor %}
+      {% assign od_tags_raw = product.fields.od_tags.value | strip_html | strip_newlines | split: ';' %}
+      {% for t in od_tags_raw %}{% assign tt = t | strip %}{% if tt != blank %}<span class="od-spec-tag">{{ tt }}</span>{% endif %}{% endfor %}
     </div>
+    <script>
+      // в чипах характеристик делаем жирными числа и префиксы Ø / L (Ø 75, L 300, 24-28, 2.2 ...)
+      (function () {
+        document.querySelectorAll('.od-spec-tags .od-spec-tag').forEach(function (el) {
+          // опциональный Ø или L (лат./кир.) перед числом + само число с дробью и диапазоном
+          el.innerHTML = el.textContent.replace(
+            /([ØøⵁL]\s*)?(\d+(?:[.,]\d+)?(?:\s*[-–—]\s*\d+(?:[.,]\d+)?)?)/g,
+            '<b>$1$2</b>'
+          );
+        });
+      })();
+    </script>
     {% endif %}
 
-    <div class="product-introtext on-page editor">
-      {{ product.short_description | editable }}
-    </div>
+    {%- comment -%} Метаданные Ø/L для богатой кнопки — из метаполей od-d / od-l (напр. «75 мм» / «300 мм»); пусто — части в кнопке не выводятся {%- endcomment -%}
+    <script>
+      window.odProductMeta = (function () {
+        var m = {
+          d: '{{ product.fields.od-d.value | strip | escape }}',
+          l: '{{ product.fields.od-l.value | strip | escape }}'
+        };
+        // метаполя не заполнены — берём из названия: «... 75 L 300» → Ø75 мм / L300 мм
+        try {
+          var t = '{{ product.title | escape }}';
+          var mt = t.match(/(\d{2,3})\s*[LlЛ]\s*(\d{2,3})/);
+          if (mt) {
+            if (!m.d) m.d = mt[1] + ' мм';
+            if (!m.l) m.l = mt[2] + ' мм';
+          } else {
+            var md = t.match(/дровокола\s+(\d{2,3})/i);
+            if (md && !m.d) m.d = md[1] + ' мм';
+          }
+        } catch (e) {}
+        return m;
+      })();
+    </script>
 
     {%- comment -%} ЦЕНА + ВАРИАНТЫ + КНОПКА — родной сниппет, не трогаем {%- endcomment -%}
     {% include "product_form" %}
@@ -123,6 +174,9 @@
   $(()=>{
     Products.setConfig({
       options: {
+        'Направление резьбы:': 'option-span',
+        'Направление резьбы': 'option-span',
+        'Направление резьбы стандартная:': 'option-span',
         'Направление резьбы стандартная': 'option-span',
         'Диаметр вала (посадочное отверстие)': 'option-diametr',
         'Внутренний Ø посадочного отверстия или размер вашего вала Выберите здесь':'option-diametr',
@@ -131,6 +185,30 @@
       }
     });
   })
+</script>
+
+<script>
+  // Снимаем белый фон/рамку/паддинг с контейнера .option-values напрямую
+  // (тема красит его в theme.css белым без !important; CSS-перебив капризничал
+  // из-за кэша компиляции — инлайн через JS работает гарантированно).
+  (function () {
+    function odClearOptionBg() {
+      document.querySelectorAll('.od-product-page .option-values').forEach(function (el) {
+        el.style.setProperty('background', 'transparent', 'important');
+        el.style.setProperty('background-color', 'transparent', 'important');
+        el.style.setProperty('border', 'none', 'important');
+        el.style.setProperty('padding', '0', 'important');
+      });
+    }
+    odClearOptionBg();
+    setTimeout(odClearOptionBg, 300);   // тема дорисовывает опции своим JS
+    setTimeout(odClearOptionBg, 800);
+    // на случай перерисовки опций (смена варианта и т.п.)
+    var host = document.querySelector('.od-product-page .product-option-selectors, .od-product-page form.product-form');
+    if (host && window.MutationObserver) {
+      new MutationObserver(odClearOptionBg).observe(host, { childList: true, subtree: true });
+    }
+  })();
 </script>
 
 <script type="text/template" data-template-id="option-diametr">
@@ -154,12 +232,15 @@
     <label class="<%= classes.label %>"><%= title %></label>
     <div class="<%= classes.values %>">
       <% _.forEach(values, function (value){ %>
-        <button class="<%= value.classes.all %> is-span           <% if ( value.title == 'Левая' ) { %>left<% } else { %> right <% } %>
+        <% var odT = String(value.title); var odMain = odT.split('—')[0].split('.')[0].trim(); %>
+        <% var odSub = /прав/i.test(odT) ? 'Под заказ 3–7 дн.' : 'В наличии'; %>
+        <button class="<%= value.classes.all %> is-span           <% if ( odMain == 'Левая' ) { %>left<% } else { %> right <% } %>
 "
           <%= value.controls %>
           <%= value.state %>
         >
-          <%= value.title %>
+          <span class="od-span-main"><%= odMain %></span>
+          <span class="od-span-sub"><%= odSub %></span>
   </button>
       <% }) %>
   </div>
@@ -189,16 +270,39 @@
       function setText($el, val) {
         if ($el.length && $el.text() !== val) $el.text(val);
       }
+      function setHtml($el, val) {
+        if ($el.length && $el.html() !== val) $el.html(val);
+      }
+
+      // покупка разблокируется после ЯВНОГО выбора диаметра покупателем
+      var odChosen = false;
 
       function syncAll() {
         try {
           var p = parsePrice($price.text());
           if (!p) return;
-          // цена в кнопке «Купить — Х ₽» — онлайн-цена (−10%), как в прототипе
+          // данные выбранного варианта
+          var dia = $('.od-product .option-value.is-active.is-diametr .diametr-text').first().text().trim();
+          var $thrBtn = $('.od-product .is-span .option-value.is-active').first();
+          var thread = ($thrBtn.find('.od-span-main').text() || $thrBtn.text()).trim().split('—')[0].trim();
+          var meta = window.odProductMeta || {};
+          // богатая кнопка: Купить / Ø.. / L.. / посадка .. / цена + строка резьбы
           if ($btn.length) {
-            var $t = $btn.find('.js-od-btn-price');
-            if (!$t.length) $t = $('<span class="js-od-btn-price"></span>').appendTo($btn.find('.button-text').length ? $btn.find('.button-text') : $btn);
-            setText($t, ' — ' + fmt(p * 0.9));
+            var $bt = $btn.find('.button-text');
+            if (!$bt.length) $bt = $btn;
+            if (odChosen) {
+              var parts = ['Купить'];
+              if (meta.d) parts.push('Ø' + meta.d);
+              if (meta.l) parts.push('L' + meta.l);
+              if (dia) parts.push('посадка ' + dia);
+              parts.push(fmt(p * 0.9));
+              var line2 = thread ? '<span class="od-buy-line2">' + thread + ' резьба</span>' : '';
+              setHtml($bt, '<span class="od-buy-line1">' + parts.join(' / ') + '</span>' + line2);
+              $btn.removeClass('od-buy-waiting');
+            } else {
+              setHtml($bt, '<span class="od-buy-line1">Выберите диаметр вала \u2191</span>');
+              $btn.addClass('od-buy-waiting');
+            }
           }
           // сумма в плашке «онлайн −10%»
           setText($('.js-od-online-price'), fmt(p * 0.9));
@@ -255,6 +359,36 @@
         $bar.find('.od-sticky-buy__btn').on('click', function () {
           if ($btn.is(':visible')) { $btn.trigger('click'); }
           else { $('html,body').animate({ scrollTop: $('.od-product').offset().top }, 300); }
+        });
+
+        // --- мобильная галерея: главный кадр — наш .od-mobile-main;
+        //     родной .gallery-main-wrapper прячем (иначе двоится) ---
+        if (window.matchMedia('(max-width: 760px)').matches) {
+          var odMw = document.querySelector('.od-product-page .gallery-main-wrapper');
+          if (odMw) odMw.style.setProperty('display', 'none', 'important');
+        }
+
+        // --- состояние «Выберите диаметр»: до явного клика покупка заблокирована ---
+        $('.od-product').addClass('od-not-chosen');
+        $(document).on('click', '.od-product .option-value.is-diametr', function () {
+          if (!odChosen) {
+            odChosen = true;
+            $('.od-product').removeClass('od-not-chosen');
+          }
+          setTimeout(syncAll, 50);
+        });
+        // попытка купить без выбора — не отправляем, ведём к диаметрам
+        $('.od-product form.product-form').on('submit', function (e) {
+          if (!odChosen) {
+            e.preventDefault();
+            var $opt = $('.od-product div.is-diametr').first();
+            if ($opt.length) {
+              $('html,body').animate({ scrollTop: $opt.offset().top - 90 }, 250);
+              $opt.addClass('od-flash');
+              setTimeout(function () { $opt.removeClass('od-flash'); }, 1200);
+            }
+            return false;
+          }
         });
 
         syncAll();
@@ -318,6 +452,111 @@
           link_text = text.split('://')[0].replace("http", "").replace("https", "")+link;
           $( this ).html(link_text);
         }
+      }
+    });
+  });
+</script>
+
+<script>
+  // Клик по строке рейтинга «★ … · читать» — открыть вкладку «Отзывы» и плавно доскроллить.
+  // Якоря #od-reviews-tab в табах нет (сниппет темы не трогаем) — находим вкладку по тексту
+  // «Отзыв» среди заголовков табов (.tab-toggle / [data-tab]) и кликаем её.
+  $(function () {
+    // СТРАХОВКА: InSales кэширует скомпилированный SCSS и не всегда подхватывает
+    // правки custom.scss. Чтобы строка рейтинга гарантированно выглядела как нужно,
+    // проставляем ВСЕ её стили инлайном на элементы — минуя компиляцию CSS.
+    function odIsMobile() { return window.matchMedia('(max-width: 760px)').matches; }
+    function odStyleRating() {
+      var $rl = $('.js-od-rating-line').first();
+      if (!$rl.length) return;
+      var mob = odIsMobile();
+      // размеры: десктоп крупные, мобила мельче (иначе строка вылезает за экран)
+      var starsF = mob ? '1.25rem' : '1.75rem';
+      var starsM = mob ? '8px'     : '14px';
+      var avgF   = mob ? '1.1rem'  : '1.55rem';
+      var sepF   = mob ? '0.9rem'  : '1.15rem';
+      var sepM   = mob ? '0 9px'   : '0 16px';
+      var txtF   = mob ? '0.95rem' : '1.2rem';
+      // на мобиле разрешаем перенос (nowrap убираем), чтобы не вылезало
+      $rl.css({
+        'display': 'block', 'margin-top': mob ? '14px' : '20px',
+        'margin-bottom': mob ? '18px' : '28px',
+        'line-height': '1.4', 'white-space': mob ? 'normal' : 'nowrap',
+        'text-decoration': 'none', 'font-family': "'PT Sans', sans-serif", 'cursor': 'pointer'
+      });
+      $rl.children().css({ 'display': 'inline-block', 'vertical-align': 'middle' });
+      var starsEl = $rl.find('.od-rating-line__stars').get(0);
+      if (starsEl) {
+        starsEl.style.setProperty('font-size', starsF, 'important');
+        starsEl.style.setProperty('letter-spacing', mob ? '2px' : '3px', 'important');
+        starsEl.style.setProperty('color', '#f5c800', 'important');
+        starsEl.style.setProperty('-webkit-text-fill-color', '#f5c800', 'important');
+        starsEl.style.setProperty('margin-right', starsM, 'important');
+      }
+      var avgEl = $rl.find('.od-rating-line__avg').get(0);
+      if (avgEl) {
+        avgEl.style.setProperty('font-size', avgF, 'important');
+        avgEl.style.setProperty('font-weight', '700', 'important');
+        avgEl.style.setProperty('color', '#111', 'important');
+        avgEl.style.setProperty('-webkit-text-fill-color', '#111', 'important');
+        avgEl.style.setProperty('line-height', '1', 'important');
+      }
+      $rl.find('.od-rating-line__sep').css({ 'color': '#c4c4c4', 'font-size': sepF, 'margin': sepM });
+      $rl.find('.od-rating-line__count').css({ 'font-size': txtF, 'color': '#555' });
+      $rl.find('.od-rating-line__read').css({
+        'font-size': txtF, 'font-weight': '700', 'color': '#555', 'border-bottom': '1px solid #999'
+      });
+    }
+    // вызываем несколько раз: тема может перекрашивать звёзды своим JS позже загрузки
+    odStyleRating();
+    setTimeout(odStyleRating, 300);
+    setTimeout(odStyleRating, 800);
+
+    // черта под чипами характеристик (как в прототипе) — серая разделительная линия.
+    // Ставим инлайном, т.к. CSS может не доехать из-за кэша компиляции SCSS.
+    function odChipsRule() {
+      var mob = odIsMobile();
+      var chips = document.querySelector('.od-product-page .od-spec-tags');
+      if (chips) {
+        chips.style.setProperty('padding-bottom', mob ? '14px' : '20px', 'important');
+        chips.style.setProperty('border-bottom', '1px solid #e0e0e0', 'important');
+        chips.style.setProperty('margin-bottom', mob ? '14px' : '20px', 'important');
+        chips.style.setProperty('gap', mob ? '7px' : '12px', 'important');
+        chips.querySelectorAll('.od-spec-tag').forEach(function (t) {
+          t.style.setProperty('font-size', mob ? '0.8rem' : '0.95rem', 'important');
+          t.style.setProperty('padding', mob ? '7px 11px' : '11px 17px', 'important');
+        });
+      }
+      var h1 = document.querySelector('.od-product-page .od-product__title');
+      if (h1) {
+        h1.style.setProperty('font-size', mob ? '1.55rem' : '2.2rem', 'important');
+        h1.style.setProperty('line-height', '1.2', 'important');
+      }
+      var kicker = document.querySelector('.od-product-page .od-kicker');
+      if (kicker) {
+        kicker.style.setProperty('font-size', mob ? '0.72rem' : '0.82rem', 'important');
+        kicker.style.setProperty('letter-spacing', mob ? '2px' : '2.5px', 'important');
+      }
+    }
+    odChipsRule();
+    setTimeout(odChipsRule, 300);
+    // пересчёт при ресайзе/повороте экрана
+    var odRzT;
+    $(window).on('resize orientationchange', function () {
+      clearTimeout(odRzT);
+      odRzT = setTimeout(function () { odStyleRating(); odChipsRule(); }, 150);
+    });
+    $(document).on('click', '.js-od-rating-line', function (e) {
+      e.preventDefault();
+      var $tab = $('.od-product-page .tab-toggle, .od-product-page [data-tab], .od-product-page .tabs-controls a, .od-product-page .tabs-controls button')
+        .filter(function () { return /отзыв/i.test($(this).text()); }).first();
+      if ($tab.length) {
+        $tab.trigger('click');
+        $('html,body').animate({ scrollTop: $tab.offset().top - 90 }, 350);
+      } else {
+        // запасной путь: проскроллить к блоку отзывов, если он на странице
+        var $rev = $('.od-product-page .reviews, .od-product-page .product-reviews, .od-product-page .comment_list').first();
+        if ($rev.length) $('html,body').animate({ scrollTop: $rev.offset().top - 90 }, 350);
       }
     });
   });
