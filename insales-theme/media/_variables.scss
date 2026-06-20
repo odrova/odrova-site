@@ -1,0 +1,52 @@
+// Theme settings
+
+// Colors
+$color-background-primary: settings(color_background_primary);
+$color-text-primary: settings(color_text_primary);
+$color-link-primary: settings(color_link_primary);
+$color-link-primary-hover: settings(color_link_primary_hover);
+$color-border-primary: settings(color_border_primary);
+
+// Дополнительные цвета
+$color-background-secondary: settings(color_background_secondary);
+$color-text-secondary: settings(color_text_secondary);
+$color-link-secondary: settings(color_link_secondary);
+$color-link-secondary-hover: settings(color_link_secondary_hover);
+$color-border-secondary: settings(color_border_secondary);
+
+// Фоновая подложка
+$body-background-color: settings(body_background_color);
+$body-background-use: settings(body_background_use);
+$body-background-image: settings(body_background_image);
+$body-background-type: settings(body_background_type);
+
+// Шрифты
+$font-family-primary: get-font(settings(font_family_primary));
+$font-size-primary: settings(font_size_primary);
+
+// Настройка логотипа
+$logotype-font-family: get-font(settings(logotype_font_family));
+$logotype-font-size: settings(logotype_font_size);
+
+// Различные настройки по-умолчанию
+$link-decoration: none;
+
+// font-size
+$font-size-medium: 1.25rem;
+$font-size-large: 1.5rem;
+
+// Headings
+$vertical-gutter: 0.5rem;
+$horizontal-gutter: 0.5rem;
+$block-gutter: 0.25rem;
+$font-size-h1: 1.5rem;
+$font-size-h2: 1.25rem;
+$font-size-h3: 1rem;
+$font-size-h4: 1rem;
+$font-size-h5: 1rem;
+$font-size-h6: 1rem;
+$font-weight-heading: normal;
+
+// compass
+$default-transition-duration: 0.3s;
+$default-transition-duration-out: 0s;

@@ -1,0 +1,82 @@
+<script type="text/javascript">
+  Site = _.merge({}, Site, {
+    template: '{{ template }}',
+
+    menuConfig: {
+      'top-menu': {
+        levels: {
+          1: ['horizontal'],
+        }
+      },
+      'catalog-menu': {
+        levels: {
+          1: ['horizontal'],
+          2: ['vertical', 'drop', 'down'],
+          default: ['vertical', 'drop', 'right'],
+        }
+      },
+      'sidebar-menu': {
+        levels: {
+          default: ['vertical', 'collapse']
+        }
+      },
+      'mobile-sidebar-menu': {
+        levels: {
+          default: ['vertical', 'collapse']
+        }
+      }
+    },
+    filterConfig: {
+      'sidebar-filter': {
+        submitOnChange: false,
+        collapse: true,
+        openActive: true,
+      },
+      'is-modal-filter': {
+        collapse: true,
+        openActive: true,
+      }
+    },
+    alertifyConfig :{
+      glossary: {
+        modal: {
+          ok: '{{ messages.s_alertify-ok }}',
+          cancel: '{{ messages.s_alertify-cancel }}',
+        },
+        cart: {
+          item_added: '{{ messages.s_alertify-addcart }}',
+          item_removed: '{{ messages.s_alertify-removecart }}'
+        },
+        compares: {
+          product_added: '{{ messages.product_added_to_comparison }}',
+          product_removed: '{{ messages.product_removed_from_comparison }}',
+          overload: '{{ messages.maximum_number_of_comparable }}'
+        }
+      }
+    },
+    messages: {
+      field_name: '{{ messages.field_name }}',
+      field_email: '{{ messages.field_email }}',
+      field_message: '{{ messages.field_message }}',
+      label_product: '{{ messages.label_product }}',
+      label_variant: '{{ messages.label_variant }}',
+
+      preorder: '{{ messages.preorder }}',
+      button_submit: '{{ messages.button_submit }}'
+    }
+  });
+
+  Products.setConfig({});
+</script>
+
+<!-- <script src="{{ 'insales.ui.alertify.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.swiper.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.tabs.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.range-slider.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.filter.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.menu.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.forms.js' | asset_url }}"></script>
+<script src="{{ 'insales.ui.images.js' | asset_url }}"></script> -->
+
+<script src="{{ 'plugins.js' | asset_url }}"></script>
+<script src="{{ 'theme.js' | asset_url }}" charset="utf-8"></script>

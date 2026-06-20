@@ -1,0 +1,108 @@
+<div class="page-content">
+<div id="js-compare-wrapper" class="compares">
+
+  {% if products.size > 0 %}
+
+    <div id="js-compare-inner">
+
+        <div class="compare-toolbar hidden">
+          <button type="button" class="button is-primary button-same-toggle js-same-toggle">
+            <span class="link-text show">
+              {{ messages.hide_the_same }}
+              <div class="fa fa-eye-slash"></div>
+            </span>
+            <span class="link-text hide">
+              {{ messages.show_the_same }}
+              <div class="fa fa-eye"></div>
+            </span>
+          </button>
+        </div>
+
+      <div class="compare-table-wrapper">
+
+        <div class="table table-compare table-striped table-bordered js-compare-table">
+          <div class="table-row">
+            <div class="table-cell table-row-title param-title">{{ messages.label_product }}</div>
+
+            {% for product in products %}
+              <div class="table-cell param-value" data-compared-id="{{ product.id }}">
+                <div class="product-title">
+                  <a class="title-link" href="{{ product.url }}" title="{{ product.title }}">{{ product.title }}</a>
+                </div>
+              </div>
+            {% endfor %}
+
+          </div>
+
+          <div class="table-row">
+            <div class="table-cell table-row-title param-title">{{ messages.label_photo }}</div>
+
+
+
+            {% for product in products %}
+              <div class="table-cell param-value" data-compared-id="{{ product.id }}">
+
+                <div class="compare-image-wrapper">
+
+                  <a class="compare-image-inner image-container is-rectangle " href="{{ product.url }}" title="{{ product.title }}">
+
+                    <img class="compare-image" src="{{ product.first_image.medium_url }}" alt="{{ product.first_image.title }}" title="{{ product.first_image.title }}">
+                  </a>
+
+
+                </div>
+
+
+
+              </div>
+            {% endfor %}
+          </div>
+
+          {% for property in properties %}
+
+            <div class="table-row {% unless property.differ? %}same-row{% endunless %}">
+
+              <div class="table-cell table-row-title param-title">{{ property.title }}</div>
+
+              {% for product in products %}
+                <div class="table-cell param-value" data-compared-id="{{ product.id }}">
+                  {% for characteristic in product.properties[property.handle].characteristics %}
+                    {{ characteristic.title }}{% unless forloop.last %},{% endunless %}
+                  {% endfor %}
+                </div>
+              {% endfor %}
+            </div>
+
+          {% endfor %}
+
+          <div class="table-row">
+            <div class="table-cell table-row-title param-title"></div>
+
+            {% for product in products %}
+              <div class="table-cell param-value compare-controls" data-compared-id="{{ product.id }}">
+                <a href="{{ product.url }}" class="button is-primary compare-more">
+                  {{ messages.button_more }}
+                </a>
+
+                <button title="{{ messages.button_remove_comparison }}" class="button is-secondary compare-delete"
+                data-compare-delete="{{ product.id }}">
+                {{ messages.button_remove }}
+              </button>
+              </div>
+            {% endfor %}
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    {% assign compare_is_empty = 'hidden' %}
+  {% endif %}
+
+</div>
+  <div class="notice is-info text-center {{ compare_is_empty }} js-compare-empty">
+    {{ messages.comparison_is_empty }}
+  </div>
+</div>

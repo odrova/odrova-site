@@ -1,0 +1,29 @@
+{% if blog.url contains 'all-articles' %}
+{% for article in blogs.zakreplennye-stati.articles limit:1 %}
+  <div class="article-preview-wrapper" style="margin-bottom: 1rem;">
+    {% include "article_preview", truncate_words: 40 %}
+  </div>
+{% endfor %}
+{% endif %}
+
+{% paginate articles by 99 %}
+  <div  {% if blog.url contains 'all-articles' %} data-js-last-articles {% endif %} class=" articles-list">
+
+    {% for article in articles %}
+      <div class="article-preview-wrapper">
+        {% include "article_preview", truncate_words: 40 %}
+      </div>
+    {% endfor %}
+
+  </div>
+
+  {% if paginate.parts.size > 1 %}
+    <div class="blog-toolbar toolbar at-bottom">
+      <div class="toolbar-inner">
+        <div class="pagination-wrapper">
+          {% include "pagination" %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endpaginate %}

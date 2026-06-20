@@ -1,0 +1,78 @@
+
+
+<style>
+  .bundle-products-wrap {
+    display:flex;
+    flex-direction:column;
+    border:2px solid #eee;
+  }
+  .bundle-products-header {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
+    color: #000;
+    padding: 15px 20px;
+    background: #f7f8fa;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .bundle-products {
+    display:flex;
+    flex-flow:row wrap;
+  }
+  .bundle-item {
+    width: 47%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    margin: .5rem;
+    box-sizing: border-box;
+  }
+  .bundle-item-photo {
+    width: 75px;
+    height: 75px;
+    object-fit: contain;
+    margin-right: 10px;
+  }
+  .bundle-item-info {
+  	display: flex;
+    flex-direction: column;
+  }
+  .bundle-item-info span:last-child {
+  	font-weight:bold;
+    margin-top:10px;
+  }
+  @media ( max-width:900px ) {
+    .bundle-products {
+    	flex-direction:column;
+    }
+    .bundle-item {
+    	width:100%;
+    }
+  }
+</style>
+<div class="bundle-products-wrap">
+  <div class="bundle-products-header">Состав комплекта</div>
+  <div class="bundle-products">
+    {% for component in product.bundle_components %}
+    <a href="{{ component.product.url }}" class="bundle-item">
+      <img src="{{ component.product.first_image.compact_url }}" class="bundle-item-photo" />
+      <div class="bundle-item-info">
+        <span>{{ component.product.title | truncate: 40 }}</span>
+        <span>
+          {% if component.is_free %}
+          	В подарок
+          {% else %}
+          	{{ component.quantity }} × {{ component.product.price | money }}    
+          {% endif %}
+        </span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</div>

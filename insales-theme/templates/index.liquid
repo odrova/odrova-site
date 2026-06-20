@@ -1,0 +1,20 @@
+{% if settings.index_vid_show %}
+<div class="main-vid">
+	<iframe width="100%" height="420" src="{{ settings.index_vid_link }}" frameborder="0" allowfullscreen></iframe>
+</div>
+{% endif %}
+
+{% for widgetDrop in widget_lists.index-list.widgets %}
+{% widget widgetDrop %}
+{% endfor %}
+
+
+
+
+
+{% include "dostavka" %}
+
+{% include "blogs" %}
+
+{% include "contacts" %}
+{% comment %}<script type="text/javascript" src="https://widget.shiptor.ru/embed/widget-pvz.js"></script>{% endcomment %}

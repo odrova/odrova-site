@@ -1,0 +1,19 @@
+{% assign start_quantity = start_quantity | default: 1 %}
+{% assign input_name = is_item | default: 'quantity' | replace: 'true', 'cart[quantity][id]' | replace: 'id', variant_id %}
+
+{% if input_name == 'quantity' %}
+  {% assign style = 'style="display: none"' %}
+{% endif %}
+<div class="counter js-variant-counter" data-quantity {{ style }}>
+  <button type="button" data-quantity-change="-1" class="counter-button is-count-down"></button>
+
+  <input type="text" value="{{ start_quantity }}" name="{{ input_name }}" class="counter-input"/>
+
+  <button type="button" data-quantity-change="1" class="counter-button is-count-up"></button>
+</div>
+
+{% assign start_quantity = null %}
+{% assign is_item = null %}
+{% assign variant_id = null %}
+
+{% assign input_name = null %}

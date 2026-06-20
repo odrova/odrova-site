@@ -1,0 +1,92 @@
+<div class="comments-wrapper">
+  <button type="button" class="button is-comments-toggle js-comments-toggle is-checked">
+    <span class="button-text">
+      {{ messages.comment_add }}
+    </span>
+  </button>
+
+  <div class="comments-form">
+    <div class="notice is-success js-comments-notice-success hidden">
+      {% if blog.moderated? %}
+        {{ messages.comment_is_added_moderated }}
+      {% else %}
+        {{ messages.comment_is_added }}
+      {% endif %}
+    </div>
+
+    <div id="comment_form">
+
+    </div>
+    {% if blog.moderated? %}
+      <div class="notice is-info js-comments-toggle-notice">
+        {{ messages.comments_are_moderated }}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function () {
+    var _commentForm = {
+      fields: [
+        {
+          title: '{{ messages.field_comment }}',
+          name: 'content',
+          type: 'textarea',
+          required: true,
+        },
+        {
+          title: '{{ messages.field_name }}',
+          name: 'author',
+          required: true,
+        },
+        {
+          title: '{{ messages.field_email }}',
+          name: 'email',
+          value: 'test@mail.ru',
+          required: true,
+        },
+        {% if comment.captcha_enabled? %}
+        {
+          title: '{{ messages.field_captcha }}',
+          type: 'captcha',
+          required: true,
+        }
+        {% endif %}
+      ],
+      buttons: [
+        {
+          title: '{{ messages.button_submit }}',
+          type: 'submit',
+          onClick: function (form) {
+            form.validate();
+          }
+        }
+      ],
+      sendTo: Shop.sendComment,
+      onValid: function (response, form) {
+        var $notice = $('.js-comments-notice-success');
+        var $commentsList = $('[data-comments-list]');
+
+        alertify.success('{{ messages.comment_success }}');
+
+        $notice.removeClass('hidden');
+        setTimeout(function () {
+          $notice.addClass('hidden');
+        }, 10000);
+
+        form.clear();
+
+        if (!$commentsList.data('commentsModerated')) {
+          $commentsList.load(document.location.pathname + ' [data-comments-list] > div');
+        };
+      },
+      onError: function (response, form) {
+        form.markErrors(response.errors);
+      },
+    };
+    var $form = InSalesUI.Form.create($('#comment_form'), _commentForm);
+
+  });
+</script>

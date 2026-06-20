@@ -1,0 +1,12 @@
+<div class="fast-checkout">
+  {% comment %}
+  <button type="button" class="one-touch"><a href="#callbackwidget">Купить в 2 клика</a></button>
+  {% endcomment %}
+  {% unless product.id == 279046661 or product.id == 279559195 %}
+  <input type="tel" placeholder="Ваш телефон?" class="js-mask"/>
+  {% endunless %}
+  <button type="button" class="one-touch js-variant-shown" type="submit" data-item-add>
+   {% if product.id == 279559195 or product.id == 279046661 %} Заказать {% else %} Купить в 1 клик {% endif %}
+  </button>
+  
+</div>

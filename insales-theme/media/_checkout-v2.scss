@@ -1,0 +1,187 @@
+/* titles */
+.co-title {
+  color: $color-text-primary;
+}
+
+.co-title--h2 {
+  font-size: $font-size-h2;
+}
+
+/* buttons */
+.co-button {
+  font-size: 1rem;
+
+  &[type="submit"],
+  &[name="commit"],
+  &[data-method="delete"],
+  &.co-button--small {
+    @extend .button;
+
+    @include button-variant($color-link-primary, $color-link-primary-hover);
+  }
+
+  &#get_pdf_receipt,
+  &#use_max_bonus_points {
+    @include button-variant($gray-light, $color-link-primary-hover);
+  }
+
+  &.co-button--small {
+    padding: calc(0.25rem + 1px) 0.75rem;
+    white-space: initial;
+  }
+}
+
+.co-button--link,
+.co-button--password_recover {
+  @include link-decor($color-link-primary, $color-link-primary-hover);
+}
+
+.co-modal-button {
+  @extend .button;
+}
+
+/* links */
+.co-link,
+.link {
+  @include link-decor($color-link-primary, $color-link-primary-hover);
+}
+
+/* input */
+
+.co-input-field,
+.co-input--file .co-input-wrapper {
+  border-radius: 0;
+}
+
+.co-input-select {
+  background-color: transparent;
+}
+
+.co-toggable_field-input {
+  color: $color-link-primary;
+
+  span {
+    border-radius: 50% !important;
+
+    &:after {
+      color: edit-color($color-link-primary) !important;
+    }
+  }
+}
+
+.co-input-description {
+  color: $color-text-primary;
+
+  a {
+    @include link-decor;
+  }
+}
+
+.co-bonus_points-maximum_points {
+  color: $color-text-primary;
+}
+
+.co-bonus_points-submit {
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+}
+
+/* tabs */
+
+.co-tabs-controls {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 260px;
+  flex: 1 0 260px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.co-tabs-node {
+  @extend .button;
+  @include button-variant($gray-light, $color-link-primary-hover);
+
+  margin: 0 0.25rem;
+  border-radius: 0 !important;
+
+  &--active {
+    background-color: $color-link-primary-hover;
+    color: edit-color($color-link-primary-hover);
+  }
+}
+
+/* prices */
+.co-price {
+  font-size: 1rem;
+}
+
+/* basket */
+.co-basket_subtotal {
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.co-basket_total-price {
+  font-size: $font-size-medium;
+}
+
+/* forms */
+.co-delivery_adress-form {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+
+  .co-input {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
+/* modals */
+.co-modal {
+  background-color: $color-background-primary;
+  border: 1px solid $color-border-primary;
+}
+
+.co-modal-close {
+  @include link-decor;
+}
+
+.js-modal-toggler {
+  @include link-decor;
+}
+
+/** order */
+.co-order-state {
+  border-radius: 0;
+}
+
+.co-section--checkout_order {
+  padding-bottom: 2rem;
+}
+
+.co-sidebar {
+  box-shadow: none;
+}
+// .co-delivery_method:last-child {
+//     display: none;
+// }
+#create_order {
+background:#72c766;
+}
+
+.co-input.co-input--required.co-input--tel.co-input--error .co-input-label:before {
+	content: 'Поле не заполнено';
+    color: red;
+	font-size: 0.9em;
+    text-align: right;
+    font-weight: normal;
+    position: absolute;
+	top: 0;
+    right: 0;
+}
+.co-input--error .co-input-field {
+	border: 2px solid red;
+}

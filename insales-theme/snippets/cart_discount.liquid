@@ -1,0 +1,34 @@
+{% if cart.enable_coupon? %}
+  <div id="js-coupon-wrapper" class="discount-wrapper">
+
+    <div class="discount-form">
+      <div class="discount-row">
+        <input type="text" placeholder="{{ messages.discount_placeholder }}" class="discount-input" name="cart[coupon]" value="{{ cart.coupon }}"/>
+
+        <button type="submit" class="discount-button button is-primary" data-coupon-submit>
+          <span class="button-text">
+            <i class="fa fa-check" aria-hidden="true"></i>
+
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    {% assign hide_notice = cart.invalid_coupon? | default: 'hidden' %}
+    <div class="discounts-notice notice is-error {{ hide_notice }}">
+      {{ cart.coupon_error }}
+    </div>
+  </div>
+{% endif %}
+
+
+
+<script type="text/template" hidden data-template-id="cart-discounts">
+  <% _.forEach( discounts, function (discount) { %>
+    <div class="discount-comment">
+      <span class="discount-description"><%= discount.description %>:</span>
+      <span class="discount-amount"><%= Shop.money.format(discount.amount) %></span>
+    </div>
+  <% }); %>
+</script>

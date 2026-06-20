@@ -1,0 +1,51 @@
+
+
+<div class="cart-item" data-product-id="{{ item.product.id }}" data-item-id="{{ item.id }}">
+  <div class="cart-item-inner item">
+
+    <div class="item-image-wrapper">
+      <div class="item-image-inner">
+        <a href="{{ item.product.url }}" title="{{ item.title }}" class="item-image-link">
+          <img title="{{ item.title }}" alt="{{ item.title }}" src="{{ item.image.large_url }}" class="item-image">
+        </a>
+      </div>
+    </div>
+
+    <div class="item-content">
+      <div class="item-caption">
+        <a href="{{ item.product.url }}" class="item-title">
+          {{ item.title }}
+        </a>
+        {% if item.sku %}
+        <div class="item-sku">
+          {{ messages.label_article }} : {{ item.sku }}
+        </div>
+        {% endif %}
+      </div>
+
+
+      <div class="item-prices is-sale-price js-item-price">
+        {{ item.sale_price | money }}
+      </div>
+
+      <div class="item-counter">
+        {% include "product_counter", is_item: true, start_quantity: item.quantity, variant_id: item.id %}
+      </div>
+
+      <div class="item-prices is-total-price js-item-total-price">
+        {{ item.total_price | money }}
+      </div>
+
+      <div class="item-delete">
+        <button type="submit" class="button is-item-delete is-transparent" data-item-delete="{{ item.id }}"></button>
+
+          <span data-favorite="{{ item.product.id }}" class="add-to-favourites"> 
+            <i class="fa fa-heart" aria-hidden="true"></i><span style="padding-left:1rem;text-transform:uppercase;"></span>
+          </span>
+        
+        </div>
+
+    </div>
+  </div>
+
+</div><!-- /.cart-item -->

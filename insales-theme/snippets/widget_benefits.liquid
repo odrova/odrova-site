@@ -1,0 +1,79 @@
+{% comment %}
+{% if data.blocks.size > 0 %}
+
+<div class="benefits-wrapper">
+
+  <div class="benefits">
+    <div class="benefits-heading-wrapper">
+      <div class="benefits-heading">
+        {{ data.name | editable }}
+      </div>
+    </div>
+
+    <div class="benefits-list row">
+
+      {% for benefit in data.blocks %}
+
+        <span class="benefit cell-">
+
+          <div class="benefit-inner">
+            <div class="benefit-image">
+              <div class="image-container is-rectangle">
+                <img src="{{ benefit.image }}" title="{{ benefit.description }}" alt="{{ benefit.description }}" />
+              </div>
+            </div>
+
+            <div class="benefit-caption">
+              {{ benefit.description | editable }}
+            </div>
+          </div>
+
+        </span>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+{% endcomment %}
+
+{% if block_lists.homepage-benefits.blocks.size > 0 %}
+
+<div class="benefits-wrapper">
+
+  <div class="benefits">
+    <div class="benefits-heading-wrapper">
+      <div class="benefits-heading">
+        {{ data.name | editable }}
+      </div>
+    </div>
+
+    <div class="benefits-list row">
+
+      {% for block in block_lists.homepage-benefits.blocks %}
+
+        <span class="benefit cell-">
+
+          <div class="benefit-inner">
+            <div class="benefit-image">
+              <div class="image-container is-rectangle">
+                <a class="benefit-link" href="{{ block.index-benefit-link }}"><img src="{{ block.index-benefit-icon }}" title="{{ block.title }}" alt="{{ block.title }}" /></a>
+              </div>
+            </div>
+
+            <div class="benefit-caption">
+              <a class="benefit-link" href="{{ block.index-benefit-link }}">{{ block.index-benefit-description | editable }}</a>
+            </div>
+          </div>
+
+        </span>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}

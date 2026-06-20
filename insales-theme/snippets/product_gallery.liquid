@@ -1,9 +1,270 @@
 <div class="product-gallery">
+  {%- comment -%} ODROVA 13.06.2026: свой главный кадр для мобильных — тема удаляет
+      родной gallery-main-wrapper на телефонах своим JS. Виден только ≤760px (CSS).
+      Тап по миниатюре подменяет кадр (скрипт ниже). {%- endcomment -%}
+  <div class="od-mobile-main">
+    <img src="{{ product.first_image.large_url }}" alt="{{ product.first_image.title | default: product.title }}">
+    <span class="od-mobile-main__count"></span>
+    <span class="od-mobile-main__zoom" aria-hidden="true">⤢</span>
+  </div>
+  <div class="od-lightbox" hidden>
+    <button class="od-lightbox__close" aria-label="Закрыть">×</button>
+    <button class="od-lightbox__nav od-lightbox__nav--prev" aria-label="Предыдущее">‹</button>
+    <button class="od-lightbox__nav od-lightbox__nav--next" aria-label="Следующее">›</button>
+    <span class="od-lightbox__count"></span>
+    <div class="od-lightbox__stage"><img src="" alt=""></div>
+  </div>
+  <script>
+    /* ДЕСКТОП: стрелки нижней карусели листают и ГЛАВНОЕ фото (с циклом).
+       Лента крутится штатно swiper'ом — мы лишь дополнительно меняем большой кадр. */
+    $(function () {
+      if (window.matchMedia('(max-width: 760px)').matches) return;  // только десктоп
+
+      // реальные миниатюры по порядку (без дублей swiper и без видео)
+      function odThumbs() {
+        var seen = {}, list = [];
+        $('.od-product-page .gallery-thumbs-wrapper.hidden-sm a.js-copy-src').each(function () {
+          var $a = $(this);
+          if ($a.closest('.swiper-slide-duplicate').length) return;      // дубли карусели пропускаем
+          var s = $a.data('image-large') || $a.attr('href');
+          if (!s || seen[s]) return;
+          seen[s] = 1; list.push($a);
+        });
+        return list;
+      }
+      // индекс активной = по картинке в главном кадре
+      function odActiveIndex(thumbs) {
+        var cur = $('.od-product-page .gallery-main-wrapper .slide-image').attr('src') || '';
+        for (var i = 0; i < thumbs.length; i++) {
+          var s = thumbs[i].data('image-large') || thumbs[i].attr('href') || '';
+          // сравниваем по базовому имени файла (large/medium/original отличаются префиксом)
+          var a = s.split('/').pop().replace(/^(large_|medium_|small_|micro_)/, '');
+          var b = cur.split('/').pop().replace(/^(large_|medium_|small_|micro_)/, '');
+          if (a && a === b) return i;
+        }
+        return 0;
+      }
+      function odGo(dir) {
+        var thumbs = odThumbs();
+        if (!thumbs.length) return;
+        var i = odActiveIndex(thumbs);
+        var n = ((i + dir) % thumbs.length + thumbs.length) % thumbs.length;  // цикл
+        thumbs[n].trigger('click');   // тема сама сменит главное фото и активную миниатюру
+      }
+      // СВОЯ рамка активной миниатюры (не полагаемся на класс темы is-checked —
+      // после переименования свойства тема перестала его корректно переставлять).
+      // Вешаем собственный класс od-thumb-active; CSS рамки зацеплен за него.
+      function odDeskMark() {
+        var thumbs = odThumbs();
+        if (!thumbs.length) return;
+        var act = odActiveIndex(thumbs);
+        // снимаем со ВСЕХ ссылок-миниатюр (включая дубли swiper), ставим на нужную
+        $('.od-product-page .gallery-thumbs-wrapper.hidden-sm a.js-copy-src').removeClass('od-thumb-active');
+        var actSrc = thumbs[act].data('image-large') || thumbs[act].attr('href') || '';
+        var base = actSrc.split('/').pop().replace(/^(large_|medium_|small_|micro_)/, '');
+        $('.od-product-page .gallery-thumbs-wrapper.hidden-sm a.js-copy-src').each(function () {
+          var s = $(this).data('image-large') || $(this).attr('href') || '';
+          var b = s.split('/').pop().replace(/^(large_|medium_|small_|micro_)/, '');
+          if (base && b === base) $(this).addClass('od-thumb-active');  // и на дубль тоже
+        });
+      }
+      // наблюдаем за главным кадром: меняется src — переставляем рамку
+      // (срабатывает на стрелки, тап по миниатюре и собственный swiper темы)
+      var odMain = document.querySelector('.od-product-page .gallery-main-wrapper .slide-image');
+      if (odMain) {
+        new MutationObserver(function () { setTimeout(odDeskMark, 20); })
+          .observe(odMain, { attributes: true, attributeFilter: ['src'] });
+      }
+      // вешаем на стрелки галереи (десктопная лента .hidden-sm)
+      $(document).on('click', '.od-product-page .gallery-thumbs-wrapper.hidden-sm .product-slider-next, .od-product-page .gallery-thumbs-wrapper.hidden-sm .swiper-button-next', function () {
+        setTimeout(function () { odGo(1); odDeskMark(); }, 30);
+      });
+      $(document).on('click', '.od-product-page .gallery-thumbs-wrapper.hidden-sm .product-slider-prev, .od-product-page .gallery-thumbs-wrapper.hidden-sm .swiper-button-prev', function () {
+        setTimeout(function () { odGo(-1); odDeskMark(); }, 30);
+      });
+      // тап по самой миниатюре — тоже переставить рамку
+      $(document).on('click', '.od-product-page .gallery-thumbs-wrapper.hidden-sm a.js-copy-src', function () {
+        setTimeout(odDeskMark, 40);
+      });
+      // листание стрелками клавиатуры ← → (десктоп). Не мешаем, если человек
+      // печатает в поле или открыт лайтбокс.
+      $(document).on('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        var tag = (e.target.tagName || '').toLowerCase();
+        if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+        if (!$('.od-lightbox').attr('hidden')) return;  // лайтбокс открыт — не вмешиваемся
+        e.preventDefault();
+        odGo(e.key === 'ArrowRight' ? 1 : -1);
+        odDeskMark();
+      });
+      setTimeout(odDeskMark, 600);  // стартовая установка после инициализации swiper
+    });
+  </script>
+  <script>
+    $(function () {
+      if (!window.matchMedia('(max-width: 760px)').matches) return;
+
+      // --- освобождаем ленту миниатюр от swiper, чтобы работала нативная прокрутка ---
+      // swiper перехватывает touch на .gallery-thumbs и блокирует горизонтальный скролл.
+      // Клонируем узел: копия не несёт swiper-обработчиков → палец прокручивает ленту.
+      // Тап по миниатюре работает через делегирование на document (ниже), поэтому жив.
+      setTimeout(function () {
+        document.querySelectorAll('.od-product-page .gallery-thumbs-wrapper.hidden-sm .gallery-thumbs').forEach(function (el) {
+          var clone = el.cloneNode(true);     // глубокая копия без слушателей событий
+          el.parentNode.replaceChild(clone, el);
+        });
+      }, 400);  // ждём инициализацию swiper темы, затем разоружаем
+
+      var odImgs = [], odThumbs = [], odIdx = 0;
+      $('.od-product-page .gallery-thumbs a.js-copy-src').each(function () {
+        var $a = $(this);
+        // видео-плитки в свайп не берём: их large — пустой/чёрный кадр
+        if ($a.closest('[data-video], .is-video, .gallery-video').length) return;
+        if ($a.is('[data-video]') || $a.find('.video-thumb, .od-video-thumb, .play').length) return;
+        var s = $a.data('image-large') || $a.attr('href');
+        if (s && /\.(jpe?g|png|webp|gif)/i.test(s) && odImgs.indexOf(s) === -1) {
+          odImgs.push(s);
+          // сама ссылка-миниатюра: тема метит активную классом is-checked,
+          // вешаем его же — один источник, рамка не двоится
+          odThumbs.push($a.get(0));
+        }
+      });
+      // ставим свой класс od-thumb-active на миниатюру i, снимаем со всех прочих
+      function odMarkThumb(i) {
+        for (var k = 0; k < odThumbs.length; k++) {
+          if (!odThumbs[k]) continue;
+          odThumbs[k].classList.toggle('od-thumb-active', k === i);
+        }
+      }
+      function odShow(i) {
+        if (!odImgs.length) return;
+        odIdx = (i % odImgs.length + odImgs.length) % odImgs.length;  // всегда в диапазоне → цикл
+        $('.od-mobile-main img').attr('src', odImgs[odIdx]);
+        $('.od-mobile-main__count').text((odIdx + 1) + ' / ' + odImgs.length);
+        odMarkThumb(odIdx);
+      }
+      if (odImgs.length) odShow(0);  // кадр и счётчик синхронны с первой миниатюрой
+      // тап по миниатюре — показать её в большом кадре
+      $(document).on('click', '.od-product-page .gallery-thumbs a.js-copy-src', function (e) {
+        e.preventDefault();
+        var s = $(this).data('image-large') || $(this).attr('href');
+        var k = odImgs.indexOf(s);
+        if (k > -1) odShow(k);
+      });
+      // свайп по большому кадру — листание (порог 20px), без дёрганья страницы
+      var odX = null, odY = null, odLock = false;
+      var $frame = $('.od-mobile-main');
+      $frame.on('touchstart', function (e) {
+        if (e.originalEvent.touches.length > 1) { odX = null; odLock = false; return; }
+        var t = e.originalEvent.touches[0];
+        odX = t.clientX; odY = t.clientY; odLock = false;
+      });
+      $frame.on('touchmove', function (e) {
+        if (odX === null) return;
+        if (e.originalEvent.touches.length > 1) { odLock = false; return; } // зум двумя пальцами — не мешаем
+        var t = e.originalEvent.touches[0];
+        var dx = t.clientX - odX, dy = t.clientY - odY;
+        if (odLock || (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy))) {
+          odLock = true;
+        }
+      });
+      // нативный слушатель с passive:false — гасит прокрутку только при одиночном горизонтальном свайпе
+      if ($frame.length) {
+        $frame[0].addEventListener('touchmove', function (e) {
+          if (odLock && e.touches.length === 1) e.preventDefault();
+        }, { passive: false });
+      }
+      $frame.on('touchend', function (e) {
+        if (odX === null) return;
+        var t = e.originalEvent.changedTouches[0];
+        var dx = t.clientX - odX, dy = t.clientY - odY;
+        odX = null;
+        if (Math.abs(dx) > 20 && Math.abs(dx) > Math.abs(dy)) {
+          odShow(dx < 0 ? odIdx + 1 : odIdx - 1);
+        }
+      });
+
+      // ---- полноэкранный просмотр по тапу (тап-зум как у маркетплейсов) ----
+      var $lb = $('.od-lightbox'), $lbImg = $lb.find('img'), $lbCnt = $lb.find('.od-lightbox__count');
+      function lbShow(i) {
+        if (!odImgs.length) return;
+        odIdx = (i % odImgs.length + odImgs.length) % odImgs.length;
+        $lbImg.attr('src', odImgs[odIdx]);
+        $lbCnt.text((odIdx + 1) + ' / ' + odImgs.length);
+        $('.od-mobile-main img').attr('src', odImgs[odIdx]);
+        $('.od-mobile-main__count').text((odIdx + 1) + ' / ' + odImgs.length);
+        odMarkThumb(odIdx);
+      }
+      function lbOpen() { if (!odImgs.length) return; lbScale = 1; lbTx = 0; lbTy = 0; lbShow(odIdx); $lb.removeAttr('hidden'); $('body').css('overflow', 'hidden'); }
+      function lbClose() { $lb.attr('hidden', 'hidden'); $('body').css('overflow', ''); }
+      $frame.on('click', function () { if (!odLock) lbOpen(); });
+      $lb.find('.od-lightbox__close').on('click', lbClose);
+      $lb.find('.od-lightbox__nav--prev').on('click', function (e) { e.stopPropagation(); lbShow(odIdx - 1); lbReset(); });
+      $lb.find('.od-lightbox__nav--next').on('click', function (e) { e.stopPropagation(); lbShow(odIdx + 1); lbReset(); });
+      $lb.on('click', function (e) { if (e.target === $lb[0] || $(e.target).hasClass('od-lightbox__stage')) lbClose(); });
+      // свайп/зум внутри лайтбокса
+      var lbX = null, lbY = null;
+      var lbScale = 1, lbTx = 0, lbTy = 0;          // текущий зум и сдвиг
+      var pinchD0 = 0, pinchS0 = 1;                  // база щипка
+      var panX0 = 0, panY0 = 0, tx0 = 0, ty0 = 0;    // база перетаскивания
+      var lastTap = 0;
+      function lbApply() {
+        $lbImg.css('transform', 'translate(' + lbTx + 'px,' + lbTy + 'px) scale(' + lbScale + ')');
+      }
+      function lbReset() { lbScale = 1; lbTx = 0; lbTy = 0; lbApply(); }
+      function dist(t) { var dx = t[0].clientX - t[1].clientX, dy = t[0].clientY - t[1].clientY; return Math.hypot(dx, dy); }
+
+      $lb.on('touchstart', function (e) {
+        var t = e.originalEvent.touches;
+        if (t.length === 2) {                        // щипок
+          pinchD0 = dist(t); pinchS0 = lbScale;
+          lbX = null;
+        } else if (t.length === 1) {
+          if (lbScale > 1) {                         // перетаскивание увеличенного
+            panX0 = t[0].clientX; panY0 = t[0].clientY; tx0 = lbTx; ty0 = lbTy;
+          } else {                                   // свайп-листание
+            lbX = t[0].clientX; lbY = t[0].clientY;
+          }
+        }
+      });
+      $lb.on('touchmove', function () {});  // jQuery-обработчик ниже заменён нативным
+      if ($lb.length) {
+        $lb[0].addEventListener('touchmove', function (e) {
+          var t = e.touches;
+          if (t.length === 2 && pinchD0) {
+            e.preventDefault();
+            lbScale = Math.min(4, Math.max(1, pinchS0 * dist(t) / pinchD0));
+            lbApply();
+          } else if (t.length === 1 && lbScale > 1) {
+            e.preventDefault();
+            lbTx = tx0 + (t[0].clientX - panX0);
+            lbTy = ty0 + (t[0].clientY - panY0);
+            lbApply();
+          }
+        }, { passive: false });
+      }
+      $lb.on('touchend', function (e) {
+        // двойной тап = зум/сброс
+        var now = Date.now();
+        if (e.originalEvent.touches.length === 0 && (now - lastTap) < 300) {
+          lbScale > 1 ? lbReset() : (lbScale = 2.5, lbApply());
+          lastTap = 0; lbX = null; return;
+        }
+        lastTap = now;
+        // свайп-листание только без зума
+        if (lbX !== null && lbScale === 1) {
+          var ct = e.originalEvent.changedTouches[0], dx = ct.clientX - lbX, dy = ct.clientY - lbY;
+          if (Math.abs(dx) > 30 && Math.abs(dx) > Math.abs(dy)) { lbShow(dx < 0 ? odIdx + 1 : odIdx - 1); lbReset(); }
+        }
+        lbX = null; pinchD0 = 0;
+      });
+    });
+  </script>
   <div class="gallery-main-wrapper">
     {% assign image_title = product.first_image.title | default: product.title %}
 
     <a href="{{ product.first_image.original_url }}" class="image-container"  id="gallery"  title="{{ image_title }}" data-gallery-count="1">
-      <img src="{{ product.first_image.medium_url }}" alt="{{ image_title }}" title="{{ image_title }}" class="slide-image" >
+      <img src="{{ product.first_image.large_url }}" alt="{{ image_title }}" title="{{ image_title }}" class="slide-image" >
     </a>
   </div>
   <!-- Для тыкалок js -->
@@ -27,14 +288,31 @@
         {% endfor %}
         {% for video in product.video_links  %}
          <div data-slider-slide >
+            {%- comment -%} VK: из ссылки vkvideo.ru/video-OID_ID собираем эмбед video_ext.php?oid=OID&id=ID {%- endcomment -%}
+            {%- assign od_is_vk = false -%}
+            {%- if video.url contains 'vkvideo.ru' or video.url contains 'vk.com/video' -%}
+              {%- assign od_is_vk = true -%}
+              {%- assign od_vkraw = video.url | split: 'video' | last -%}{%- comment -%} -OID_ID (возможно с хвостом) {%- endcomment -%}
+              {%- assign od_vkraw = od_vkraw | split: '?' | first | split: '%2F' | first -%}
+              {%- assign od_vk_oid = od_vkraw | split: '_' | first -%}
+              {%- assign od_vk_id = od_vkraw | split: '_' | last -%}
+              {%- assign od_vk_embed = 'https://vkvideo.ru/video_ext.php?oid=' | append: od_vk_oid | append: '&id=' | append: od_vk_id | append: '&hd=2&autoplay=1' -%}
+            {%- endif -%}
+            {%- if od_is_vk -%}
+            <a class="slide-inner image-container is-square slide-video od-vk-video" data-fancybox data-type="iframe" data-src="{{ od_vk_embed }}" href="javascript:;" data-gallery-count="{{ forloop.index }}" title="{{ image_title }}">
+              <span class="od-video-thumb"></span>
+              <i class="fa fa-play"></i>
+            </a>
+            {%- else -%}
             <a class="slide-inner image-container is-square fancybox slide-video" data-fancybox  href="{{video.url}}" data-gallery-count="{{ forloop.index }}"  title="{{ image_title }}" >
               {% if video.url contains 'youtu' %}
-              <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
+              <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" | split:"?" | first | split:"&" | first }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
               {% else %}
               <span class="od-video-thumb"></span>
               {% endif %}
               <i class="fa fa-play"></i>
             </a>
+            {%- endif -%}
           </div>
         {% endfor %}
       </div>
@@ -68,14 +346,29 @@
         {% endfor %}
 		{% for video in product.video_links  %}
  <div data-slider-slide >
+    {%- assign od_is_vk2 = false -%}
+    {%- if video.url contains 'vkvideo.ru' or video.url contains 'vk.com/video' -%}
+      {%- assign od_is_vk2 = true -%}
+      {%- assign od_vkraw2 = video.url | split: 'video' | last | split: '?' | first | split: '%2F' | first -%}
+      {%- assign od_vk_oid2 = od_vkraw2 | split: '_' | first -%}
+      {%- assign od_vk_id2 = od_vkraw2 | split: '_' | last -%}
+      {%- assign od_vk_embed2 = 'https://vkvideo.ru/video_ext.php?oid=' | append: od_vk_oid2 | append: '&id=' | append: od_vk_id2 | append: '&hd=2&autoplay=1' -%}
+    {%- endif -%}
+    {%- if od_is_vk2 -%}
+	<a class="slide-inner image-container slide-video od-vk-video" data-fancybox="gallery" data-type="iframe" data-src="{{ od_vk_embed2 }}" href="javascript:;" data-gallery-count="{{ forloop.index }}" title="{{ image_title }}">
+	  <span class="od-video-thumb"></span>
+       <i class="fa fa-play"></i>
+	</a>
+    {%- else -%}
 	<a class="slide-inner image-container fancybox slide-video"  data-fancybox="gallery"  href="{{video.url}}" data-gallery-count="{{ forloop.index }}"  title="{{ image_title }}" >
 	  {% if video.url contains 'youtu' %}
-	  <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
+	  <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" | split:"?" | first | split:"&" | first }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
 	  {% else %}
 	  <span class="od-video-thumb"></span>
 	  {% endif %}
        <i class="fa fa-play"></i>
 	</a>
+    {%- endif -%}
   </div>
 {% endfor %}
       </div>

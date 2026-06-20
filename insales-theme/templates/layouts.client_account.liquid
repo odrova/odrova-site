@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class='' lang='ru' xml:lang='ru' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  {% include "head" %}
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='noindex, nofollow' name='robots'>
+  <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout2.core' | global_stylesheet_tag }}
+
+  {% include "styles" %}
+</head>
+<body class='adaptive fhg-body' data-template="{{ template }}">
+<!-- {% include "gtm_body" %} -->
+  {% include "sticky" %}
+
+  <div class="header-wrapper">
+    <div class="container">
+      {% include "header" %}
+    </div>
+  </div>
+  <div class="top-panel-wrapper">
+    <div class="container">
+      {% include "top_panel" %}
+    </div>
+  </div>
+
+
+
+  {% comment %}<div class="catalog-menu-wrapper hidden-sm">
+    <div class="container">
+      {% include "menu", source_type: 'collection', source_handle: 'all', menu_class: 'catalog-menu', show_icon: false %}
+    </div>
+  </div>{% endcomment %}
+
+  <div class="content-wrapper container fhg-content">
+
+    <div class=' co-section--content_wrapper'>
+      {% if client %}
+      {% yield 'menu' %}
+      {% endif %}
+      <div class='co-section--content'>
+        <div class='co-section--checkout_header co-checkout-block--padded'>
+          <h1 class='co-checkout-title co-title co-title--h1'>
+            {% yield 'title' %}
+          </h1>
+        </div>
+        {% yield %}
+      </div>
+    </div>
+  </div>
+  <div class="footer-wrapper">
+    <div class="container">
+      {% include "footer" %}
+    </div>
+  </div>
+  
+  <script>
+    $(function(){$(".co-menu.co-menu--personal.co-checkout-block--padded").prepend("<div class='co-menu-item co-menu-item--personal'><a class='co-menu-link co-menu-link--personal co-link co-link--active co-menu-link--active' href='/page/favorites'>Избранное</a></div>")})
+  </script>
+  
+</body>
+{% include "modals" %}
+
+{% include "scripts" %}
+{% include 'cookie-banner' %}
+
+</html>

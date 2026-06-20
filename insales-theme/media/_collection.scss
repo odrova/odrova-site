@@ -1,0 +1,261 @@
+
+// toolbar
+
+.toolbar.collection-toolbar {
+  & .toolbar-inner {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+//=============================
+//          order
+//=============================
+
+.collection-order {
+  display: inline-block;
+
+  @include media-max(mc) {
+    width: 100%;
+  }
+}
+
+.collection-order-wrapper {
+
+  @include media-max(mc) {
+    width: 100%;
+  }
+}
+
+.toolbar-inner > .collection-order-wrapper {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.collection-order-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+
+  &.is-page-size {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-flow: row;
+    flex-flow: row;
+  }
+}
+
+.collection-order-field {
+  //border: 0px solid;
+  background-color: #fff;
+  line-height: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  cursor: pointer;
+  line-height: 23px;
+  border: 1px solid #eaeaea;
+  padding: 4px 20px;
+  margin: 0px 10px;
+  border-radius: 5px;
+
+  &.page-size {
+    line-height: 18px;
+    padding-left: 0.5rem;
+    padding: 0.5rem;
+    background-size: 0.6rem;
+    background-position-x: 86%;
+    padding-right: 1.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  @include media-max(mc) {
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 100%;
+    flex: 0 1 100%;
+  }
+
+  @include media-max(sm) {
+    border: 1px solid $color-background-secondary;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  };
+}
+
+//==============================
+//            filter
+//==============================
+
+.collection-description {
+  margin-bottom: 2rem;
+  
+  &:empty {
+    display: none;
+  }
+}
+
+
+.filter-heading {
+
+  @extend .sidebar-block-heading;
+}
+
+
+
+.filter-section-clear {
+  color: $color-link-primary;
+
+  @include own-icon($fa-plus,'Plus');
+
+  &.is-enable {
+    @include own-icon($fa-close, 'iconmonstr-iconic-font') {
+      font-size: 0.75em;
+      position: relative;
+      top: 0.25em;
+    }
+  }
+
+}
+.filter-item {
+  padding: 0.25rem;
+}
+
+.filter-section-name {
+  color: $color-link-primary;
+  padding-right: 0.25em;
+  padding-left: 0.25em;
+
+  @include transition-property(color);
+}
+
+
+
+.filter-section-toolbar {
+  display: none;
+}
+
+.ajs-body {
+  background-color: $color-background-primary;
+}
+
+.filter-items-wrapper {
+  --filter-background-color: $color-background-primary;
+  --filter-background-color-transparent: rgba($color-background-primary, 0);
+  padding-top: 0;
+}
+
+.filter-field {
+  padding: 0.35rem 0 0.35rem 0.55rem;
+
+  &:hover {
+    color: $color-link-primary-hover;
+  }
+}
+
+.filter-field-marker {
+  color: $color-text-primary;
+  width: 1rem;
+  height: 1rem;
+  outline: 1px solid $color-border-primary;
+  border: 3px solid #fff;
+  background-color: #fff;
+  margin-right: 0.4rem;
+  -ms-flex: 0 2 1rem;
+
+  &.is-active {
+    // @include icon($fa-plus);
+    background: lighten($color-link-primary-hover, 10%);
+  }
+}
+
+.form-field .form-toggle-marker {
+
+  @extend .filter-field-marker;
+}
+
+.filter-field-caption {
+  padding: 0 0 0 0.25rem;
+  color: $color-text-primary;
+}
+
+.filter-controls {
+  margin: -0.25rem;
+  margin-top: 1rem;
+}
+
+.button.filter-submit {
+  margin: 0.5rem 0.25rem;
+  width: 100%;
+  //padding: 0.5rem;
+}
+
+.noUi-target {
+  height: 0.32rem;
+}
+
+.noUi-handle {
+  width: 1.1rem;
+  height: 1.1rem;
+
+  &:focus {
+    background-color: $color-link-primary-hover;
+  }
+}
+//
+//.buy.text-right-xl,
+//.product-control .more-info {
+//
+//  & .button-buy {
+//      text-align: center;
+//      margin: auto;
+//      display: inline-block;
+//  }
+//
+//}
+//
+
+
+.filter-clear {
+  width: 100%;
+  margin: 0.25rem;
+  padding: 0.5rem;
+}
+
+.filter-empty {
+  width: auto;
+}
+
+.collection-description {
+
+  @include media-max(xs) {
+    margin: 0.5rem auto;
+  }
+}
+
+.button-breadcrumb {
+
+  @include media-min(sm) {
+    display: none;
+  }
+}
+
+.filter-section-control:hover  span {
+  color: $color-link-primary-hover;
+}
+
+.hidden-breadcrumbs {
+  padding: 0.15rem 0.5rem !important;
+}
+
+.co-toggable_field-input--radio input:focus + span,
+.co-toggable_field-input--radio input:checked + span {
+  color: $color-text-primary;
+}

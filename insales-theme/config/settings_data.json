@@ -1,0 +1,40 @@
+{
+  "common_js_version": "v2",
+  "current": "custom",
+  "presets": {
+    "custom": {
+      "color_background_primary": "#ffffff",
+      "color_text_primary": "#212121",
+      "color_link_primary": "#ea580c",
+      "color_link_primary_hover": "#3f51b5",
+      "color_border_primary": "#d3dee7",
+      "color_background_secondary": "#080808",
+      "color_text_secondary": "#ffffff",
+      "color_link_secondary": "#ffffff",
+      "color_link_secondary_hover": "#ededf2",
+      "color_border_secondary": "#d3dee7",
+      "body_background_color": "#ffffff",
+      "body_background_type": "default",
+      "font_family_primary": "google:Montserrat",
+      "font_size_primary": "16px",
+      "logotype_type": "text",
+      "logotype_font_family": "google:Montserrat",
+      "logotype_font_size": "35px",
+      "phone": "from_settings",
+      "email": "from_settings",
+      "promo_slider_auto_time": "2",
+      "index_vid_show": "1",
+      "index_vid_link": "https://player.vimeo.com/video/898708845",
+      "category_description_position": "before_products",
+      "product_not_available": "shown",
+      "product_share_hide": "1",
+      "product_compare_hide": "1",
+      "article_author_hide": "1",
+      "feedback_captcha_enabled": "1",
+      "_settings_version": 1766479376.0290112
+    }
+  },
+  "remote_theme_id": 411,
+  "source_account_id": null,
+  "theme_title": "ODROVA new"
+}

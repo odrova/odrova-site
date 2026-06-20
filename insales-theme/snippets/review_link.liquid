@@ -1,0 +1,25 @@
+ <a class="reviews-link" href="{{ product.url }}#product-reviews">
+        
+        {% if product.rating %}
+        <div data-product-rating="{{ product.rating }}">  </div>
+		{% endif %}
+        
+          {% unless product.rating %}
+        
+            <div class="product-rating">   
+              <span class="product-rating-point"></span>
+              <span class="product-rating-point"></span>  
+              <span class="product-rating-point"></span>  
+              <span class="product-rating-point"></span>  
+              <span class="product-rating-point "></span> 
+            </div>
+
+          {% endunless %}
+          
+      	<span>
+          <i class="fa fa-comment" aria-hidden="true"></i>
+          <span>Отзывы</span>
+          {% comment %}<span>( 👈 )( {{ product.reviews.size }} )</span> {% endcomment %}
+        </span>
+
+      </a>

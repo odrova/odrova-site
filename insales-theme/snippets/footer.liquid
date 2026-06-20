@@ -1,0 +1,51 @@
+
+<footer class="footer ">
+<div class="footer-bottom-wrapper row flex-between">
+  <div class="footer-block js-contacts-header cell-4 cell-12-sm ">
+    {% comment %}
+    <div id="referer_code_block">
+		<span style="display:flex;flex-direction:column">
+		<span style="margin-top: 5px;"></span>
+		<span style="font-size: 11px;margin-top: 5px;" class="xs-hidden">Сообщите этот код менеджеру</span>
+	</span></div>
+    {% endcomment %}
+    {{ blocks.kartochka-predprinimatelya.content }}
+  </div>
+  <div class="footer-block js-contacts-header cell-4 cell-12-sm ">
+    <div class="footer-menu-title">МЕНЮ</div>
+    {% include "menu", source_type: 'menu', source_handle: 'footer-menu', menu_class: 'footer-menu' %}
+  </div>
+  <div class="social-link-wrapper footer-block text-right text-center-sm cell-4 cell-12-sm cell-12-xs flex-first-sm ">
+    {{ blocks.kontakty.content }}
+    {% unless settings.social_media_hide  %}
+    <div class="social-header">
+      Мы в соц. сетях
+    </div>
+    {% include "social_links" %}
+    {% endunless %}
+  </div>
+  <div class="cell-12">
+    © {{ account.title }}
+    
+  </div>
+  
+</div>
+<button class="js-arrow-up">
+</button>
+
+</footer>
+{% comment %}
+<script>
+function getIP(json) { 
+    $('#referer_code_block,.js-code-manager').html(`
+		<span style="display:flex;flex-direction:column">
+		<span style="margin-top: 5px;" >${$.cookie('roistat_visit')}</span>
+		<span style="font-size: 11px;margin-top: 5px;" class="xs-hidden">Сообщите этот код менеджеру</span>
+	`);
+}
+  $(()=>{
+  	getIP()
+  })
+</script>
+{% endcomment %}
+

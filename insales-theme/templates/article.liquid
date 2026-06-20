@@ -1,0 +1,76 @@
+{% assign hide_image = false %}
+{% if settings.article_image_hide or article.image.large_url contains 'no_image' %}
+  {% assign hide_image = true %}
+{% endif %}
+{% unless hide_image %}
+  <div class="article-block-image">
+    <img src="{{ article.image.original_url }}" alt="{{ article.title }}" title="{{ article.title }}" class="article-image">
+  </div>
+{% endunless %}
+
+<div class="article-body editor">
+  {{ article.content | editable }}
+</div>
+
+<div class="article-toolbar toolbar at-bottom">
+  <span class="date">
+    {{ article.created_at | date: "%d.%m.%Y" }}
+  </span>
+  {% unless settings.article_author_hide  %}
+  {% if article.author %}
+    <span class="author">
+
+      {{ article.author }}
+    </span>
+  {% endif %}
+  {% endunless %}
+
+</div>
+
+ {% unless settings.product_share_hide %}
+  <div class="product-share share">
+    <script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+    <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,gplus,twitter,lj"  data-description='{{ article.preview | strip_html | truncatewords: 25, " ..." }}' data-image="{{ product.first_image.original_url }}" data-counter=""></div>
+  </div>
+  {% endunless %}
+
+{% if article.tags.size > 0 %}
+  <div class="article-tags-wrapper">
+    <p class="article-tags-header">
+      {{ messages.tags_title }}
+    </p>
+
+    <ul class="tag-list">
+      {% for tag in article.tags %}
+      <li class="tag ">
+        <a href="{{ tag.url }}" title="{{ tag.title }}" class="tag-link">
+        <span href="{{ tag.url }}"  class="tag-text ">
+          {{ tag.title }}
+      </span>  <span class="tag-count">{{ tag.articles_count }}</span></a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+{% if blog.comments_enabled? %}
+  <div id="comments-block" class="comments-wrapper">
+
+    <div class="comments-heading-wrapper">
+      <p class="comments-heading">
+        {{ messages.comments }}
+      </p>
+    </div>
+
+    {% include 'comment_list', comments_list: article.comments, moderated: blog.moderated? %}
+
+    {% include 'article_comments' %}
+  </div>
+
+{% endif %}
+
+{% if article.related_products.size > 0 %}
+  {% include "product_slider", slider_products: article.related_products, slider_class: 'article-related-products', slider_heading: messages.article_related_products %}
+{% endif %}
+

@@ -1,0 +1,40 @@
+{% assign product_limit = product_limit | default: 100 %}
+{% assign is_bundle = is_bundle | default: false %}
+
+{% if slider_products.size > 0 %}
+
+  <div class="cell-12 product-slider is-{{ slider_class }}" data-slider="{{ slider_class }}">
+
+    <div class="product-slider-heading-wrapper">
+      <p class="product-slider-heading">{{ slider_heading }}</p>
+
+      <div  class="product-slider-controls" data-slider-controls>
+        <button class="product-slider-prev" data-slider-prev></button>
+        <button class="product-slider-next" data-slider-next></button>
+      </div>
+    </div>
+
+    {% if is_bundle %}
+      {% for component in slider_products limit:product_limit %}
+        <div class="{{ slider_class }}" data-slider-slide>
+          {% include 'product_card', card_class: 'is-bundle-product', bundle_component: component %}
+        </div>
+      {% endfor %}
+
+    {% else %}
+      {% for product in slider_products limit:product_limit %}
+        <div class="{{ slider_class }}" data-slider-slide>
+          {% include 'product_card', card_class: slider_class %}
+        </div>
+      {% endfor %}
+
+    {% endif %}
+  </div>
+
+{% endif %}
+
+{% assign product_limit = null %}
+{% assign slider_products = null %}
+{% assign slider_class = null %}
+{% assign slider_heading = null %}
+{% assign is_bundle = null %}

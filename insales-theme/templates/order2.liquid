@@ -1,0 +1,226 @@
+{% content_for 'title' %}
+Заказ № {{ order.number }}
+{% end_content_for %}
+<div class='co-section--content'>
+<div class='co-checkout-block--padded'>
+<div class='co-title co-title--h2'>Информация о заказе</div>
+<div class='co-order-information'>
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Дата оформления</div>
+<div class='co-order-information_value'>{{ order.created_at | date: '%d.%m.%Y %H:%M' }}</div>
+</div>
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Сумма и статус</div>
+<div class='co-order-information_value'>
+<span class='co-price'>{{ order.total_price | money }}</span>
+<span class='co-order-state'>{{ order.customer_status }}</span>
+{% if order.paid? %}
+<span class='co-order-state co-order-state--paid'>Оплачен</span>
+{% else %}
+<span class='co-order-state co-order-state--not_paid'>Не оплачен</span>
+{% if order.payment_needed? %}
+<a class="co-button co-button--small" href="{{ order.pay_url }}">{% if order.paid_with_bank_bill? %}Перейти к оплате (распечатать квитанцию){% else %}Перейти к оплате{% endif %}</a>
+{% endif %}
+  
+{% assign payment_title = order.payment_title | downcase %}
+{% if order.status != 'declined' and order.status != 'returned' %}
+	{% if payment_title contains "в кредит" or payment_title contains "в рассрочку" %}
+	  <script src="https://forma.tinkoff.ru/static/onlineScript.js"></script>
+	  <button type="button" class="co-button co-button--small" onclick="tinkoff.create({
+		sum: {{ order.total_price | plus: order.discounts.first.amount | replace: '.0', '.00' }},
+		items: [{% for item in order.items %}{name: '{{ item.title | escape }}', price: {{ item.sale_price.full | replace: '.0', '.00' }}, quantity: {{ item.quantity }}},{% endfor %}{name: '{{ order.delivery_title | escape }}', price: {{ order.delivery_price | replace: '.0', '.00' }}, quantity: 1}],
+		{% if payment_title contains '3 месяца' %}promoCode: 'installment_0_0_3_5,19',
+		{% elsif payment_title contains '4 месяца' %}promoCode: 'installment_0_0_4_6,43',
+		{% elsif payment_title contains '6 месяцев' %}promoCode: 'installment_0_0_6_8,84',
+		{% elsif payment_title contains '10 месяцев' %}promoCode: 'installment_0_0_10_13,42',
+		{% elsif payment_title contains '12 месяцев' %}promoCode: 'installment_0_0_12_15,59',{% endif %}
+		shopId: 'b94d3b01-bbef-4379-82f8-ee10ea279213',
+		showcaseId: '177c8b46-b857-47bf-9778-17f7cece15b4',
+	  })">Купить {% if payment_title contains 'в кредит' %}в кредит{% else %}в рассрочку{% endif %}</button>
+	{% endif %}
+{% endif %}
+  
+{% endif %}
+</div>
+  </div>
+{% comment %}{% include "system_messengers_notification_v2" %}{% endcomment %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Получать уведомления в мессенджерах</div>
+<div class='co-order-information_value'>  
+  
+  {% if order.can_notify_client? %}
+  {% unless order.client.whatsapp_subscription? %}
+    {% if order.client.messengers.whats_app["display_only_on_desktop"] %}
+      {% assign whats_app_class = 'co-social_login--desktop_only' %}
+    {% elsif order.client.messengers.whats_app["display_only_on_mobile"] %}
+      {% assign whats_app_class = 'co-social_login--mobile_only' %}
+    {% else %}
+      {% assign whats_app_class = '' %}
+    {% endif %}
+    <form action="/orders/{{ order.key }}/subscribe_whats_app" method="post" class="co-social_login-button_group {{ whats_app_class }}">
+      <input id="subscribe_whats_app" type="submit" class="co-social_login-button" value="">
+      
+    </form>
+  {% endunless %}
+
+  {% unless order.client.viber_subscription? %}
+    {% if order.client.messengers.viber["display_only_on_desktop"] %}
+      {% assign viber_class = 'co-social_login--desktop_only' %}
+    {% elsif order.client.messengers.viber["display_only_on_mobile"] %}
+      {% assign viber_class = 'co-social_login--mobile_only' %}
+    {% else %}
+      {% assign viber_class = '' %}
+    {% endif %}
+    <div class="co-social_login-button_group {{ viber_class }}">
+      <a href="{{ order.viber_link }}" class="co-social_login-button" id="subscribe_viber" ></a>
+      
+    </div>
+  {% endunless %}
+
+  {% unless order.client.telegram_subscription? %}
+  {% if order.client.messengers.telegram["display_only_on_desktop"] %}
+      {% assign telegram_class = 'co-social_login--desktop_only' %}
+    {% elsif order.client.messengers.telegram["display_only_on_mobile"] %}
+      {% assign telegram_class = 'co-social_login--mobile_only' %}
+    {% else %}
+      {% assign telegram_class = '' %}
+    {% endif %}
+    <div class="co-social_login-button_group {{telegram_class }}">
+      <a href="{{ order.telegram_link }}" class="co-social_login-button" target="_blank" id="subscribe_telegram"></a>
+      
+    </div>
+  {% endunless %}
+
+  {% if order.vk_link %}
+  <div id="subscribe_vk"></div>
+  <script src="https://vk.com/js/api/openapi.js?160" type="text/javascript"></script>
+  <script src="{{order.vk_link}}&element_name=subscribe_vk" type="text/javascript"></script>
+  {% endif %}
+
+  {% if order.client.subscription? %}
+    <form action="/orders/{{ order.key }}/unsubscribe" method="POST" class="co-social_login-button_form">
+      <input type="submit" class="co-button co-button--small co-social_login-button" value="Отключить уведомления">
+    </form>
+  {% endif %}
+{% endif %}
+  
+</div>
+</div>
+
+
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Способ оплаты</div>
+<div class='co-order-information_value'>{{ order.payment_title }}</div>
+</div>
+{% if order.payment_description != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'></div>
+<div class='co-order-information_value'>{{ order.payment_description | strip_html }}</div>
+</div>
+{% endif %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Способ доставки</div>
+<div class='co-order-information_value'>{{ order.delivery_description_with_tariff | strip_html }}</div>
+</div>
+{% if order.delivery_info.outlet.address != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Адрес точки самовывоза</div>
+<div class='co-order-information_value'>
+<a href='//maps.yandex.ru/?text={{ order.delivery_info.outlet.address | url_encode }}' target='_blank' title='Yandex'>{{ order.delivery_info.outlet.address }}</a>
+</div>
+</div>
+{% if order.delivery_info.outlet.description != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'></div>
+<div class='co-order-information_value'>{{ order.delivery_info.outlet.description | strip_html }}</div>
+</div>
+{% endif %}
+{% else %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Адрес доставки</div>
+<div class='co-order-information_value'>{{ order.shipping_address.full_delivery_address }}</div>
+</div>
+{% endif %}
+{% if order.delivery_date != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Дата доставки</div>
+<div class='co-order-information_value'>{{ order.delivery_date | date: "%d.%m.%Y" }}</div>
+</div>
+{% endif %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Получатель</div>
+<div class='co-order-information_value'>{{ order.shipping_address.full_name }} {{ order.shipping_address.phone }}</div>
+</div>
+{% if order.client.email != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>E-mail</div>
+<div class='co-order-information_value'>{{ order.client.email }}</div>
+</div>
+{% endif %}
+{% if order.comment != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>Комментарии к заказу</div>
+<div class='co-order-information_value'>{{ order.comment | strip_html | newline_to_br }}</div>
+</div>
+{% endif %}
+{% for field in order.result_fields %}
+{% if field.value != blank %}
+<div class='co-order-information_row'>
+<div class='co-order-information_title'>{{ field.client_title }}</div>
+<div class='co-order-information_value'>
+{% if field.is_file? %}
+<a target="_blank" href="{{ field.value }}">{{ field.file_name }}</a>
+{% else %}
+{{ field.value }}
+{% endif %}
+</div>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+<div class='co-title co-title--h2'>Состав заказа</div>
+<table class='co-table co-table--to_card'>
+<tr class='co-table-row co-table-row--head'>
+<td class='co-table-cell co-table-cell--head'>Наименование</td>
+<td class='co-table-cell co-table-cell--head'>Кол-во</td>
+<td class='co-table-cell co-table-cell--head'>Стоимость</td>
+</tr>
+{% for item in order.items %}
+<tr class='co-table-row co-table-row--body co-table-row--striped'>
+<td class='co-table-cell co-table-cell--body' data-title='Наименование'>{{ item.title }}</td>
+<td class='co-table-cell co-table-cell--body' data-title='Кол-во'>{{ item.quantity}}</td>
+<td class='co-table-cell co-table-cell--body' data-title='Стоимость'>{{ item.total_price.with_margin | money }}</td>
+</tr>
+{% endfor %}
+{% for discount in order.discounts %}
+<tr class='co-table-row co-table-row--body co-table-row--striped'>
+<td class='co-table-cell co-table-cell--body co-table-cell--hide@xs'>
+{{ discount.description }}
+</td>
+<td class='co-table-cell co-table-cell--body' colspan='2' data-title='{{ discount.description }}'>-{{ discount.amount.with_margin | money }}</td>
+</tr>
+{% endfor %}
+{% unless order.delivery_price == 0 %}
+<tr class='co-table-row co-table-row--body co-table-row--striped'>
+<td class='co-table-cell co-table-cell--body co-table-cell--hide@xs'>Доставка</td>
+<td class='co-table-cell co-table-cell--body' colspan='2' data-title='Доставка'>{{ order.delivery_price.with_margin | money }}</td>
+</tr>
+{% endunless %}
+{% unless order.margin_amount == 0 %}
+<tr class='co-table-row co-table-row--body co-table-row--striped'>
+<td class='co-table-cell co-table-cell--body'>Наценка на способ оплаты (включена в стоимость)</td>
+<td class='co-table-cell co-table-cell--body' colspan='2'>{{ order.margin }} %</td>
+</tr>
+{% endunless %}
+<tr class='co-table-row co-table-row--foot'>
+<td class='co-table-cell co-table-cell--foot' colspan='3'>
+<div class='co-order_history-total_title'>Итого:</div>
+<div class='co-order_history-total_sum co-price'>{{ order.total_price | money }}</div>
+</td>
+</tr>
+</table>
+<div style="padding-top:2rem;">
+
+</div>
+</div>
+</div>

@@ -1,0 +1,86 @@
+<style>
+  .benefits-column {
+    display:flex;
+    flex-flow:column wrap; 
+  }
+  .benefit-description {
+    display:none;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left:5px;
+    padding-right:5px;
+  }
+  .benefit-item {
+    border-bottom: 1px solid #d3d3d3b0;
+  }
+  .benefit-title {
+    display:flex;
+    align-items:center;
+    justify-content:space-between; 
+    cursor:pointer;
+    font-size: 14px;
+    padding:5px;
+    padding-left:10px;
+    padding-right:10px;
+    background: #eeeeee6e;
+  }
+
+  .benefit-title.active i {
+    transform:rotate(180deg)
+  }
+  .benefit-title i {
+    transition:0.4s;
+  }
+  .benefit-title  img {
+    width:35px;
+    height:35px;
+    margin-right:10px;
+  }
+  .benefit-title div {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+</style>
+
+
+<div class="benefits-column">
+  {% for block in block_lists.product-new-benefits.blocks %}
+  <div class="benefit-item">
+    <div benefit-title="{{ block.handle }}" class="benefit-title">
+
+      <div>
+        <img src="{{ block.benefit_blocks_file }}"/> 
+        <div>{{ block.title }}</div>
+      </div>
+
+      <i class="fa fa-angle-down"></i>
+    </div>
+    <div benefit-description="{{ block.handle }}" class="benefit-description" {% if block.benefit_blocks_checkbox %}style="display:block;"{% endif %}>
+      {{ block.benefit_blocks_description }}
+    </div>
+  </div>  
+  {% endfor %}
+</div>
+
+<script>
+
+
+  $('[benefit-title]').on('click', function(){
+
+    let item = $(this).attr('benefit-title')
+    $(this).toggleClass('active')
+    $(`[benefit-description='${item}']`).slideToggle()
+
+  })
+  
+  // Закрыть на мобилках 
+  
+  if (innerWidth <= 768) {
+    document.querySelectorAll('.benefit-item').forEach(function (item, i, arr) {
+      item.querySelector('.benefit-title').classList.add('active');
+      item.querySelector('.benefit-description').style.display = 'none';
+    });
+  }
+
+</script>

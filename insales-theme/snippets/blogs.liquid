@@ -1,0 +1,30 @@
+<div class="index-block news-feed-wrapper">
+
+  <div class="news-feed-inner">
+
+    <div class="news-feed" data-slider="blogs">
+      <div class="product-slider-heading-wrapper">
+        <h2>
+        <a href="{{ blog.url }}" class="product-slider-heading">
+          {{ blog.title }}
+        </a>
+        </h2>
+        <div class="product-slider-controls" data-slider-controls>
+          <button class="blogs-slider-prev product-slider-prev swiper-button-next" data-slider-prev></button>
+          <button class="blogs-slider-next product-slider-next swiper-button-prev" data-slider-next></button>
+        </div>
+      </div>
+
+
+      {% for blog in blogs %}
+      {% for article in blog.articles limit:10 %}
+      <div class="blog-slide special-products swiper-slide swiper-slide" data-slider-slide>
+        {% include "article_preview", show_readmore: false, use_truncate: true, show_author: false, show_comments: false %}
+      </div>
+      {% endfor %}
+      {% endfor %}
+
+    </div>
+
+  </div>
+</div>

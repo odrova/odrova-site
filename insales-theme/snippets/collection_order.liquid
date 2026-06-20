@@ -1,0 +1,92 @@
+{% if hide_sort or collection.products.size == 0 %}
+  {% assign sort_class = 'hidden' %}
+{% endif %}
+
+{% if hide_page_size or collection.products.size == 0 %}
+  {% assign page_size_class = 'hidden' %}
+{% endif %}
+
+<form class="collection-order {{ block_class }}" action="{{ collection.url }}" method="get">
+
+  {% unless hide_sort %}
+    <label class="collection-order-row is-order {{ block_class }} {{ sort_class }}">
+      <span class="collection-order-label">
+        {{ messages.label_sort }}
+      </span>
+
+        <select class="collection-order-field" name="order">
+          {{ "" | select_option: order, messages.label_sort }}
+          {{ "price" | select_option: order, messages.sort_by_price }}
+          {{ "descending_price" | select_option: order, messages.sort_by_price_desc }}
+          {{ "descending_age" | select_option: order, messages.sort_by_createdon }}
+          {{ "title" | select_option: order, messages.sort_by_title }}
+        </select>
+
+    </label>
+  {% endunless %}
+
+  {% unless hide_page_size %}
+    <label class="collection-order-row is-page-size {{ block_class }} {{ page_size_class }}">
+      <span class="collection-order-label">
+        {{ messages.label_limit }}
+      </span>
+    <div class="styled-select-wrapper">
+      <select class="collection-order-field page-size" name="page_size">
+        {{ "96" | select_option: page_size, 96 }}
+        {{ "12" | select_option: page_size, 12 }}
+        {{ "24" | select_option: page_size, 24 }}
+        {{ "48" | select_option: page_size, 48 }}
+      </select>
+    </div>
+    </label>
+  {% endunless %}
+
+  {% for prop in collection.current_characteristics %}
+    <input type="hidden" name="characteristics[]" value="{{ prop.id }}"/>
+  {% endfor %}
+
+  {% for property in collection.properties %}
+    {% if property.is_numeric? and property.gt_value %}
+      <input type="hidden" name="properties_gt[{{ property.id }}]" value="{{ property.gt_value }}"/>
+    {% endif %}
+
+    {% if property.is_numeric? and property.lt_value %}
+      <input type="hidden" name="properties_lt[{{ property.id }}]" value="{{ property.lt_value }}"/>
+    {% endif %}
+  {% endfor %}
+
+  {% for val in collection.current_option_values %}
+    <input type="hidden" name="options[{{ val.option_name.id }}][]" value="{{ val.id }}"/>
+  {% endfor %}
+
+  {% if search.query != '' %}
+    <input type="hidden" name="q" value="{{ search.query }}" />
+  {% endif %}
+
+  {% if language.not_default? %}
+    <input type="hidden" name="lang" value="{{ language.locale }}" />
+  {% endif %}
+
+  {% if price_min %}
+    <input type="hidden" name="price_min" value="{{ price_min }}" />
+  {% endif %}
+
+  {% if price_max %}
+    <input type="hidden" name="price_max" value="{{ price_max }}" />
+  {% endif %}
+
+  {% if hide_sort and order %}
+    <input type="hidden" name="order" value="{{ order }}">
+  {% endif %}
+
+  {% if hide_page_size and page_size %}
+    <input type="hidden" name="page_size" value="{{ page_size }}">
+  {% endif %}
+
+</form>
+
+{% assign block_class = null %}
+{% assign hide_sort = null %}
+{% assign sort_class = null %}
+{% assign hide_page_size = null %}
+{% assign page_size_class = null %}

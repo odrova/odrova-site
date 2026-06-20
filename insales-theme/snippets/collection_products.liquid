@@ -1,0 +1,35 @@
+{% assign display_filter = false %}
+
+{% include "collection_filter_check" %}
+
+<div class="products-list is-collection row">
+  {% if products.size > 0 %}
+
+    {% for product in products %}
+      <div class="product-card-wrapper in-collection cell-6 cell-6-md cell-12-xs cell-12-mc">
+        {% include 'product_card' %}
+      </div>
+    {% endfor %}
+
+  {% elsif filter_selected %}
+
+    <div class="cell-12">
+      <div class="notice is-warning">
+        {{ messages.collection_filters_is_empty }}
+      </div>
+
+      <a href="{{ collection.url }}" class="button is-secondary filter-empty">
+        {{ messages.button_reset_filters }}
+      </a>
+    </div>
+
+  {% else %}
+
+    <div class="cell-12">
+      <div class="notice is-info">
+        {{ messages.collection_is_empty }}
+      </div>
+    </div>
+
+  {% endif %}
+</div>

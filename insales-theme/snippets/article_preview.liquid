@@ -1,0 +1,80 @@
+{% assign show_readmore = true %}
+{% assign truncate_words = truncate_words | default: 25 %}
+{% assign hide_image = false %}
+{% if settings.article_image_hide or article.image.large_url contains 'no_image' %}
+  {% assign hide_image = true %}
+{% endif %}
+{% assign show_author = show_author | default: true %}
+{% assign show_comments = show_comments | default: true %}
+
+{% if template contains "index" %}
+  {% assign is_rectangle = 'is-rectangle-widget-blogs is-cover' %}
+  {% capture src_set %} {{ article.image.large_url }} 400w, {{ article.image.original_url }} 800w{% endcapture %}
+  {% capture src_article %}{{ article.image.large_url }}{% endcapture %}
+{% else %}
+  {% capture src_article %}{{ article.image.original_url }}{% endcapture %}
+{% endif %}
+
+
+
+
+<div class="article-preview">
+  {% unless hide_image %}
+    <div class="article-preview-image-wrapper ">
+      <a href="{{ article.url }}" title="{{ article.title }}" class="article-preview-image-inner image-container {{ is_rectangle }}">
+        <img  src="{{ src_article }}"
+          srcset="{{ src_set }}"  alt="{{ article.title }}" title="{{ article.title }}" class="article-preview-image"/>
+      </a>
+    </div>
+  {% endunless %}
+
+  <div class="article-preview-caption">
+    <div class="article-preview-heading-wrapper">
+      <p class="article-preview-heading">
+        <a href="{{ article.url }}" class="article-preview-link">{{ article.title }}</a>
+      </p>
+    </div>
+
+    <div class="article-preview-body">
+      <div class="article-preview-introtext editor">
+        {% if use_truncate %}
+          {{ article.preview | strip_html | truncatewords: truncate_words }}
+        {% elsif article.has_preview? %}
+          {{ article.preview }}
+        {% else %}
+          {{ article.preview | replace: 'pre', 'p' | truncatewords: truncate_words }}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="article-preview-toolbar toolbar">
+      <div class="toolbar-inner">
+        <span class="date">
+           {{ article.created_at | date: "%d.%m.%Y" }}
+        </span>
+        {% unless settings.article_author_hide  %}
+          {% if article.author and show_author %}
+            <span class="author">
+
+              {{ article.author }}
+            </span>
+          {% endif %}
+        {% endunless %}
+        {% if blog.comments_enabled? and show_comments %}
+          <a href="{{ article.url }}#comments-block" class="comments-count  is-article-comments">
+
+            <span class="button-text">
+              {{ messages.comments | downcase }} ({{ article.comments_count }})
+            </span>
+          </a>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% assign use_truncate =  null %}
+{% assign show_comments = null %}
+{% assign show_author = null %}
+{% assign show_readmore = null %}
+{% assign truncate_words = null %}

@@ -1,0 +1,292 @@
+<div class="top-panel row js-top-panel-fixed flex-between">
+  <div class="top-menu-wrapper cell- cell-10-sm hide-sm">
+    {% include "menu", source_type: 'menu', source_handle: 'main-menu', menu_class: 'top-menu' %}
+  </div>
+  <div class="hidden-sm favorites-top cell- cell-2-sm hide-sm">
+
+    <div class="favorites-link" href="/page/favorites">
+      <span class="js-favorites-counter">0</span>       
+      <a href="/page/favorites">
+        <i class="fa fa-heart" aria-hidden="true"></i>
+      </a>
+
+      <div class="user_icons-popup">
+        <div class="popup">
+
+          <div class="popup-title">Избранное</div>
+
+          <div class="js-popup-favorites">
+            <div class="dropdown_products-header">В вашем избранном<span class="js-favorites-counter-drop">0</span></div>
+            <div class="dropdown_products js-popup-favorites-products"></div>
+            <div class="dropdown_products-action">                 
+              <a href="/page/favorites" class="red-btn-custom button">Перейти к избранному</a>                 
+            </div>
+          </div>
+
+          <div class="js-popup-favorites-empty">
+            <i class="fa fa-heart" aria-hidden="true"></i>
+            <div class="dropdown_products-header">В вашем избранном пока пусто</div>
+
+          </div>
+
+        </div>
+        <div class="popup-shade js-popup-close"></div>
+      </div>
+
+    </div>
+
+
+    <div  class="favorites-link login top-cart" >
+      <a href="/cart_items"> <img src="{{ 'cart.png' | asset_url }}" alt="oDrova.ru - корзина"></a>
+      <span class="js-shopcart-widget-count">{{ cart.items_count }}</span>
+
+      <div class="user_icons-popup">
+        <div class="popup">
+
+          <div class="popup-title">Избранное</div>
+
+          <div class="js-popup-cart">
+
+            <div class="dropdown_products-header">
+              В вашей корзине
+              <div class="next-line">
+                <span class="js-cart-counter-drop">0</span>
+                <span style="font-weight: 400;">на сумму</span>
+                <span class="js-cart-total-drop">0</span>
+              </div>
+            </div>
+            <div class="dropdown_products js-popup-cart-products"></div>
+            <div class="dropdown_products-action">                 
+              <a href="/cart_items" class="red-btn-custom button">Открыть корзину</a>                 
+              <a href="/new_order" class="red-btn-custom button">Оформить заказ</a>                 
+            </div>
+          </div>
+
+          <div class="js-popup-cart-empty">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <div class="dropdown_products-header">В вашей корзине пока пусто</div>
+
+          </div>
+
+        </div>
+        <div class="popup-shade js-popup-close"></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="user-account cell- cell-2-sm hide-sm">
+    <div class="favorites-link user-account-link">
+      {% if client %}
+      <a class="login " href="/client_account/exit">
+        <img src="{{ 'door2.png' | asset_url }}" height="30" alt="oDrova.ru - вход в личный кабинет">
+        <span>Выйти</span>
+      </a>      
+      {% else %}
+      <a class="login " href="/client_account/login">
+        <img src="{{ 'door2.png' | asset_url }}" height="30" alt="oDrova.ru - вход в личный кабинет">
+        <span>Войти</span>
+      </a>
+      {% endif %}
+
+      <div class=" user_icons-popup login-popup">
+        <div class="popup">
+
+          {% if client %}
+
+          <div style="display:flex !important" class="js-popup-cart">
+
+            <div class="popup-content-client">
+              <a href="/page/favorites">
+                <span class="col-auto"><img src="{{ 'font-awesome_heart.png' | asset_url }}"/></span>
+                <span>Избранное</span>
+              </a>
+              <a href="/client_account/orders">
+                <span class="col-auto"><svg class="svg-inline--fa fa-history" aria-hidden="true" data-prefix="far" data-icon="history" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M504 255.532c.252 136.64-111.182 248.372-247.822 248.468-64.014.045-122.373-24.163-166.394-63.942-5.097-4.606-5.3-12.543-.443-17.4l16.96-16.96c4.529-4.529 11.776-4.659 16.555-.395C158.208 436.843 204.848 456 256 456c110.549 0 200-89.468 200-200 0-110.549-89.468-200-200-200-55.52 0-105.708 22.574-141.923 59.043l49.091 48.413c7.641 7.535 2.305 20.544-8.426 20.544H26.412c-6.627 0-12-5.373-12-12V45.443c0-10.651 12.843-16.023 20.426-8.544l45.097 44.474C124.866 36.067 187.15 8 256 8c136.811 0 247.747 110.781 248 247.532zm-167.058 90.173l14.116-19.409c3.898-5.36 2.713-12.865-2.647-16.763L280 259.778V116c0-6.627-5.373-12-12-12h-24c-6.627 0-12 5.373-12 12v168.222l88.179 64.13c5.36 3.897 12.865 2.712 16.763-2.647z"></path></svg></span>
+                <span>История заказов</span>
+              </a>
+              <a href="/client_account/addresses">
+                <span><svg class="svg-inline--fa fa-map-marker-alt" aria-hidden="true" data-prefix="far" data-icon="map-marker-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M192 0C85.903 0 0 86.014 0 192c0 71.117 23.991 93.341 151.271 297.424 18.785 30.119 62.694 30.083 81.457 0C360.075 285.234 384 263.103 384 192 384 85.903 297.986 0 192 0zm0 464C64.576 259.686 48 246.788 48 192c0-79.529 64.471-144 144-144s144 64.471 144 144c0 54.553-15.166 65.425-144 272zm-80-272c0-44.183 35.817-80 80-80s80 35.817 80 80-35.817 80-80 80-80-35.817-80-80z"></path></svg></span>
+                <span>Адрес доставки</span>
+              </a>
+
+              <a href="/client_account/discounts" >
+                <span><svg class="svg-inline--fa fa-piggy-bank" aria-hidden="true" data-prefix="far" data-icon="piggy-bank" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" data-fa-i2svg=""><path fill="currentColor" d="M560 224h-29.5c-11.1-25.3-28.7-46.9-50.5-63.4V96h-16c-30.3 0-57.8 10.1-81 26.2.4-3.4 1-6.7 1-10.2C384 50.1 333.9 0 272 0S160 50.1 160 112c0 9.7 1.5 19 3.8 27.9C114.9 159.8 78 203.1 67.2 256H56c-14.8 0-26.5-13.5-23.5-28.8C34.7 215.8 45.4 208 57 208h1c3.3 0 6-2.7 6-6v-20c0-3.3-2.7-6-6-6-28.5 0-53.9 20.4-57.5 48.6C-3.9 258.8 22.7 288 56 288h8c0 52.2 25.4 98.1 64 127.3V496c0 8.8 7.2 16 16 16h112c8.8 0 16-7.2 16-16v-48h64v48c0 8.8 7.2 16 16 16h112c8.8 0 16-7.2 16-16v-80.9c11.7-9 22.4-19.3 31.3-31.1H560c8.8 0 16-7.2 16-16V240c0-8.8-7.2-16-16-16zM272 48c35.3 0 64 28.7 64 64 0 5.6-.9 10.9-2.3 16H224c-4.5 0-8.8 1-13.3 1.3-1.6-5.5-2.7-11.3-2.7-17.3 0-35.3 28.7-64 64-64zm256 288h-40.6c-23.5 31.1-19.4 27.9-55.4 55.4V464h-48v-64H224v64h-48v-72.6c-14.6-11-64-39.8-64-103.4 0-61.8 50.2-112 112-112h167.4c9.5-7.6 22.2-19.3 40.6-26.2v34.7c45.4 34.4 44.2 35.2 67.1 87.5H528v64zm-96-80c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16-7.2-16-16-16z"></path></svg></span>
+                <span>Скидки и бонусы</span>
+              </a>
+
+              <a href="/client_account/contacts" >
+                <span><svg class="svg-inline--fa fa-address-card" aria-hidden="true" data-prefix="far" data-icon="address-card" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zm-54-176H300c-6.627 0-12-5.373-12-12v-16c0-6.627 5.373-12 12-12h104c6.627 0 12 5.373 12 12v16c0 6.627-5.373 12-12 12zm0 72H300c-6.627 0-12-5.373-12-12v-16c0-6.627 5.373-12 12-12h104c6.627 0 12 5.373 12 12v16c0 6.627-5.373 12-12 12zM176 160c33.137 0 60 26.863 60 60s-26.863 60-60 60-60-26.863-60-60 26.863-60 60-60zm68.731 125.183l-26.742-6.686c-28.096 20.209-62.152 15.699-83.978 0l-26.742 6.686C91.243 289.189 80 303.589 80 320.108V334c0 9.941 8.059 18 18 18h156c9.941 0 18-8.059 18-18v-13.892c0-16.519-11.243-30.919-27.269-34.925z"></path></svg></span>
+                <span>Контактные данные</span>
+              </a>
+            </div>
+
+
+          </div>
+
+          {% else %}
+
+          <div style="display:flex !important" class="js-popup-cart-empty">
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+
+            <div class="dropdown_products-action">                 
+              <a href="/client_account/login" class="red-btn-custom button">Авторизация</a>                 
+              <a style="background:#dc4646;" href="/client_account/contacts/new" class="red-btn-custom button">Регистрация</a>                 
+            </div>
+
+          </div>
+          {% endif %}
+
+        </div>
+        <div class="popup-shade js-popup-close"></div>
+      </div>
+
+    </div>  </div>
+
+  <div class="top-menu-wrapper cell- hidden shown-sm">
+    <button type="button" class="top-panel-open-sidebar button js-open-sidebar"></button>
+  </div>
+
+  <style>
+    .mobile-logo .js-code-manager {
+      display:none;
+    }
+    .fixed .logo-link {
+      display:none;
+    }
+    .fixed .js-code-manager  {
+      display:flex !important;
+    }
+    .fixed .js-code-manager > span {
+      flex-direction: row-reverse !important;
+      align-items: center;
+    }
+    .fixed .js-code-manager  span {
+      margin-top:0 !important;
+    } 
+    .top-menu-wrapper {
+      flex:unset;
+    }
+    .fixed .js-code-manager .xs-hidden {
+      margin-top: 0px !important;
+      font-size:10px !important;
+    }
+    
+    @media (max-width: 480px) {
+      .float-telephone.row.js-top-panel-fixed.flex-between.hidden.shown-sm.fixed {
+      	position: fixed;
+        margin: 0;
+        top: 44px;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 999;
+        border-top: 1px solid #ccc;
+        box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+      }
+      .float-telephone.row.js-top-panel-fixed.flex-between.hidden.shown-sm.fixed .header-block a {
+		color: #3147c3;      	
+      }
+    }
+  </style>
+
+  <div class="mobile-logo top-menu-wrapper cell- hidden shown-sm">
+    <a class="logo-link" href="/">oDrova.ru</a>
+    <span class="js-code-manager"></span>
+  </div>
+
+  <div class="top-menu-icons-block collapse-block cell-">
+    <div class="favorites-link user-account-link">
+      {% if client %}
+      <a class="login login-mobile hidden shown-sm" href="/client_account/exit">
+        <i class="fa fa-sign-in login-mobile__icon"></i>
+      </a>      
+      {% else %}
+      <a class="login login-mobile hidden shown-sm" href="/client_account/login">
+        <i class="fa fa-sign-out login-mobile__icon"></i>
+      </a>
+      {% endif %}
+      </div>
+    <div class="contacts-top-menu hidden shown-md">
+      {% unless settings.phone == 'hidden' and settings.email == 'hidden'  %}
+      <a href="tel:{{ account.phone | strip_html }}"><button type="button" class="contacts-icon js-open-contacts"></button></a>
+      {% endunless %}
+      {% comment %}<div class="contacts-top-menu-block cell-12 {% comment %}hidden{% endcomment %}">
+        <div class="header-block js-contacts-header cell- ">
+          <div class="phone text-left ">
+            {% case settings.phone %}
+            {% when 'from_settings' %}
+            <a href="tel:{{ account.phone | strip_html }}" class="contact-link tel">
+              {{ account.phone | strip_html | editable }}
+            </a>
+            {% when 'edited_block' %}
+            <span class="">
+              {{ blocks.phone.content | editable }}
+            </span>
+            {% endcase %}
+          </div>
+
+          <div class="email text-left flex-center-xs d-none">
+            {% case settings.email %}
+            {% when 'from_settings' %}
+            <a href="mailto:{{ account.email | strip_html }}" class="contact-link email">
+              {{ account.email | strip_html | editable }}
+            </a>
+            {% when 'edited_block' %}
+            <span class="">
+              {{ blocks.email.content | editable }}
+            </span>
+            {% endcase %}
+          </div>
+        </div>
+
+      </div>{% endcomment %}
+    </div>
+
+    <div class="hidden shown-sm">
+      <button type="button" class="top-panel-open-search button js-open-search-panel shown-sm"></button>
+    </div>
+
+    {% unless settings.product_compare_hide %}
+    <div class="compares-widget cell- _hidden _shown-sm">
+      <a href="/compares" class="compares-widget-link">
+        <span class="compare-widget-caption ">
+          <span class="compares-widget-count js-compares-widget-count"></span>
+        </span>
+      </a>
+    </div>
+    {% endunless %}
+
+    <div class="shopcart-widget-wrapper cell-  hidden shown-sm">
+      {% include "cart_widget", block_class: 'in-top-panel' %}
+    </div>
+  </div>
+</div>
+<div class="float-telephone row js-top-panel-fixed flex-between hidden shown-sm">
+  <div class="header-block js-contacts-header cell- ">
+    <div class="phone text-center ">
+      {% case settings.phone %}
+      {% when 'from_settings' %}
+      <a href="tel:{{ account.phone | strip_html }}" class="contact-link tel">
+        {{ account.phone | strip_html | editable }}
+      </a>
+      {% when 'edited_block' %}
+      <span class="">
+        {{ blocks.phone.content | editable }}
+      </span>
+      {% endcase %}
+    </div>
+
+    <div class="email text-left flex-center-xs d-none">
+      {% case settings.email %}
+      {% when 'from_settings' %}
+      <a href="mailto:{{ account.email | strip_html }}" class="contact-link email">
+        {{ account.email | strip_html | editable }}
+      </a>
+      {% when 'edited_block' %}
+      <span class="">
+        {{ blocks.email.content | editable }}
+      </span>
+      {% endcase %}
+    </div>
+  </div>
+</div>

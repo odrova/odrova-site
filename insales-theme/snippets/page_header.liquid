@@ -1,0 +1,38 @@
+{% comment %} Заголовок страницы {% endcomment %}
+
+<div class="page-headding-wrapper">
+  <h1 class="page-headding">
+    {% if template contains 'cart' %}
+      {{ messages.cart_title }}
+
+    {% elsif template contains 'search' %}
+      {{ messages.search_title }}
+
+    {% elsif template contains 'compare' %}
+      {{ messages.comparison_title }}
+
+    {% elsif template contains 'index' %}
+      {{ page.title | editable }}
+
+    {% elsif template contains 'collection' %}
+      {% if filter.title %}
+        {{ filter.title | editable }}
+      {% else %}
+        {{ collection.title | editable }}
+      {% endif %}
+
+    {% elsif template contains 'product' %}
+      {{ product.title | editable }}
+
+    {% elsif template contains 'blog' %}
+      {{ blog.title | editable }}
+
+    {% elsif template contains 'article' %}
+      {{ article.title | editable }}
+
+    {% elsif template contains 'page' %}
+      {{ page.title | editable }}
+    {% endif %}
+  </h1>
+  {% include "breadcrumb", home_title: 'Главная' %}
+</div><!-- /.page_headding -->

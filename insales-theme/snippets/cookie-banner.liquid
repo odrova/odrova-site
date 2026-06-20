@@ -1,0 +1,95 @@
+<div id="cookie-banner">
+  <p>Сайт использует cookie с целью анализа поведения посетителей для улучшения Сайта.<br>
+    Продолжая пользоваться Сайтом, вы соглашаетесь с нашей политикой использования персональных данных и cookies в соответствии с Политикой о персональных данных. Вы можете прочитать нашу политику <a href="/page/oferta">здесь</a>
+  </p>
+  <button id="accept-cookies">Хорошо</button>
+</div>
+
+<style>
+#cookie-banner {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #222;
+  color: #fff;
+  padding: 11px 15px;
+  max-width: 95%;
+  z-index: 1000;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  animation: slideUp 0.3s ease-out;
+  font-size: 13px;
+}
+
+#cookie-banner p {
+  margin: 0;
+  line-height: 14px;
+}
+
+.policy-link {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+#cookie-banner button {
+    background-color: #fff;
+    color: #222;
+    border: none;
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#cookie-banner button:hover {
+  background-color: #f1f1f1;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  #cookie-banner {
+    width: 95%;
+            padding: 9px 13px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  #cookie-banner p {
+      margin: 0;
+      line-height: 11px;
+      font-size: 10px;
+  }
+  #cookie-banner button {
+    padding: 8px 10px;
+}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const banner = document.getElementById('cookie-banner');
+
+  if (!localStorage.getItem('cookiesAccepted')) {
+    banner.style.display = 'flex';
+  }
+
+  document.getElementById('accept-cookies').addEventListener('click', function () {
+    localStorage.setItem('cookiesAccepted', 'true');
+    banner.style.display = 'none';
+  });
+});
+</script>

@@ -1,0 +1,22 @@
+<h1 class="homepage-heading">Производство профессиональных винтовых дровоколов.<br> От конуса до готового станка.</h1>
+
+{% if data.blocks.size > 0 %}
+
+{% for block in data.blocks %}
+{% if block.collection.products.size > 0 %}
+
+<div class="products-list is-collection row" id="prod-list{{forloop.index}}">
+
+  {% for product in block.collection.products limit:27 %}
+  <div class="product-card-wrapper in-collection cell-4 cell-6-md cell-12-xs cell-12-mc">
+    {% include 'product_card' %}
+  </div>
+  {% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endfor %}
+
+{% endif %}

@@ -1,0 +1,49 @@
+{% if page.url contains 'feedback' %}
+  <div class="js-form-feedback"></div>
+{% elsif page.url contains 'favorites' %}
+  <div class="js-favorites-place products-list is-collection row">Здесь пока пусто{% comment %}{% if client %}<a href="/client_account/orders">История заказов</a>{% endif %}{% endcomment %}</div>
+{% else %}
+  <div class="editor">
+    {{ page.content | editable }}
+  </div>
+{% endif %}
+
+
+
+<script type="text/javascript">
+  $(function () {
+    var _options = {
+      fields: [
+        {
+          title: Site.messages.field_email,
+          name: 'from',
+          required: true,
+        },
+        {
+          title: Site.messages.field_message,
+          name: 'content',
+          type: 'textarea',
+          required: true
+        }
+      ],
+      buttons: [
+        {
+          title: Site.messages.button_submit,
+          type: 'submit',
+          onClick: function(form){
+            form.validate();
+          }
+        }
+      ],
+      onValid: function (response, form) {
+        form.clear();
+        alertify.success(response.notice);
+      },
+      onError: function (errors){
+        alertify.warning(errors);
+      }
+    };
+
+    InSalesUI.Form.create($('.js-form-feedback'), _options);
+  });
+</script>

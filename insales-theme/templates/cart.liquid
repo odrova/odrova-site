@@ -1,0 +1,89 @@
+{% if cart.items.size > 0 %}
+
+<form action="{{ cart_items }}" method="post" class="row shopping-cart" data-cart-form>
+
+  <div class="cart-body  cell-12-md cell-9 ">
+    <div class="cart-list ">
+      {% for item in cart.items %}
+
+      {% include 'cart_item' %}
+
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cart-footer  cell-12-md cell-3 row flex-between">
+
+
+    <div class="cell-12-sm  cart-block-checkout">
+
+      <div class="total-wrap">
+        
+        <div class="flex-justify">
+          <span>ИТОГО:</span>
+          <div class="cart-total js-shopcart-total-summ"></div>
+        </div>
+        
+        {% if cart.discounts.size > 0 %}
+        
+        <div class="discount-comment-list js-discount-comment-list">
+          {% for discount in cart.discounts %}
+          <div class="discount-comment">
+            <span class="discount-description">{{ discount.description }}:</span>
+            <span class="discount-amount">{{ discount.amount | money }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        
+        {% endif %}
+
+      </div>
+
+      
+      
+      <div class="summary-wrap">
+
+        {% include "cart_discount" %}
+        
+        
+        {% comment %}
+        <div class="fast-checkout-wrap">
+          <span>Заказ в один клик</span>
+        {% include 'fast-checkout-cart' %}
+        </div>
+        {% endcomment %}
+        
+        <button style="background:#25D366;" type="submit" class="cart-checkout button is-primary" data-cart-submit>
+          <span class="button-text">
+            {{ messages.button_checkout }}
+          </span>
+        </button>
+        
+      </div>
+      
+
+
+    </div>
+
+  </div>
+
+  <input type="hidden" name="_method" value="put">
+  <input type="hidden" name="make_order" value="">
+  <input type="hidden" name="lang" value="{{ language.locale }}"/>
+
+</form>
+
+{% assign cart_empty_class = 'hidden' %}
+{% endif %}
+
+<div class="notice is-info text-center js-cart-empty {{ cart_empty_class }}">
+  {{ messages.cart_is_empty }}
+</div>
+
+<style>
+  .korrYb {
+    display: none;
+  }
+</style>
+
+{% assign cart_empty_class = null %}

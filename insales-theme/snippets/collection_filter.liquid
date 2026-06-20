@@ -1,0 +1,233 @@
+{% assign show_submit = show_submit | default: true %}
+{% assign show_options = show_options | default: true %}
+
+{% assign filter_active = false %}
+{% assign filters_active = false %}
+
+{% assign display_filter = false %}
+{% include "collection_filter_check" %}
+{% assign hide_class = display_filter | default: "hidden" | replace: 'true','' %}
+<form class="filter {{ filter_class }} {{ hide_class }}" action="{{ collection.url }}" method="get" data-filter="{{ filter_class }}">
+
+  <div class="filter-heading">
+    {{ messages.filter_heading }}
+  </div>
+
+  {% if show_options %}
+    {% for option in collection.options %}
+      {% assign filter_active = false %}
+
+      {% for value in option.values %}
+        {% if value.selected %}
+          {% assign filters_active = true %}
+          {% assign filter_active = true %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="filter-section" data-filter-section="{{ filter_active }}">
+
+        <div class="filter-section-control">
+          <button class="filter-section-toggle is-filter-section-toggle" type="button" data-filter-section-toggle>
+            <span class="filter-section-name">{{ option.title }}</span>
+            <sup class="filter-section-count"></sup>
+            <span class="sidebar-menu-marker filter-marker menu-marker level-1">
+            </span>
+          </button>
+
+          <button class="filter-section-clear button is-filter-section-clear" type="button" data-filter-section-clear></button>
+        </div>
+
+        <div class="filter-items-wrapper" data-filter-section-items>
+          <ul class="filter-items-list">
+
+            {% for value in option.values %}
+              {% assign is_checked = value.selected | default: '' | replace: 'true', 'checked' %}
+
+              <li class="filter-item" data-filter-section-item>
+                <label class="filter-field">
+                  <input class="filter-field-input" type="checkbox" value="{{ value.id }}" {{ is_checked }} name="options[{{ option.id }}][]" />
+
+                  <span class="filter-field-marker"></span>
+                  <span class="filter-field-caption">{{ value.title }}</span>
+                </label>
+              </li>
+            {% endfor %}
+
+          </ul>
+
+          <div class="filter-section-toolbar">
+            <button type="button" class="filter-section-submit button is-filter-section-submit" data-filter-submit>
+              {{ messages.button_apply }}
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    {% endfor %}
+  {% endif %}
+
+  {% for property in collection.properties %}
+    {% assign filter_active = false %}
+
+    {% if property.is_numeric? %}
+
+      {% assign min_val = property.characteristics.first.name | round: 0 %}
+      {% assign max_val = property.characteristics.first.name | round: 0 %}
+
+      {% for characteristic in property.characteristics %}
+        {% assign val = characteristic.name | round: 0 %}
+        {% if val < min_val %}
+          {% assign min_val = val %}
+        {% endif %}
+
+        {% if val > max_val %}
+          {% assign max_val = val %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if property.current? or property.lt_value or property.gt_value %}
+      {% assign filters_active = true %}
+      {% assign filter_active = true %}
+    {% endif %}
+
+    <div class="filter-section" data-filter-section="{{ filter_active }}">
+
+      <div class="filter-section-control">
+        <button class="filter-section-toggle is-filter-section-toggle" type="button" data-filter-section-toggle>
+          <span class="filter-section-name">{{ property.title }}</span>
+          <sup class="filter-section-count"></sup>
+          <span class="sidebar-menu-marker filter-marker menu-marker level-1">
+          </span>
+        </button>
+
+        <button class="filter-section-clear button is-filter-section-clear" type="button" data-filter-section-clear></button>
+      </div>
+
+      <div class="filter-items-wrapper" data-filter-section-items>
+
+        {% unless property.is_numeric? %}
+          <ul class="filter-items-list">
+            {% for characteristic in property.characteristics %}
+              {% assign is_checked = characteristic.current? | default: '' | replace: 'true', 'checked' %}
+
+              <li class="filter-item" data-filter-section-item>
+                <label class="filter-field">
+                  <input class="filter-field-input" type="checkbox" value="{{ characteristic.id }}" {{ is_checked }} name="characteristics[]"/>
+
+                  <span class="filter-field-marker"></span>
+                  <span class="filter-field-caption">{{ characteristic.title }}</span>
+                </label>
+              </li>
+            {% endfor %}
+          </ul>
+
+        {% else %}
+          <div class="filter-items">
+            <div class="filter-item is-range-slider" data-filter-section-item>
+              <div
+                data-min="{{ min_val }}"
+                data-max="{{ max_val }}"
+                data-from="{{ property.gt_value }}"
+                data-to="{{ property.lt_value }}"
+                data-range-slider="{{ property.id }}">
+              </div>
+            </div>
+          </div>
+        {% endunless %}
+
+        <div class="filter-section-toolbar">
+          <button type="button" class="filter-section-submit button is-filter-section-submit" data-filter-submit>
+            {{ messages.button_apply }}
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  {% endfor %}
+
+  {% assign filter_active = false %}
+  {% assign coll_min = collections[collection.handle].products_price_min | round: 0 %}
+  {% assign coll_max = collections[collection.handle].products_price_max | round: 0 %}
+  {% if price_max or price_min %}
+    {% assign filter_active = true %}
+    {% assign filters_active = true %}
+  {% endif %}
+
+  <div class="filter-section" data-filter-section="{{ filter_active }}">
+
+    <div class="filter-section-control">
+      <button class="filter-section-toggle is-filter-section-toggle" type="button" data-filter-section-toggle>
+        <span class="filter-section-name">
+          {{ messages.label_price }}
+        </span>
+        <sup class="filter-section-count"></sup>
+        <span class="sidebar-menu-marker filter-marker menu-marker level-1">
+        </span>
+      </button>
+
+      <button class="filter-section-clear button is-filter-section-clear" type="button" data-filter-section-clear></button>
+    </div>
+
+    <div class="filter-items-wrapper" data-filter-section-items>
+      <div class="filter-items">
+        <div class="filter-item is-range-slider" data-filter-section-item>
+          <div
+            data-min="{{ coll_min }}"
+            data-max="{{ coll_max }}"
+            data-from="{{ price_min }}"
+            data-to="{{ price_max }}"
+            data-range-slider="price">
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section-toolbar">
+        <button type="button" class="filter-section-submit button is-filter-section-submit" data-filter-submit>
+          {{ messages.button_apply }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="filter-controls">
+    {% if show_submit %}
+      <button type="submit" class="filter-submit button is-primary is-filter-submit" data-filter-submit>
+        {{ messages.button_apply }}
+      </button>
+    {% endif %}
+
+    <a href="{{ collection.url }}" class="filter-clear button is-secondary is-sfilter-clear" data-filter-clear>
+      {{ messages.button_reset_filters }}
+    </a>
+  </div>
+
+  {% if order %}
+    <input type="hidden" name="order" value="{{ order }}" />
+  {% endif %}
+
+  {% if page_size %}
+    <input type="hidden" name="page_size" value="{{ page_size }}"/>
+  {% endif %}
+
+  {% if language.not_default? %}
+    <input type="hidden" name="lang" value="{{ language.locale }}"/>
+  {% endif %}
+
+  {% if search.query != '' %}
+    <input type="hidden" name="q" value="{{ search.query }}"/>
+  {% endif %}
+
+</form>
+{% assign heading = null %}
+{% assign show_submit = null %}
+{% assign filter_class = null %}
+
+{% assign filter_active = null %}
+{% assign filters_active = null %}
+
+{% assign is_checked = null %}

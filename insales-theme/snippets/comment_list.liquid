@@ -1,0 +1,47 @@
+<div data-comments-list data-comments-moderated="{{ moderated }}">
+  {% if comments_list.size > 0  %}
+    <div class="comments-list">
+      {% for item in comments_list %}
+        <div class="comments-item">
+          <div class="comment-header"></div>
+
+          <div class="comment-body">
+            {{ item.content }}
+            {% if item.image %}
+            <a href="{{ item.image.original_url }}" target="_blank" style="display: block; margin-top: .5em; text-decoration: none;">
+              <img src="{{ item.image.medium_url }}" alt="{{ item.image.file_name }}">
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="comment-footer">
+            <div class="date">
+              {{ item.created_at | date: "%d.%m.%Y %H:%M" }}
+            </div>
+
+            <div class="author">
+              {{ item.author }}
+            </div>
+            
+            
+
+            {% if item.rating %}
+              <div data-product-rating="{{ item.rating }}"></div>
+            {% endif %}
+          </div>
+
+          <!-- Ответ на отзыв-->
+          {% if item.replied? %}
+          <div class="review-reply-wrap">
+            <div class="author review-reply-title"><i class="fa fa-user-circle-o"></i> Ответ администратора:</div>
+            <p class="review-manager_reply">{{ item.manager_reply }}</p>
+            <div class="date review-replied_at"><i class="fa"></i> {{ item.replied_at | date: "%d.%m.%Y %H:%M" }}</div>
+          </div>
+          {% endif %}
+        </div><!-- /.list-item -->
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+
+{% assign comments_list = null %}

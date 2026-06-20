@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class='' lang='ru' xml:lang='ru' xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+  {% include "head" %}
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+  <meta content='noindex, nofollow' name='robots'>
+  <meta content='width=device-width, initial-scale=1.0, user-scalable=no' name='viewport'>
+
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700&amp;subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+  {{ 'checkout2.core' | global_stylesheet_tag }}
+
+  {% include "styles" %}
+</head>
+<body class='adaptive fhg-body'>
+  <style>
+    .hChpzt {
+    display: none;
+    }
+</style>
+<!-- {% include "gtm_body" %} -->
+  {% include "sticky" %}
+  
+  <div class="header-wrapper">
+    <div class="container">
+      {% include "header" %}
+    </div>
+  </div>
+
+  <div class="top-panel-wrapper">
+    <div class="container">
+      {% include "top_panel" %}
+    </div>
+  </div>
+
+  {% comment %}<div class="catalog-menu-wrapper hidden-sm">
+    <div class="container">
+      {% include "menu", source_type: 'collection', source_handle: 'all', menu_class: 'catalog-menu', show_icon: false %}
+    </div>
+  </div>{% endcomment %}
+
+  <div class="content-wrapper container fhg-content">
+    <div class="page-headding-wrapper">
+      <h1 class="page-headding">
+        {% yield 'title' %}
+      </h1>
+    </div>
+
+    <div class='checkout-v2-wrapper co-section--checkout_content'>
+
+
+      <div class='co-section--checkout_order co-section--checkout_order_sided'>
+        {% yield 'sidebar' %}
+        {% yield %}
+      </div>
+    </div>
+  </div>
+  <div class="footer-wrapper">
+    <div class="container">
+  {% include "footer" %}
+</div>
+</div>
+  <!-- <script>
+let checknone = document.querySelector('.sc-htpNat');
+checknone.classList.add('cust-checknone');
+    
+  
+
+  </script>
+   -->
+</body>
+  {% include "modals" %}
+
+  {% include "scripts" %}
+  {% include 'cookie-banner' %}
+<style>
+  .korrYb {
+    display: none;
+  }
+</style>
+<script>
+  $(() => {
+    $('[for="client_email"]').text("Email (необязательно)")
+  })
+</script>
+</html>

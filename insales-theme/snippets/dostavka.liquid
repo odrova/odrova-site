@@ -1,0 +1,10 @@
+<div class="row dostavka">
+	{% for block in block_lists.dostavka.blocks %}
+	<div class="cell-4 cell-12-sm">
+		<div class="block" style="background-image: url({{ 'block_bg.png' | asset_url }})">
+			{{ block.content }}
+			<a class="more" target="_blank" href="{{ block.link }}">Подробнее</a>
+		</div>
+	</div>
+	{% endfor %}
+</div>

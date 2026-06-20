@@ -1,0 +1,108 @@
+{% if template contains 'collection' %}
+{% assign menu_root = collection.parent %}
+{% if collection.level == 0 %}
+{% assign menu_root = collection %}
+{% endif %}
+
+
+
+
+
+
+{% if menu_root.subcollections.size > 0 %}
+<div class="sidebar-block">
+  
+
+  <div class="sidebar-block-heading">
+    <a href="/collection/all" style="text-decoration: none;">Каталог</a>
+  </div>
+
+  <div class="sidebar-block-content">
+    {% include "menu2", source_type: 'collection', source_handle: 'all', menu_class: 'sidebar-menu',  %}
+  <a href="tel:+79220352887">8(922)-035-28-87</a>
+  </div>
+  
+
+  
+</div>
+{% endif %}
+
+
+
+<div class="sidebar-block">
+  {% include "collection_filter", filter_class: 'sidebar-filter' %}
+</div>
+{% endif %}
+
+{% if template contains 'blog' or template contains 'article' %}
+{% for blog in blogs %}
+{% if blog.articles.size > 0 %}
+{% unless blog.title == 'Закрепленные статьи' %}
+<div class="sidebar-block" style="margin-top:1rem;">
+  <div class="sidebar-block-heading active" blog-title="{{ blog.handle }}">
+    {{ blog.title }}
+    <span><i class="fa fa-angle-down"></i></span>
+  </div>
+
+  <div class="blog-menu-content" blog-description="{{ blog.handle }}">
+    {% include "menu", source_type: 'blog', source_handle: blog.handle menu_class: 'blog-menu', links_limit: 5 %}
+
+    {% if blog.articles.size > 5 %}
+    <div class="sidebar-block-toolbar toolbar">
+      <a href="{{ blog.url }}" class="button is-secondary button-more">
+        {% comment %}{{ messages.all_blogs }}{% endcomment %}Все статьи этого раздела
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endunless %}
+{% endif %}
+{% endfor %}
+
+{% if blog.tags.size > 0 %}
+<div class="sidebar-block">
+  <div class="sidebar-block-heading">
+    {{ messages.tags_title }}
+  </div>
+
+  {% include "tags_cloud" %}
+</div>
+{% endif %}
+{% endif %}
+
+
+<script>
+
+
+  $('[blog-title]').on('click', function(){
+
+    let item = $(this).attr('blog-title')
+    $(this).toggleClass('')
+    $(`[blog-description='${item}']`).slideToggle()
+
+  })
+
+</script>
+
+<style>
+
+  .blog-menu-content {
+/*  	display: none; */
+  }
+  .sidebar-block-heading {
+  	cursor: pointer;
+    border: 1px solid #dcdcdc;
+    padding-left: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 3px;
+  }
+  .sidebar-block-heading.active i {
+    transform:rotate(180deg)
+  }
+  .sidebar-block-heading i {
+    transition:0.4s;
+  }
+
+</style>
+

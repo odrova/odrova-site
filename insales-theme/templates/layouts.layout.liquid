@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    {% include "head" %}
+
+    {% if page.url contains 'favorites' %}
+      {{ 'checkout2.core' | global_stylesheet_tag }}
+    {% endif %}
+
+    {% include "styles" %}
+    <data-blogs data-blogs='{{ blogs | custom_json:'handle' }}'></data-blogs>
+  </head>
+
+  <body class="fhg-body">
+    {% comment %}
+     {% include "gtm_body" %}
+    {% endcomment %}
+    {% include "no_js_alert" %}
+
+    {% include "sticky" %}
+    
+    <div class="header-wrapper">
+      <div class="container">
+        {% include "header" %}
+      </div>
+    </div>
+
+    <div class="top-panel-wrapper">
+      <div class="container">
+        {% include "top_panel" %}
+      </div>
+    </div>
+
+    {% comment %}<div class="catalog-menu-wrapper hidden-sm">
+      <div class="container">
+        {% include "menu", source_type: 'collection', source_handle: 'all', menu_class: 'catalog-menu', show_icon: false %}
+      </div>
+    </div>{% endcomment %}
+
+    <div class="content-wrapper container fhg-content">
+      <div class="cell-12" data-desktop="vision">{{blocks.blok-pod-menyu.content | editable}}</div>
+      
+      <div class="cell-12 mobile-vision" style="text-align: center;">{{blocks.blok-pod-menyu-mob.content | editable}}</div>
+      
+      
+      
+		<!-- <div class="mega-timer"><script src="//megatimer.ru/get/889d1f56ff56c7a23476cf55787ea1df.js"></script></div>  код счетчика-->
+      {% if page.url contains 'favorites' %}
+      <div class="co-section--content_wrapper">
+      <div class="co-sidebar--menu"><input class="co-menu-switcher" id="co-menu-toggle" type="checkbox" /><label class="co-menu-toggle" data-title="Личный кабинет" for="co-menu-toggle"></label><div class="co-menu co-menu--personal co-checkout-block--padded"><div class='co-menu-item co-menu-item--personal'><a class='co-menu-link co-menu-link--personal co-link co-link--active co-menu-link--active' href='/page/favorites'>Избранное</a></div><div class="co-menu-item co-menu-item--personal"><a class="co-menu-link co-menu-link--personal co-link co-link--active co-menu-link--active" href="/client_account/orders">История заказов</a></div><div class="co-menu-item co-menu-item--personal"><a class="co-menu-link co-menu-link--personal co-link" href="/client_account/addresses">Адрес доставки</a></div><div class="co-menu-item co-menu-item--personal"><a class="co-menu-link co-menu-link--personal co-link" href="/client_account/discounts">Скидки и бонусы</a></div><div class="co-menu-item co-menu-item--personal"><a class="co-menu-link co-menu-link--personal co-link" href="/client_account/contacts">Контактные данные</a></div><div class="co-menu-item co-menu-item--personal"><a class="co-menu-link co-menu-link--personal co-link" href="/client_account/exit">Выход</a></div></div></div>
+
+      <div style="padding: 0 2rem; width: 100%;">
+      {% endif %}
+
+      {% assign content_classes = 'cell-9 cell-8-md cell-12-sm' %}
+      {% assign sidebar_classes = 'cell-3 cell-4-md hidden-sm' %}
+
+      {% unless template contains 'collection' or template contains 'blog' or template contains 'article' %}
+        {% assign content_classes = 'cell-12' %}
+        {% assign sidebar_classes = '' %}
+      {% endunless %}
+
+      {% comment %} ODROVA: на странице товара заголовок и крошки рендерит сам product.liquid (как в прототипе) {% endcomment %}
+      {% unless template contains 'index' or template contains 'product' %}
+        {% comment %}{% include "breadcrumb", home_title: 'Главная' %}{% endcomment%}
+
+        {% include "page_header" %}
+      {% endunless %}
+
+      {% assign sidebar_position = 'flex-last' %}
+      {% if template contains 'collection' %}
+        {% assign sidebar_position = 'flex-first' %}
+      {% endif %}
+
+      <div class="row {{ template }}-wrapper">
+        <div class="{{ template }} {{ content_classes }}">
+          {{ content_for_layout }}
+        </div>
+{% include "widget_promo_slider" %}
+        {% unless sidebar_classes == '' %}
+          <div class="{{ sidebar_classes }} {{ sidebar_position }}">
+            {% include "sidebar" %}
+          </div>
+        {% endunless %}
+      </div>
+      {% if page.url contains 'favorites' %}
+      </div>
+      </div>
+      {% endif %}
+      {% if template contains 'index' %}
+        {% comment %}{% include "page_header" %}
+
+        <div class="index-description editor">
+          {{ page.content | editable}}
+        </div>{% endcomment %}
+      	
+      {% endif %}
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="container">
+        {% include "footer" %}
+      </div>
+    </div>
+
+    <script>
+      $(()=>{
+        $('[data-product-rating]').each(function () {
+          var _node = $(this);
+          var _rating = _node.data('productRating');
+          var _maxRating = _node.data('productMaxRating') || 5;
+
+          _node.html(Template.render({
+            rating: _rating,
+            max: _maxRating
+          }, 'system-review-rating'));
+        });
+      })
+    </script>
+    
+   <div class="code-block js-code-manager hidden-md"></div>
+    
+    {% include 'fast-checkout-script' %}
+    
+  <script>
+    $(document).ready(function(){
+      $(".form-row").eq(2).hide();
+
+    });
+  </script>
+  </body>
+
+  {% include "modals" %}
+  {% include "scripts" %}
+  {% include 'cookie-banner' %}
+</html>

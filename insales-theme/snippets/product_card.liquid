@@ -1,0 +1,161 @@
+
+{% if bundle_component %}
+{% assign hidden_form = 'hidden' %}
+{% assign product = component.product  %}
+{% endif %}
+
+<div class="product-card {{ card_class }}">
+  <div class="product-card-inner">
+
+    <a href="{{ product.url }}" target="_blank" class="product-card-photo" title="{{ product.title }}">
+      {% if bundle_component %}
+      {% assign image = bundle_component.variant.first_image.large_url %}
+      {% else %}
+      {% assign image = product.first_image.large_url %}
+      {% endif %}
+      <img src="{{ image }}" title="{{ bundle_component.product.title }}" alt="{{ product.title }}" class="product-card-image">
+
+    </a>
+
+    {% unless bundle_component %}
+    {% include "product_labels", product: product, bundle_component: bundle_component %}
+    {% endunless %}
+    <div class="padded">
+
+      <div class="card-title">
+        {% if bundle_component and bundle_component.product.variants.size > 1 %}
+        {{  bundle_component.product.title }}
+        ({{ bundle_component.variant.title }})
+
+        {% else %}
+        <a  href="{{ product.url }}" target="_blank" class="product-link">
+          {{ product.title }}
+        </a>
+
+        {% endif %}
+      </div>
+      
+		{% comment %}
+      {% if product.short_description %}
+      <div class="short">{{ product.short_description }}</div>
+      {% endif %}
+		{% endcomment %}
+
+
+      <div class="product-card-price product-prices in-card">
+        <div class="price in-card" style="color: #aaa; text-decoration: line-through;">
+          {{ product.old_price | money }}
+        </div>  
+        <div class="price in-card">
+          {% if bundle_component %}
+          {% if bundle_component.is_free %}
+          {{ messages.bundle_is_free }}
+          {% else %}
+          {{ bundle_component.quantity }} × {{ bundle_component.variant.price | money }}
+          {% endif %}
+
+          {% elsif product.price_varies? %}
+          {{ messages.label_from | downcase }}
+          {{ product.price_min | money }}
+          {% else %}
+          {{ product.price | money }}
+          {% endif %}
+
+        </div>
+      </div>
+
+      {% include 'review_link' %}
+
+      <form class="product-cart-control {{ hidden_form }}" method="post" action="{{ cart_url }}" data-product-id="{{ product.id }}">
+
+        <input type="hidden" name="variant_id" value="{{ product.variants.first.id }}">
+        <input type="hidden" name="quantity" class="counter-input input-number input-field" value="1"/>
+
+        {% comment %}
+        <a style="margin-left:12px;" href = "#callbackwidget"> <button type="button" class="product-button is-quick-checkout button button-buy is-primary" data-quick-checkout>В 1 клик</button></a>
+        {% endcomment %}
+
+        <!-- Если больше 1 модификации -->
+        {% comment %}{% if product.variants.size >= 2 %}
+        <button class="button button-buy is-primary" type="submit" data-item-add>
+          <span class="button-text">
+            {{ messages.button_to_cart }}
+          </span>
+        </button>
+        {% else %}
+        {% if product.available %}
+        <!-- больше 0 -->
+        <button class="button button-buy is-primary" type="submit" data-item-add>
+          <span class="button-text">
+            {{ messages.button_to_cart }}
+          </span>
+        </button>
+
+        {% else %}
+        <!-- не больше 0 -->
+        {% if settings.product_not_available contains 'shown' %}
+        <button class="button button-buy is-primary" type="submit" data-item-add><span class="button-text">
+          {{ messages.button_to_cart }}</span>
+        </button>
+        {% else %}
+        <a class="button button-buy is-primary " href="{{ product.url }}" title='{{ product.title }}'>
+          <span class="button-text">{{ messages.button_more }}</span>
+        </a>
+        {% endif %}
+        {% endif %}
+        {% endif %}{% endcomment %}
+
+
+        <a class="button button-buy is-secondary " href="{{ product.url }}" target="_blank" title='{{ product.title }}' style="position: relative;">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          <span class="button-text">
+            {% if product.title == 'Станки на заказ' or product.title == 'Шкив под заказ' or product.title == 'Вал под заказ' %}
+            Заказать
+            {% else %}
+            Выбрать
+          	{% endif %}
+            {% comment %}
+            {% if product.variants.size > 1 %}
+            Выбрать
+            {% else %}
+            Заказать
+          	{% endif %}
+            {% endcomment %}
+          </span>
+        </a>
+
+        {% comment %}
+        <span data-favorite="{{ product.id }}" class="button button-buy is-secondary ">
+          <i class="fa fa-heart" aria-hidden="true"></i>
+        </span>
+        {% endcomment %}
+
+		{% comment %}
+        <div class="row preview-fast-checkout">
+          {% if account.quick_checkout.enabled %}
+          {% include 'fast-checkout' %} 
+          {% endif %}
+        </div>
+        {% endcomment %}
+
+      </form><!-- /.product-control -->
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .preview-fast-checkout .fast-checkout button {
+  	padding-right: 11px;
+    padding-left: 11px;
+    font-size: 13px;
+  }
+  .preview-fast-checkout .fast-checkout input {
+  	border: 1px solid #3147c3;
+  }
+</style>
+
+
+{% assign image = null %}
+{% assign bundle_component = null %}
+{% assign card_class = null %}

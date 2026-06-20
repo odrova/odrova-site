@@ -1,0 +1,48 @@
+{% if paginate.pages.size > 1 %}
+
+  <ul class="pagination">
+    {% comment %}
+    {% if paginate.previous %}
+      <li class="pagination-item hidden-md">
+        <a href="{{ paginate.parts.first.url }}" class="pagination-link"></a>
+      </li>
+      <li class="pagination-item hidden-md">
+        <a href="{{ paginate.previous.url }}" class="pagination-link"></a>
+      </li>
+    {% endif %}
+    {% endcomment %}
+
+    {% for part in paginate.parts %}
+      {% if part.title == paginate['current_page'] %}
+        <li class="pagination-item is-current">
+          <span class="pagination-link">
+            {{ part.title }}
+          </span>
+        </li>
+      {% else %}
+        <li class="pagination-item">
+          {% if part.is_link %}
+            <a href="{{ part.url }}" class="pagination-link">
+              {{ part.title }}
+            </a>
+          {% else %}
+            <span class="pagination-void">
+              {{ part.title }}
+            </span>
+          {% endif %}
+        </li>
+      {% endif %}
+    {% endfor %}
+    
+{% comment %}
+    {% if paginate.next %}
+      <li class="pagination-item hidden-md">
+        <a href="{{ paginate.next.url }}" class="pagination-link"></a>
+      </li>
+      <li class="pagination-item hidden-md">
+        <a href="{{ paginate.parts.last.url }}" class="pagination-link"></a>
+      </li>
+    {% endif %}
+{% endcomment %}
+  </ul>
+{% endif %}

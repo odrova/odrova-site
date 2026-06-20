@@ -1,0 +1,170 @@
+{% assign level_limit = level_limit | default: 100 %}
+{% assign links_limit = links_limit | default: 100 %}
+{% assign show_icon = show_icon | default: false %}
+
+{% assign start_time = 'now' | date: '%s.%L' %}
+
+
+
+{% capture cache_menu_key %}cache_menu_key_{{ collections.last_updated_at }}_{{ menu_class }}_{{ level_limit }}_{{ links_limit }}_{{ show_icon }}_{{ source_type}}_{{ source_handle }}_{{ languge.local }}{% endcapture %}
+
+
+
+
+
+
+
+{% if source_type == 'collection' %}
+
+
+
+
+  
+    {% assign prev_link_level = 1 %}
+    {% assign root_level = collections[source_handle].level %}
+
+
+
+
+    <ul class="{{ menu_class }} menu level-1" data-menu-id="{{ menu_class }}">
+
+      {% for link in collections[source_handle].flatten_branch %}
+
+        {% assign node_level = link.level | minus: root_level %}
+        {% assign _in_limit = level_limit | minus: node_level %}
+        {% assign _next_level_in_limit = _in_limit | minus: 1 %}
+
+        {% assign show_level = false %}
+        {% if _in_limit >= 0 %}
+          {% assign show_level = true %}
+        {% endif %}
+
+        {% assign show_next_level = false %}
+        {% if link.subcollections.size > 0 and  _next_level_in_limit >= 0 %}
+          {% assign show_next_level = true %}
+        {% endif %}
+
+        {% if show_level %}
+
+          {% assign level_difference = prev_link_level | minus: link.level | plus: root_level %}
+
+          {% if level_difference > 0 %}
+            {% for i in (1..level_difference) %}
+              {% unless forloop.first %}
+                </li>
+              {% endunless %}
+
+              </ul>
+            {% endfor %}
+
+            </li>
+          {% endif %}
+
+          <li class="{{ menu_class }}-item menu-item level-1 {% if menu_class == 'sidebar-menu' %}is-opened{% endif %}" >
+            <div class="{{ menu_class }}-item-controls menu-item-controls level-1 {% if menu_class == 'sidebar-menu' %}is-opened{% endif %}">
+
+              {% if show_icon %}
+                <span class="{{ menu_class }}-icon menu-icon"></span>
+              {% endif %}
+
+              <a href="{{ link.url }}" class="{{ menu_class }}-link menu-link level-1" data-menu-link="{{ link.handle }}" data-menu-link-source="collection">
+                {{ link.title }}
+              </a>
+
+              {% if show_next_level %}
+                <button class="{{ menu_class }}-marker menu-marker" type="button"></button>
+              {% endif %}
+            </div>
+
+            {% if show_next_level %}
+              <ul class="{{ menu_class }} menu {% if menu_class == 'sidebar-menu' %}is-opened{% endif %}"> 
+            {% endif %}
+
+            {% assign prev_link_level = node_level %}
+
+          {% unless show_next_level %}
+            </li>
+          {% endunless %}
+
+          {% if forloop.last %}
+            {% assign prev_link_level = node_level | minus: 1 %}
+            {% for i in (1..prev_link_level) %}
+              </ul>
+            {% endfor %}
+          {% endif %}
+
+        {% endif %}
+
+      {% endfor %}
+    </ul>
+
+
+
+
+
+{% elsif source_type == 'menu' %}
+
+
+
+  <ul class="{{ menu_class }} menu level-1" data-menu-id="{{ menu_class }}">
+    {% for link in linklists[source_handle].links %}
+
+      {% assign is_current = link.current? | default: 'no' | replace: 'true', 'yes' %}
+
+      <li class="{{ menu_class }}-item menu-item">
+        <div class="{{ menu_class }}-item-controls menu-item-controls">
+          {% if show_icon %}
+            <span class="{{ menu_class }}-icon menu-icon"></span>
+          {% endif %}
+
+          <a href="{{ link.url }}" class="{{ menu_class }}-link menu-link" data-menu-link-source="menu" data-menu-link-current="{{ is_current }}" {% comment %}{% if menu_class == "top-menu" %}{% unless link.title == "Отзывы"%} target="_blank" {% endunless%}{% endif %}{% endcomment %}>
+            {{ link.title }}
+          </a>
+        </div>
+        {% if link.title == "Вопросы - ответы" %}
+          <div class="submenu">
+            <a href="/blogs/poleznye-sovety" class="submenu-link">
+            Полезные советы
+          </a>
+          <a href="/blogs/sdelay-sam" class="submenu-link">
+            Сделай сам
+          </a>
+          <a href="/blogs/video" class="submenu-link">
+            Видео
+          </a>
+          </div>
+        {% endif %}
+      </li>
+
+    {% endfor %}
+  </ul>
+
+{% elsif source_type == 'blog' %}
+  <ul class="{{ menu_class }} menu level-1" data-menu-id="{{ menu_class }}">
+    {% for link in blogs[source_handle].articles limit: links_limit %}
+
+      <li class="{{ menu_class }}-item menu-item">
+        <div class="{{ menu_class }}-item-controls menu-item-controls">
+          {% if show_icon %}
+            <span class="{{ menu_class }}-icon menu-icon"></span>
+          {% endif %}
+
+          <a href="{{ link.url }}" class="{{ menu_class }}-link menu-link" data-menu-link="{{ link.url | split: '/' | last }}" data-menu-link-source="article">
+            {{ link.title }}
+          </a>
+        </div>
+      </li>
+
+    {% endfor %}
+  </ul>
+
+{% endif %}
+
+{% assign prev_link_level = null %}
+{% assign source_handle = null %}
+{% assign menu_class = null %}
+{% assign source_type = null %}
+{% assign show_icon = null %}
+{% assign level_limit = null %}
+{% assign links_limit = null %}
+{% assign is_current = null %}

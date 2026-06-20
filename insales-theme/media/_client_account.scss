@@ -1,0 +1,144 @@
+.co-button.js-co-login-submit {
+
+  @include button-variant;
+}
+
+.co-button--link {
+  font-size: 1rem;
+	@include link-decor;
+}
+
+.co-title.co-checkout-title {
+	color: $color-text-primary;
+	font-size: $font-size-h1;
+}
+
+.co-input-label {
+	color: $color-text-primary;
+}
+
+.co-toggable_field-input input:focus + span,
+.co-toggable_field-input input:checked + span {
+  -webkit-box-shadow: inset 0 0 0 7px edit-color($color-background-primary);
+  box-shadow: inset 0 0 0 7px edit-color($color-background-primary);
+}
+
+.co-toggable_field-input.co-toggable_field-input--checkbox input:focus + span,
+.co-toggable_field-input.co-toggable_field-input--checkbox input:checked + span {
+  -webkit-box-shadow: inset 0 0 0 10px edit-color($color-background-primary);
+  box-shadow: inset 0 0 0 10px edit-color($color-background-primary);
+}
+
+
+.co-toggable_field-input--checkbox input + span {
+  -webkit-box-shadow: inset 0 0 0 2px edit-color($color-background-primary);
+  box-shadow: inset 0 0 0 2px edit-color($color-background-primary);
+}
+
+.co-table--to_card .co-table-cell--body {
+  white-space: pre-line;
+  line-height: 1.5rem;
+}
+
+.tt-dropdown-menu {
+  color: #222222;
+}
+.co-input-description {
+	color: rgba($color-text-primary,0.7);
+	font-size: 0.8rem;
+
+	& a {
+
+		@include link-decor();
+		text-decoration: underline;
+	}
+}
+
+.co-menu-link--personal {
+
+  @include link-decor();
+}
+
+.co-form-button:not(.co-button--link) {
+
+  @include button-variant;
+  font-size: 1rem;
+}
+
+.co-order-information_title {
+  color: rgba($color-text-primary,0.7);
+
+  @include media-max(xs){
+    margin-bottom: 1rem;
+  }
+}
+
+.co-order-information_value {
+  color: $color-text-primary;
+  line-height: 1.5rem;
+}
+
+.co-title--h2 {
+  font-size: $font-size-h2;
+}
+
+.co-table-cell--head {
+  color: rgba($color-text-primary,0.7);
+}
+
+.co-link {
+
+  @include link-decor;
+
+  &.co-link--active {
+    color: $color-link-primary-hover;
+  }
+}
+
+.co-button.co-button--small {
+
+  @include button-variant;
+  word-break: break-word;
+}
+
+.co-order-information_value a {
+  @include link-decor;
+}
+
+.co-menu-toggle {
+
+  @include button-variant;
+}
+
+.co-menu-switcher:checked ~ .co-menu {
+  background-color: $color-background-primary;
+  border-bottom: 1px solid $color-border-primary;
+}
+
+input.co-input-field {
+  color: $gray-darker;
+}
+
+.small_label .co-form-controls,.new_client_payment_transaction_juridical_person_bill .co-form-controls{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+.co-input-title {
+  font-size: 1rem;
+}
+
+.co-menu-toggle {
+  @include own-icon($fa-angle-down, 'iconmonstr-iconic-font', 'after') {
+    position: relative;
+    top: 0.25em;
+  };
+}
+
+.co-menu-switcher:checked ~ .co-menu-toggle {
+  @include own-icon($fa-angle-up, 'iconmonstr-iconic-font', 'after') {
+    position: relative;
+    top: 0.25em;
+  };
+}

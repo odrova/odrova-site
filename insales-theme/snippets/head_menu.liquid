@@ -1,0 +1,53 @@
+{% assign menu_path = '' %}
+{% for part in collection.current_collections %}
+  {% assign menu_path = menu_path | append: part.handle | append: '|' %}
+{% endfor %}
+
+{% if template contains 'blog' %}
+  {% assign blog_url = blog.url | split: '/' | last %}
+{% endif %}
+
+{% if template contains 'article' %}
+  {% assign blog_url = blog.url | split: '/' | last %}
+  {% assign article_url = article.url | split: '/' | last %}
+{% endif %}
+
+{% assign menu_path = menu_path | append: blog_url | append: '|' | append: article_url | append: '|' | append: page_url | append: '|' | split: '|' %}
+
+<meta name="handle" content="{{ menu_path | json | escape }}"/ data-current-collection="{{ collection.current_collections | map: 'handle' | json | escape }}"
+{% if template contains 'blog' or template contains 'article' %}
+  data-blog="{{ blog.handle }}"
+{% endif %}
+{% if template contains 'article' %}
+  data-article="{{ article.url | split: '/' | last }}"
+{% endif %}
+>
+
+<style>
+  .menu:not(.insales-menu--loaded) {
+    display: flex;
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+    box-shadow: none;
+    width: auto;
+    background: transparent;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .menu:not(.insales-menu--loaded) .menu-link {
+    display: block;
+  }
+
+  .menu:not(.insales-menu--loaded) .menu,
+  .menu:not(.insales-menu--loaded) .menu-marker,
+  .menu:not(.insales-menu--loaded) .menu-icon {
+    display: none;
+  }
+</style>
+
+{% assign menu_path = null %}
+{% assign blog_url = null %}
+{% assign article_url = null %}
+{% assign page_url = null %}

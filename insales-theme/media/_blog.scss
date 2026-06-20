@@ -1,0 +1,250 @@
+.blog-menu-item {
+  padding: 0.25rem 0;
+  line-height: 23px;
+}
+
+.blog-menu-link {
+
+  @include transition-property(color);
+  text-decoration: none;
+  cursor: pointer;
+  color: $color-link-primary;
+  line-height: 1.5rem;
+
+  &.is-active,
+  &.is-current,
+  &.is-hovered {
+    color: $color-link-primary-hover;
+  }
+}
+
+.js-comments-toggle-notice {
+  display: none;
+}
+
+.blog-menu {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: column;
+  flex-flow: column;
+}
+
+.tags-cloud {
+  margin: 0.5rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-left: 0;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+
+.tag {
+  list-style-type: none;
+  margin: 0.75rem 0.5rem 0.75rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+
+  &:hover {
+    border-color: $color-link-primary-hover;
+
+    & * {
+      border-color: $color-link-primary-hover;
+      color: $color-link-primary-hover;
+    }
+  }
+}
+
+.article-perview-introtext {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.tag-link {
+  text-decoration: none;
+  color: $color-link-primary;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px solid $color-border-primary;
+  vertical-align: middle;
+  border-radius: 0.15rem;
+  background-color: $color-background-primary;
+}
+
+.tag-text {
+  padding: 0.25rem;
+}
+
+.tag-count {
+  border-left: 1px solid $color-border-primary;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  color: lighten($color-link-primary, 20%);
+  text-decoration: none;
+}
+
+.comments-count {
+  color: $color-link-primary;
+  padding: 0 1em;
+  text-decoration: none;
+  padding-left: 0;
+  padding-bottom: 0.25rem;
+
+  &:hover {
+    color: $color-link-primary-hover;
+  }
+}
+
+.author {
+  padding-right: 0.75rem;
+  opacity: 0.5;
+  padding-bottom: 0.25rem;
+
+  @include icon($fa-user);
+
+  @include media-max(mc) {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    &:before {
+      padding-right: 0.25rem;
+    }
+  }
+}
+
+.date {
+  opacity: 0.5;
+  padding-right: 0.5rem;
+  padding-bottom: 0.25rem;
+
+  @include icon($fa-calendar, 'before');
+
+  @include media-max(mc) {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+
+    &:before {
+      padding-right: 0.25rem;
+    }
+  }
+}
+
+.product-rating {
+  padding-bottom: 0.25rem;
+}
+
+.article-preview-toolbar.toolbar .toolbar-inner {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  margin-top: 0.5rem;
+}
+
+.comments-heading {
+
+  @extend %heading-h4;
+  margin: 0.75rem 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid darken($color-border-primary, 30%);
+}
+
+.comments-item {
+  padding: 0.6rem 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.comment-body {
+  padding: 0.5rem 0;
+  line-height: 22px;
+}
+
+.comment-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  font-size: 80%;
+}
+
+.comments-wrapper {
+  margin: 1.5rem 0;
+}
+
+.comments-form {
+  margin: 1.5rem 0;
+}
+
+.form-button {
+
+  @include button-variant;
+}
+
+.article-block-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.form-field {
+
+  &.is-text {
+    margin: 0.25rem 0;
+    border: 1px solid $color-border-primary;
+    padding: 0.75rem 0.5rem;
+    outline: none;
+
+    &:focus {
+      box-shadow: 0 0 2px $color-border-primary;
+    }
+  }
+
+  &.with-error {
+    background-color: #ffebeb;
+  }
+}
+.article-preview-image-inner{
+  text-align: center;
+}

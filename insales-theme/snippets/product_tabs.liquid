@@ -1,0 +1,109 @@
+
+<div class="product-content tab">
+
+  
+  {% if product.description %}
+    <button class="tab-toggle  {% if product.fields.Vkladka_Opisanie.value != blank %}is-active is-opened{% endif %}" data-target="#product-description" data-toggle="tabs">
+      {{ messages.label_description }}
+      <i class="fa fa-angle-up"></i>
+    </button>
+
+    <div id="product-description" class="tab-block">
+      <div class="tab-block-inner editor">
+        {{ product.description | editable }}
+      </div>
+    </div><!-- /#product-description -->
+  {% endif %}
+
+  {% comment %}
+  Скрываем характеристики, оставляя только кастомную версию
+  {% if product.properties.size > 0 %}
+    <button class="tab-toggle {% if product.fields.Vkladka_Harakter.value != blank %}is-active is-opened{% endif %}" data-target="#product-characteristics" data-toggle="tabs">
+      {{ messages.label_characteristics }}
+      <i class="fa fa-angle-down"></i>
+    </button>
+
+    <div id="product-characteristics" class="tab-block">
+      <div class="tab-block-inner editor">
+        <table class="table table-bordered table-striped table-hover">
+
+          {% for property in product.properties %}
+            <tr>
+              <td>{{ property.name }}</td>
+              <td>
+                {% for characteristic in property.characteristics %}
+                  {{ characteristic.title }}{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+              </td>
+            </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+    </div><!-- /#product-characteristics -->
+  {% endif %}
+  {% endcomment %}
+
+  {% if account.reviews_enabled? %}
+    <button class="tab-toggle {% if product.fields.Vkladka_Otzyvy.value != blank %}is-active is-opened{% endif %}" data-target="#product-comment" data-toggle="tabs">
+      {{ messages.label_reviews }} ( {{ product.reviews.size }} )
+      <i class="fa fa-angle-down"></i>
+    </button>
+
+    
+  {% endif %}
+
+  {% for field in product.fields  %}
+  
+  {% if field.value != '' and field.handle != 'floating-card'  %}
+  {% unless field.handle == 'Tekst_v_metke_so' or field.handle == 'Vkladka_Harakter' or field.handle == 'Vkladka_Otzyvy' or field.handle == 'Vkladka_Stati'%}
+  <button class="tab-toggle" data-target="#{{  field.handle }}" data-toggle="tabs">
+    {{ field.title }}
+    <i class="fa fa-angle-down"></i>
+  </button>
+  <div id="{{  field.handle }}" class="tab-block">
+    <div class="tab-block-inner editor">
+      {{ field.value }}
+    </div>
+  </div>
+  {% endunless %}
+  {% endif %}
+  
+  {% endfor %}
+  
+  {% if product.related_articles.size > 0 %}
+  
+      <button class="tab-toggle  {% if product.fields.Vkladka_Stati.value != blank %}is-active is-opened{% endif %}" data-target="#articles" data-toggle="tabs">
+        Статьи ( {{ product.related_articles.size }} )
+        <i class="fa fa-angle-down"></i>
+      </button>
+  
+      <div id="articles" class="tab-block">
+        <div class="tab-block-inner editor row">
+          {% for article in product.related_articles %}
+			{% assign article_url = article.url | split: '/' %}
+			{% assign article_blog_handle = article_url[2] %}
+          <div class="article_card cell-3 cell-6-md">
+            <a href="{{ article.url }}" class="article_card-thumb article_card-thumb--16x9 article_card-thumb--cover" data-title="Читать">
+
+              <span class="article_card-thumb-item" style="background-image: url({{ article.image.medium_url }});"></span>
+
+              <span class="article_card-labels">
+                <span class="article_card-label article_card-label--date">{{ article.created_at | date: "%d [%m] %Y" | replace: '[01]', 'Января' | replace: '[02]', 'Февраля' | replace: '[03]', 'Марта' | replace: '[04]', 'Апреля' | replace: '[05]', 'Мая' | replace: '[06]', 'Июня' | replace: '[07]', 'Июля' | replace: '[08]', 'Августа' | replace: '[09]', 'Сентября' | replace: '[10]', 'Октября' | replace: '[11]', 'Ноября' | replace: '[12]', 'Декабря'  }}</span>
+              </span>
+            </a>
+            <div class="article_card-title">
+              <a href="{{ article.url }}">{{ article.title }}</a>
+              <span class="article_card-blog">&nbsp;— <a href="{{ blogs[article_blog_handle].url }}">{{ blogs[article_blog_handle].title }}</a></span>
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+  
+  {% endif %}
+  
+</div>
+
+

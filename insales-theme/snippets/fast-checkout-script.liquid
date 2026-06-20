@@ -1,0 +1,55 @@
+<script>
+  $(()=>{
+
+    $('.js-mask').inputmask("+7(999)-999-99-99");   
+
+    
+   $(document).on('click','.fast-checkout button',function(){
+     console.log($(this));
+   
+
+      var delivery = {{account.delivery_variants.first.id}};
+                                     var payment = {{account.payment_gateways.first.id}};  
+    var error = false;
+    var phone = $(this).prev();
+
+  if(phone.val() == '') {
+    error = true;
+    phone.addClass('input-error');
+  }else{
+    error = false;
+    phone.removeClass('input-error');
+  }
+
+  fastCheckoutSend = function() {
+    $.ajax({
+      url: '/fast_checkout.json',
+      type: 'post',
+      data: 'pid_value=1&order[shipping_address[street]]=Заказ в один клик&order[shipping_address[house]]=Пусто&client[consent_to_personal_data]=1&client[name]=Заказ в один клик&client[phone]='+phone.val()+'&order[delivery_variant_id]='+delivery+'&order[payment_gateway_id]='+payment,
+      dataType: 'json',
+      success:  function(response) {
+        if ( response.status == 'ok' ) {
+          location.href = response.location
+        }
+      }
+    });
+  }
+
+  var variantName = $(this).parents('form:first').find('[name="variant_id"]').val();
+
+  if( error ) { return ; }
+     
+  $.ajax({
+    url: '/cart_items.json',
+    type: 'post',
+    data: '_method=put&cart[quantity]['+variantName+']=1',
+    success: fastCheckoutSend
+  });  
+  
+  
+  })  
+
+
+  
+  })
+</script>

@@ -1,0 +1,40 @@
+<script type="text/template" data-modal="mobile-sidebar">
+<div class="sidebar">
+
+  <div class="sidebar-block">
+    <div class="sidebar-block-heading">
+      {{ messages.label_catalog }}
+    </div>
+
+    <div class="sidebar-block-content">
+    
+
+    
+      {% include "menu", source_type: 'collection', source_handle: 'all', menu_class: 'mobile-sidebar-menu', show_icon: false %}
+      <a href="tel:+79220352887" style="padding: 8px; font-size: 25px;">8(922)-035-28-87</a>
+    </div>
+  </div>
+
+  <div class="sidebar-block">
+    <div class="sidebar-block-heading">
+      {{ messages.label_main_menu }}
+    </div>
+
+    <div class="sidebar-block-content">
+      {% include "menu", source_type: 'menu', source_handle: 'main-menu', menu_class: 'mobile-sidebar-menu' %}
+    </div>
+  </div>
+</div>
+</script>
+
+<script type="text/template" data-modal="collection-filter">
+  <div class="sidebar">
+    <div class="sidebar-block">
+      {% include "collection_filter", filter_class: 'is-modal-filter' %}
+    </div>
+  </div>
+</script>
+
+<script type="text/template" data-modal="search-form">
+  {% include "search_widget", widget_class: 'in-search-panel' %}
+</script>

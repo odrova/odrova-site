@@ -1,0 +1,59 @@
+{% if template contains "product" %}
+<!-- Продукт -->
+    <meta property="og:title" content="{{ product.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}{{ product.url }}" />
+
+    {% if product.first_image.thumb_url contains "http" %}
+      <meta property="og:image" content="{{ product.first_image.original_url }}" />
+    {% else %}
+      <meta property="og:image" content="{{ account.url }}{{ product.first_image.original_url }}" />
+    {% endif %}
+
+{% elsif  template contains "index" %}
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}" />
+    <meta property="og:title" content="{{ account.title }}" />
+
+    {% assign logotype_image = "logotype.jpg" | asset_url_if_exists %}
+    {% if settings.logotype_type == "image" and logotype_image %}
+      <meta property="og:image" content="{{ logotype_image }}" />
+    {% endif %}
+
+{% elsif template contains "article" %}
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:image" content="{{ article.image.original_url }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}{{ article.url }}" />
+
+{% elsif template contains "collection" %}
+  {% if filter %}
+    {% assign  seo_url =  filter.handle  %}
+    <meta property="og:title" content="{{ filter.title }}" />
+  {% else %}
+    <meta property="og:title" content="{{ collection.title }}" />
+  {% endif %}
+  {% if collection.image.thumb_url contains "http" %}
+    <meta property="og:image" content="{{ collection.image.original_url }}" />
+  {% else %}
+    <meta property="og:image" content="{{ collection.image.original_url }}" />
+  {% endif %}
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ account.url }}{{ collection.url }}/{{ filter.handle }}" />
+
+{% elsif template contains "page" %}
+    <meta property="og:title" content="{{ page.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}{{ page.url }}" />
+{% elsif template contains "blog" %}
+    <meta property="og:title" content="{{ blog.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}{{ blog.url }}" />
+{% elsif template contains "compare" %}
+    <meta property="og:title" content="{{ compare.title }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ account.url }}{{ compare.url }}" />
+
+{% endif %}
+
+{% assign seo_url = null  %}
