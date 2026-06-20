@@ -1142,7 +1142,7 @@ body .od-product-page .is-span .option-label {
   height: 100%;
   min-height: 64px;
   background:
-    radial-gradient(120% 80% at 50% 30%, #2c2c2c 0%, var(--od-graphite) 60%, #161616 100%);
+    radial-gradient(120% 80% at 50% 30%, #2c2c2c 0%, #1e1e1e 60%, #161616 100%);
 }
 /* VK-плитка: всю карточку рисуем на САМОЙ ссылке .od-vk-video — swiper темы при
    клонировании слайдов теряет вложенные span/i, ссылка же есть всегда.
