@@ -1,0 +1,232 @@
+{% comment %} ============================================================
+  ODROVA — форма добавления отзыва (наполнение пустого сниппета).
+  Поля и URL — по офиц. документации InSales (peremennye/product/review):
+    action = review.action_url
+    review[author], review[email], review[content], review[rating]
+    фото = review[image_attributes][image]
+  Со звёздами и видео-ссылкой (VK/YouTube → маркер [video] в тексте).
+  Кнопка «Оставить отзыв» разворачивает форму (по умолчанию скрыта).
+============================================================ {% endcomment %}
+
+<div class="od-review-form-wrap">
+
+  <button type="button" class="od-review-toggle js-od-review-toggle">
+    Оставить отзыв
+  </button>
+
+  <form class="od-review-form js-od-review-form od-hidden" action="{{ review.action_url }}" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+    <input type="hidden" name="authenticity_token" class="js-od-csrf" value="">
+
+    <div class="od-review-form__title">Ваш отзыв о товаре «{{ product.title }}»</div>
+
+    {%- comment -%} Оценка звёздами 1–5 (radio + CSS-заливка) {%- endcomment -%}
+    <div class="od-review-rating">
+      <span class="od-review-rating__label">Ваша оценка:</span>
+      <div class="od-review-stars js-od-review-stars">
+        {% for i in (1..5) %}
+          {% assign rv = 6 | minus: i %}
+          <input type="radio" name="review[rating]" id="od-star-{{ rv }}" value="{{ rv }}" class="od-review-star-input"{% if rv == 5 %} checked{% endif %}>
+          <label for="od-star-{{ rv }}" class="od-review-star" title="{{ rv }}">★</label>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="od-review-form__row">
+      <input type="text" name="review[author]" class="od-review-input" placeholder="Ваше имя" required
+             value="{% if customer %}{{ customer.name }}{% endif %}">
+    </div>
+
+    <div class="od-review-form__row">
+      <input type="email" name="review[email]" class="od-review-input" placeholder="E-mail (не публикуется)"
+             value="{% if customer %}{{ customer.email }}{% endif %}">
+    </div>
+
+    <div class="od-review-form__row">
+      <textarea name="review[content]" class="od-review-textarea" rows="5" placeholder="Поделитесь впечатлениями: как работает, что понравилось, для какого привода или двигателя подошёл…" required></textarea>
+    </div>
+
+    {%- comment -%}
+      Ссылка на видео (VK / YouTube). Отдельного поля под видео в InSales нет —
+      дописываем ссылку в конец review[content] маркером [video]…[/video] (скрипт ниже).
+      Парсер на выводе превращает её в плеер.
+    {%- endcomment -%}
+    <div class="od-review-form__row">
+      <input type="url" class="od-review-input js-od-review-video" placeholder="Ссылка на видео-отзыв (VK или YouTube) — необязательно">
+      <span class="od-review-video-hint">Например: https://vk.com/video… или https://youtu.be/…</span>
+    </div>
+
+    {%- comment -%} Фото — имя поля строго по документации InSales {%- endcomment -%}
+    <div class="od-review-form__row od-review-photos">
+      <label class="od-review-photo-label">
+        📷 Прикрепить фото
+        <input type="file" name="review[image_attributes][image]" accept="image/*" class="od-review-file">
+      </label>
+      <span class="od-review-photo-hint">JPG/PNG.</span>
+    </div>
+
+    <div class="od-review-form__actions">
+      <button type="submit" class="od-review-submit">Отправить отзыв</button>
+      <span class="od-review-note">Отзыв появится после проверки модератором.</span>
+    </div>
+  </form>
+</div>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.js-od-review-toggle');
+    var form = document.querySelector('.js-od-review-form');
+
+    // CSRF-токен из <meta name="csrf-token"> → в скрытое поле
+    (function () {
+      var meta = document.querySelector('meta[name="csrf-token"]');
+      var field = document.querySelector('.js-od-csrf');
+      if (meta && field) field.value = meta.getAttribute('content') || '';
+    })();
+
+    if (btn && form) {
+      btn.addEventListener('click', function () {
+        if (form.classList.contains('od-hidden')) {
+          form.classList.remove('od-hidden');
+          btn.style.display = 'none';
+          var nameInput = form.querySelector('input[name="review[author]"]');
+          if (nameInput) nameInput.focus();
+        }
+      });
+    }
+
+    // фолбэк action: если review.action_url не отдался (пустой action) — строим путь сами
+    if (form && (!form.getAttribute('action') || form.getAttribute('action').trim() === '')) {
+      var path = window.location.pathname.replace(/\/+$/, '');
+      // на странице товара путь вида /product/<permalink> → добавляем /reviews
+      form.setAttribute('action', path + '/reviews');
+    }
+
+    // перед отправкой: дописываем ссылку на видео в review[content] маркером [video]…[/video]
+    if (form) {
+      form.addEventListener('submit', function () {
+        var videoInput = form.querySelector('.js-od-review-video');
+        var contentInput = form.querySelector('textarea[name="review[content]"]');
+        if (videoInput && contentInput) {
+          var url = (videoInput.value || '').trim();
+          if (url && /(vk\.com|vkvideo\.ru|youtu\.be|youtube\.com)/i.test(url)) {
+            if (contentInput.value.indexOf('[video]') === -1) {
+              contentInput.value = contentInput.value.trim() + '\n\n[video]' + url + '[/video]';
+            }
+          }
+        }
+      });
+    }
+
+    // === КРАСИВО: зашиваем фирменный стиль формы инлайном (кэш SCSS не доезжает) ===
+    function odStyleReviewForm() {
+      var clip = 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))';
+      function set(el, props) {
+        if (!el) return;
+        for (var k in props) el.style.setProperty(k, props[k], 'important');
+      }
+      var mob = window.matchMedia('(max-width: 760px)').matches;
+
+      // кнопка «Оставить отзыв» — жёлтая угловатая
+      set(document.querySelector('.od-review-toggle'), {
+        'display': 'inline-block', 'background': '#f5c800', 'color': '#1e1e1e',
+        'border': 'none', 'font-family': "'PT Sans', sans-serif", 'font-weight': '700',
+        'font-size': mob ? '0.95rem' : '1rem', 'text-transform': 'uppercase',
+        'letter-spacing': '0.3px', 'padding': '13px 28px', 'cursor': 'pointer',
+        'clip-path': clip, 'margin-top': '8px'
+      });
+
+      // сама форма — карточка
+      set(document.querySelector('.od-review-form'), {
+        'margin-top': '16px', 'max-width': '560px', 'background': '#fff',
+        'border': '1px solid #e3e3e3', 'padding': mob ? '16px' : '22px'
+      });
+      set(document.querySelector('.od-review-form__title'), {
+        'font-family': "'PT Sans', sans-serif", 'font-weight': '700',
+        'font-size': '1.05rem', 'color': '#1e1e1e', 'margin-bottom': '14px'
+      });
+
+      // поля ввода
+      document.querySelectorAll('.od-review-input, .od-review-textarea').forEach(function (el) {
+        set(el, {
+          'width': '100%', 'box-sizing': 'border-box', 'background': '#fff',
+          'border': '1px solid #d5d5d5', 'color': '#1e1e1e',
+          'font-family': "'PT Sans', sans-serif", 'font-size': '0.95rem',
+          'padding': '11px 13px', 'border-radius': '0', 'margin-bottom': '12px'
+        });
+        el.addEventListener('focus', function () { el.style.setProperty('border-color', '#f5c800', 'important'); el.style.setProperty('outline', 'none', 'important'); });
+        el.addEventListener('blur', function () { el.style.setProperty('border-color', '#d5d5d5', 'important'); });
+      });
+      var ta = document.querySelector('.od-review-textarea');
+      set(ta, { 'resize': 'vertical', 'min-height': '100px' });
+
+      // блок оценки
+      set(document.querySelector('.od-review-rating'), {
+        'display': 'flex', 'align-items': 'center', 'gap': '12px', 'margin-bottom': '16px'
+      });
+      set(document.querySelector('.od-review-rating__label'), {
+        'font-family': "'PT Sans', sans-serif", 'font-weight': '700',
+        'font-size': '0.9rem', 'color': '#6b7280'
+      });
+      // звёзды: контейнер в обратном порядке для CSS-заливки
+      set(document.querySelector('.od-review-stars'), {
+        'display': 'inline-flex', 'flex-direction': 'row-reverse', 'gap': '4px'
+      });
+      document.querySelectorAll('.od-review-star-input').forEach(function (el) {
+        set(el, { 'position': 'absolute', 'opacity': '0', 'width': '0', 'height': '0' });
+      });
+      var stars = Array.prototype.slice.call(document.querySelectorAll('.od-review-star'));
+      stars.forEach(function (star) {
+        set(star, { 'font-size': mob ? '1.6rem' : '1.9rem', 'line-height': '1', 'color': '#d6d6d6', 'cursor': 'pointer', 'transition': 'color 0.12s' });
+        // подсветка наведением/выбором: т.к. row-reverse — подсвечиваем текущую и все ПОСЛЕ по DOM
+        star.addEventListener('mouseenter', function () {
+          var i = stars.indexOf(star);
+          for (var j = i; j < stars.length; j++) stars[j].style.setProperty('color', '#f5c800', 'important');
+        });
+      });
+      var starsWrap = document.querySelector('.od-review-stars');
+      if (starsWrap) {
+        starsWrap.addEventListener('mouseleave', applyChecked);
+        document.querySelectorAll('.od-review-star-input').forEach(function (inp) {
+          inp.addEventListener('change', applyChecked);
+        });
+      }
+      function applyChecked() {
+        // сброс
+        stars.forEach(function (s) { s.style.setProperty('color', '#d6d6d6', 'important'); });
+        var checked = document.querySelector('.od-review-star-input:checked');
+        if (!checked) return;
+        // подсветить выбранную и все после неё по DOM (визуально — слева направо)
+        var lbl = document.querySelector('label[for="' + checked.id + '"]');
+        var i = stars.indexOf(lbl);
+        if (i === -1) return;
+        for (var j = i; j < stars.length; j++) stars[j].style.setProperty('color', '#f5c800', 'important');
+      }
+      applyChecked(); // подсветить звёзды, выбранные по умолчанию (5)
+
+      // фото
+      set(document.querySelector('.od-review-photos'), { 'display': 'flex', 'align-items': 'center', 'gap': '12px', 'flex-wrap': 'wrap', 'margin-bottom': '12px' });
+      set(document.querySelector('.od-review-photo-label'), {
+        'display': 'inline-block', 'background': '#f4f4f4', 'border': '1px dashed #c4c4c4',
+        'color': '#555', 'font-family': "'PT Sans', sans-serif", 'font-size': '0.9rem',
+        'padding': '10px 16px', 'cursor': 'pointer'
+      });
+      set(document.querySelector('.od-review-file'), { 'display': 'none' });
+      document.querySelectorAll('.od-review-photo-hint, .od-review-video-hint, .od-review-note').forEach(function (el) {
+        set(el, { 'font-size': '0.78rem', 'color': '#6b7280' });
+      });
+      set(document.querySelector('.od-review-video-hint'), { 'display': 'block', 'margin-top': '-6px', 'margin-bottom': '12px' });
+
+      // действия
+      set(document.querySelector('.od-review-form__actions'), { 'display': 'flex', 'align-items': 'center', 'gap': '14px', 'flex-wrap': 'wrap', 'margin-top': '6px' });
+      set(document.querySelector('.od-review-submit'), {
+        'background': '#1e1e1e', 'color': '#f5c800', 'border': 'none',
+        'font-family': "'PT Sans', sans-serif", 'font-weight': '700',
+        'font-size': '1rem', 'text-transform': 'uppercase', 'padding': '13px 30px',
+        'cursor': 'pointer', 'clip-path': clip
+      });
+    }
+    odStyleReviewForm();
+    // перестилизуем после раскрытия формы (элементы внутри становятся видимы)
+    if (btn) btn.addEventListener('click', function () { setTimeout(odStyleReviewForm, 30); });
+  })();
+</script>
