@@ -437,23 +437,119 @@
 {% include "product_slider", slider_products: product.similar_products, slider_class: 'similar-products', slider_heading: messages.similar_products %}
 
 <script type="text/javascript">
-  $( document ).ready(function() {
-    $('.review-manager_reply').each(function() {
-      var text = $( this ).text();
-      var link; var link_text;
-      if (text.includes('http')) {
-        if (text.includes('youtu')) {
-          var utID = text.split('/').pop();
-          link = '<iframe src="//www.youtube.com/embed/'+utID+'" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>'
-          link_text = text.split('https://')[0]+link
-          $( this ).html(link_text);
-        } else {
-          link = '<a href="http://'+text.split('://').pop().trim()+'">'+text.split('://').pop().trim()+'</a>'
-          link_text = text.split('://')[0].replace("http", "").replace("https", "")+link;
-          $( this ).html(link_text);
-        }
+  $(document).ready(function () {
+    // ============================================================
+    // ODROVA — видео в отзывах (VK + YouTube), выравнивание медиа, жёлтые звёзды.
+    // ============================================================
+
+    // строит embed-iframe по ссылке (YouTube или VK), иначе null
+    function odVideoEmbed(url) {
+      url = (url || '').trim();
+      if (!url) return null;
+      var frameStyle = 'position:relative;width:100%;max-width:360px;margin:0;background:#000;'
+        + 'aspect-ratio:16/9;clip-path:polygon(0 0,calc(100% - 14px) 0,100% 14px,100% 100%,0 100%);';
+      var ifrStyle = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;';
+      // YouTube
+      var yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{6,})/i);
+      if (yt) {
+        return '<div class="od-review-video-frame" style="' + frameStyle + '"><iframe style="' + ifrStyle +
+               '" src="https://www.youtube.com/embed/' + yt[1] +
+               '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
+      }
+      // VK: video-OID_ID
+      var vk = url.match(/video(-?\d+)_(\d+)/i);
+      if (vk) {
+        return '<div class="od-review-video-frame" style="' + frameStyle + '"><iframe style="' + ifrStyle +
+               '" src="https://vk.com/video_ext.php?oid=' + vk[1] + '&id=' + vk[2] +
+               '&hd=2" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe></div>';
+      }
+      return null;
+    }
+
+    // 1) [video]…[/video] в тексте отзыва (.comment-body)
+    $('#product-comment .comment-body, #product-comment .comment-text').each(function () {
+      var $el = $(this);
+      var html = $el.html();
+      if (!html || html.indexOf('[video]') === -1) return;
+      html = html.replace(/\[video\]\s*([\s\S]*?)\s*\[\/video\]/gi, function (m, link) {
+        var clean = link.replace(/<[^>]*>/g, '').trim();
+        var embed = odVideoEmbed(clean);
+        return embed ? embed : '';
+      });
+      $el.html(html);
+    });
+
+    // 2) ответ администратора: голая ссылка → плеер (VK или YouTube), иначе обычная ссылка
+    $('.review-manager_reply').each(function () {
+      var $el = $(this);
+      var text = $el.text();
+      if (text.indexOf('http') === -1) return;
+      var urlMatch = text.match(/https?:\/\/\S+/);
+      if (!urlMatch) return;
+      var embed = odVideoEmbed(urlMatch[0]);
+      if (embed) {
+        $el.html(text.split(urlMatch[0])[0] + embed);
+      } else {
+        var u = urlMatch[0];
+        $el.html(text.replace(u, '<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>'));
       }
     });
+
+    // 3) фото и видео в ряд, одинаковая высота
+    var odMediaH = 220;
+    function odStyleReviewMedia() {
+      $('#product-comment .comment-body').each(function () {
+        var $body = $(this);
+        var $media = $body.find('.od-review-video-frame, img').filter(function () {
+          if (this.tagName === 'IMG') { var nw = this.naturalWidth || 0; return !(nw && nw < 80); }
+          return true;
+        });
+        if (!$media.length) return;
+        var $row = $body.find('.od-review-media-row').first();
+        if (!$row.length) {
+          $row = $('<div class="od-review-media-row"></div>');
+          $media.first().before($row);
+          $media.each(function () { $row.append(this); });
+        }
+        var r = $row.get(0);
+        r.style.setProperty('display', 'flex', 'important');
+        r.style.setProperty('flex-wrap', 'wrap', 'important');
+        r.style.setProperty('gap', '10px', 'important');
+        r.style.setProperty('align-items', 'flex-start', 'important');
+        r.style.setProperty('margin', '10px 0', 'important');
+        $row.find('img').each(function () {
+          this.style.setProperty('display', 'block', 'important');
+          this.style.setProperty('height', odMediaH + 'px', 'important');
+          this.style.setProperty('width', 'auto', 'important');
+          this.style.setProperty('max-width', 'none', 'important');
+          this.style.setProperty('margin', '0', 'important');
+          this.style.setProperty('border-radius', '4px', 'important');
+          this.style.setProperty('object-fit', 'cover', 'important');
+        });
+        $row.find('.od-review-video-frame').each(function () {
+          this.style.setProperty('display', 'block', 'important');
+          this.style.setProperty('height', odMediaH + 'px', 'important');
+          this.style.setProperty('width', Math.round(odMediaH * 16 / 9) + 'px', 'important');
+          this.style.setProperty('max-width', '100%', 'important');
+          this.style.setProperty('margin', '0', 'important');
+          this.style.setProperty('aspect-ratio', 'auto', 'important');
+        });
+      });
+      // звёзды-оценка: span.product-rating-point, символ через :after. Красим сами span.
+      $('#product-comment .product-rating').each(function () {
+        var pts = $(this).find('.product-rating-point').toArray();
+        var lastActive = -1;
+        pts.forEach(function (p, idx) { if (p.classList.contains('is-current')) lastActive = idx; });
+        pts.forEach(function (p, idx) {
+          p.style.setProperty('font-size', '1.4rem', 'important');
+          p.style.setProperty('letter-spacing', '2px', 'important');
+          if (idx <= lastActive) p.style.setProperty('color', '#f5c800', 'important');
+        });
+      });
+    }
+    odStyleReviewMedia();
+    $(window).on('load', odStyleReviewMedia);
+    setTimeout(odStyleReviewMedia, 600);
   });
 </script>
 
