@@ -1144,16 +1144,6 @@ body .od-product-page .is-span .option-label {
   background:
     radial-gradient(120% 80% at 50% 30%, #2c2c2c 0%, #1e1e1e 60%, #161616 100%);
 }
-/* VK-плитка: всю карточку рисуем на САМОЙ ссылке .od-vk-video — swiper темы при
-   клонировании слайдов теряет вложенные span/i, ссылка же есть всегда.
-   ::before — жёлтый кружок play с треугольником ►, ::after — подпись.
-   Фон бьём точный селектор-победитель темы:
-   .od-product-page .gallery-thumbs .image-container { background:#fff !important }
-   (theme.css:15553) — повторяем её путь + .od-vk-video + body для перевеса. */
-/* Графитовый фон на ВСЕ видео-плитки .slide-video — не зависим от класса
-   od-vk-video (swiper теряет его в клонах слайдов). У YouTube реальное превью
-   ложится картинкой поверх фона и перекрывает его; у VK превью нет — виден графит.
-   Бьём точный селектор-победитель темы (.gallery-thumbs .image-container = #fff). */
 body.fhg-body .od-product-page .gallery-thumbs .image-container.slide-video,
 body.fhg-body .od-product-page .gallery-thumbs a.slide-video.image-container,
 body .od-product-page .gallery-thumbs .image-container.slide-video,
@@ -1184,8 +1174,6 @@ body .od-product-page .gallery-thumbs .slide-video,
 /* прячем штатную иконку play у всех видео-плиток — рисуем свой кружок */
 .od-product-page .slide-video .od-video-thumb,
 .od-product-page .slide-video .fa-play { display: none !important; }
-/* круглая жёлтая кнопка play с треугольником ► — на .slide-video (уцелеет в
-   клонах swiper, в отличие от od-vk-video). Виден поверх превью и поверх графита. */
 .od-product-page .slide-video::before {
   content: '\25BA';                 /* ► */
   position: absolute;
@@ -1256,17 +1244,13 @@ body .od-product-page .gallery-thumbs .slide-video,
 
 /* ============================================================
    ODROVA — кнопка «без отверстия»: бокс растёт по тексту
-   (тема задаёт кнопкам фиксированную ширину — снимаем её
-   на максимальной специфичности, контейнер — во flex)
    ============================================================ */
-/* контейнер значений — гибкая обтекаемая сетка */
 .od-product-page div.is-diametr > div,
 .od-product-page .is-diametr .option-values {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 6px;
 }
-/* кнопка — по содержимому, без переноса текста */
 .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .product-option .option-value.is-diametr {
   display: inline-flex !important;
@@ -1293,7 +1277,6 @@ body .od-product-page .product-option .option-value.is-diametr {
 /* ============================================================
    ODROVA — блок выбора диаметра/резьбы крупнее, как в прототипе
    ============================================================ */
-/* лейблы опций («ДИАМЕТР ВАЛА...», «НАПРАВЛЕНИЕ РЕЗЬБЫ») */
 .od-product-page .od-product__info .product-option > label,
 .od-product-page .od-product__info form.product-form label {
   font-family: 'Fira Mono', monospace !important;
@@ -1305,20 +1288,17 @@ body .od-product-page .product-option .option-value.is-diametr {
   display: block;
 }
 
-/* кнопки диаметров — крупнее (как плитки прототипа) */
 .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .product-option .option-value.is-diametr {
   min-width: 86px;
   padding: 12px 16px !important;
   font-size: 0.95rem !important;
 }
-/* контейнер — чуть просторнее */
 .od-product-page div.is-diametr > div,
 .od-product-page .is-diametr .option-values {
   gap: 8px;
 }
 
-/* подсказка под сеткой диаметров */
 .od-product-page div.is-diametr::after {
   content: 'Выберите диаметр вала вашего дровокола';
   display: block;
@@ -1328,7 +1308,6 @@ body .od-product-page .product-option .option-value.is-diametr {
   margin: 8px 0 4px;
 }
 
-/* Левая/Правая — компактные и тихие (раньше были крупными) */
 .od-product-page .od-product__info form.product-form .option-value.left,
 .od-product-page .od-product__info form.product-form .option-value.right {
   padding: 4px 11px !important;
@@ -1337,9 +1316,7 @@ body .od-product-page .product-option .option-value.is-diametr {
 
 /* ============================================================
    ODROVA — широкий десктоп + крупные фото + богатая кнопка
-   + состояние «Выберите диаметр» (как в прототипе)
    ============================================================ */
-/* 1. Контейнер страницы товара — на всю ширину (как и весь сайт) */
 @media (min-width: 1280px) {
   body:has(.od-product-page) .container {
     max-width: 100% !important;
@@ -1347,7 +1324,6 @@ body .od-product-page .product-option .option-value.is-diametr {
   }
 }
 
-/* 1. Фото на всю ширину колонки галереи */
 .od-product-page .product-gallery .gallery-main-wrapper { width: 100%; }
 .od-product-page .product-gallery .gallery-main-wrapper .image-container {
   display: flex !important;
@@ -1368,7 +1344,6 @@ body .od-product-page .product-option .option-value.is-diametr {
   display: block !important;
 }
 
-/* 2. Богатая кнопка: две строки */
 .od-product-page .product-button.is-primary .od-buy-line1 {
   display: block;
   font-size: 1.05rem;
@@ -1384,7 +1359,6 @@ body .od-product-page .product-option .option-value.is-diametr {
   margin-top: 2px;
 }
 
-/* 3. Состояние «Выберите диаметр»: бледная кнопка, автовыбор нейтрализован */
 .od-product-page .product-button.is-primary.od-buy-waiting {
   background: #f7e27a !important;
   color: #6b5d00 !important;
@@ -1398,7 +1372,6 @@ body .od-product-page .product-option .option-value.is-diametr {
 .od-product.od-not-chosen .option-value.is-active.is-diametr .diametr-text {
   color: var(--od-black) !important;
 }
-/* подсветка блока диаметров при попытке купить без выбора */
 .od-product div.is-diametr.od-flash {
   outline: 2px solid var(--od-yellow);
   outline-offset: 6px;
@@ -1406,12 +1379,8 @@ body .od-product-page .product-option .option-value.is-diametr {
 }
 
 /* ============================================================
-   ODROVA — доводка 12.06 (вечер): миниатюры, центр сетки,
-   уголки+свечение выбранного, пульс лейбла, приглушённая «Правая»
+   ODROVA — доводка 12.06: миниатюры, центр сетки, свечение
    ============================================================ */
-/* 1. Миниатюры галереи — единый размер, фото вписывается */
-/* слайд оставляем как ждёт swiper (его ширина) — цикл не ломаем;
-   квадратную миниатюру центрируем ВНУТРИ слайда */
 .od-product-page .gallery-thumbs [data-slider-slide] {
   display: flex !important;
   align-items: center !important;
@@ -1440,7 +1409,6 @@ body .od-product-page .product-option .option-value.is-diametr {
   display: block !important;
 }
 
-/* 2. Сетка диаметров по центру */
 .od-product-page div.is-diametr > div,
 .od-product-page .is-diametr .option-values {
   justify-content: center;
@@ -1448,8 +1416,6 @@ body .od-product-page .product-option .option-value.is-diametr {
 .od-product-page div.is-diametr > label { text-align: center; }
 .od-product-page div.is-diametr::after { text-align: center; }
 
-/* 2. Выбранный диаметр: фирменные уголки + жёлтое свечение
-      (drop-shadow вместо box-shadow — clip-path его не режет) */
 .od-product-page .od-product__info form.product-form .option-value.is-active.is-diametr,
 body .od-product-page .product-option .option-value.is-active.is-diametr {
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
@@ -1457,7 +1423,6 @@ body .od-product-page .product-option .option-value.is-active.is-diametr {
   filter: drop-shadow(0 0 7px rgba(245, 200, 0, 0.65));
 }
 
-/* 3. Пульсация лейбла «ДИАМЕТР ВАЛА...», пока диаметр не выбран */
 @keyframes od-label-pulse {
   0%, 100% { color: var(--od-steel); }
   50%      { color: var(--od-yellow-dark); }
@@ -1466,7 +1431,6 @@ body .od-product-page .product-option .option-value.is-active.is-diametr {
   animation: od-label-pulse 1.5s ease-in-out infinite;
 }
 
-/* 5. «Правая — под заказ» приглушённая, пока не выбрана */
 .od-product-page .option-value.right:not(.is-active) {
   background: #fbfbfb !important;
   border-color: #e2e2e2 !important;
@@ -1477,7 +1441,6 @@ body .od-product-page .product-option .option-value.is-active.is-diametr {
   color: var(--od-black) !important;
 }
 
-/* фикс: приглушение «Правой» с приоритетом над ранним правилом белых кнопок */
 body .od-product-page .product-option .is-span .option-value.right:not(.is-active),
 body .od-product-page .od-product__info form.product-form .option-value.right:not(.is-active) {
   background: #fbfbfb !important;
@@ -1490,8 +1453,6 @@ body .od-product-page .od-product__info form.product-form .option-value.right:no
   color: var(--od-black) !important;
 }
 
-/* фикс: состояние «не выбрано» — нейтрализация автовыбранного диаметра
-   с приоритетом над чёрным правилом (был чёрный текст на чёрном фоне) */
 body .od-product-page .od-product.od-not-chosen .product-option .option-value.is-active.is-diametr,
 body .od-product-page .od-product.od-not-chosen .od-product__info form.product-form .option-value.is-active.is-diametr,
 .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diametr {
@@ -1506,22 +1467,18 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
 }
 
 /* ============================================================
-   ODROVA — итерация «Галерея под прототип»:
-   срезанные углы плиток, жёлтые бейджи, лента od-ribbon
+   ODROVA — Галерея под прототип: срезы, бейджи, лента
    ============================================================ */
-/* главное фото — плитка со срезанным правым верхним углом */
 .od-product-page .product-gallery .gallery-main-wrapper .image-container {
   clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
   background: #fff;
 }
-/* миниатюры — маленький срез */
 .od-product-page .gallery-thumbs .image-container {
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
   border: none !important;
   box-shadow: inset 0 0 0 1px #e3e3e3;
 }
 
-/* бейджи темы (Акция/Хит/Новинка) — жёлтые плашки прототипа */
 .od-product-page .product-labels .label,
 .od-product-page .label.is-discount,
 .od-product-page .label.is-hit,
@@ -1537,7 +1494,6 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
   border-radius: 0 !important;
   clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
 }
-/* позиция бейджей — левый верхний угол плитки */
 .od-product-page .product-labels {
   position: absolute;
   top: 14px;
@@ -1546,7 +1502,6 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
   right: auto !important;
 }
 
-/* лента «2-ЗАХОДНАЯ РЕЗЬБА»: графит + зелёная отметка слева */
 .od-product-page .product-gallery-wrapper { position: relative; }
 .od-product-page .od-ribbon {
   position: absolute;
@@ -1568,10 +1523,8 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
 }
 
 /* ============================================================
-   ИТЕРАЦИЯ 1 — ГАЛЕРЕЯ под прототип: срезанные углы,
-   жёлтая плашка акции, активная миниатюра с обводкой
+   ИТЕРАЦИЯ 1 — ГАЛЕРЕЯ: срезы, жёлтая плашка акции, миниатюры
    ============================================================ */
-/* главный кадр: срез правого верхнего угла, лёгкая тень */
 .od-product-page .product-gallery .gallery-main-wrapper .image-container {
   clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
   background: #fff;
@@ -1579,7 +1532,6 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
   box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
-/* миниатюры: срез правого нижнего угла */
 .od-product-page .gallery-thumbs .image-container {
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
   border: 1px solid #e3e3e3;
@@ -1589,10 +1541,6 @@ body .od-product-page .od-product.od-not-chosen .option-value.is-active.is-diame
 .od-product-page .gallery-thumbs .image-container:hover {
   border-color: var(--od-yellow);
 }
-/* активную миниатюру НЕ выделяем — рамка убрана (мелькала при быстром листании,
-   синхронизация со swiper темы ненадёжна). Гасим любую подсветку — нашу и темы —
-   чтобы все миниатюры были одинаковыми, ровная серая граница. Какая в кадре —
-   видно по самому большому фото. */
 .od-product-page .gallery-thumbs .od-thumb-active .image-container,
 .od-product-page .gallery-thumbs a.js-copy-src.od-thumb-active .image-container,
 body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
@@ -1605,7 +1553,6 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   box-shadow: none !important;
 }
 
-/* плашки на фото: стиль прототипа — Fira Mono, жёсткие углы */
 .od-product-page .product-gallery .label,
 .od-product-page .product-labels .label {
   font-family: 'Fira Mono', monospace !important;
@@ -1616,15 +1563,12 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   padding: 6px 12px !important;
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
 }
-/* акция — ЖЁЛТАЯ с чёрным текстом, как в прототипе (вместо красной) */
 .od-product-page .product-gallery .label.is-discount,
 .od-product-page .product-labels .label.is-discount {
   background: var(--od-yellow) !important;
   color: var(--od-black) !important;
 }
 
-/* итерация 1, хвост (v3): плашки товара — в углу фото; якорь — реальная
-   колонка .od-product__gallery (плашки — её прямой потомок, см. product.liquid) */
 .od-product-page .od-product__gallery,
 .od-product-page .product-gallery {
   position: relative;
@@ -1642,8 +1586,6 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   gap: 6px;
 }
 
-/* итерация 1, мобильная галерея: на телефоне слайдер = галерея,
-   слайды крупные (правило 120×120 касается только десктопных миниатюр) */
 @media (max-width: 760px) {
   .od-product-page .mobile-wrapper .gallery-thumbs .image-container {
     width: 78vw !important;
@@ -1655,9 +1597,8 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
 }
 
 /* ============================================================
-   БАГФИКСЫ мобильной карточки (12.06, вечер)
+   БАГФИКСЫ мобильной карточки
    ============================================================ */
-/* 1. Кнопки диаметров: глушим квадратную распорку темы (мобильная ветка) */
 .od-product-page .option-value.is-diametr::before,
 .od-product-page .option-value.is-diametr::after {
   display: none !important;
@@ -1673,7 +1614,6 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   }
 }
 
-/* 2. Богатая кнопка: на узких экранах текст переносится и мельче */
 @media (max-width: 760px) {
   .od-product-page .product-button.is-primary .od-buy-line1 {
     white-space: normal;
@@ -1685,7 +1625,6 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   }
 }
 
-/* багфикс v2: высота кнопок диаметров на мобиле — добивка */
 @media (max-width: 760px) {
   body .od-product-page .product-option .option-value.is-diametr,
   body .od-product-page .od-product__info form.product-form .option-value.is-diametr {
@@ -1708,8 +1647,7 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
 }
 
 /* ============================================================
-   Плавающая шапка (.sticky-header): явный графитовый фон —
-   была прозрачной и «раздевалась» на светлой странице товара
+   Плавающая шапка (.sticky-header): графитовый фон
    ============================================================ */
 .sticky-header {
   background-color: var(--od-black) !important;
@@ -1722,7 +1660,7 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
 }
 
 /* ============================================================
-   ИТЕРАЦИЯ: кнопки резьбы с подписями (как в прототипе)
+   ИТЕРАЦИЯ: кнопки резьбы с подписями
    ============================================================ */
 .od-product-page .is-span .option-value .od-span-main {
   display: block;
@@ -1738,11 +1676,9 @@ body .od-product-page .gallery-thumbs .od-thumb-active .image-container,
   text-transform: none;
   letter-spacing: 0.3px;
 }
-/* подписи: на чёрной выбранной — жёлтая, на приглушённой — серая */
 .od-product-page .is-span .option-value.is-active .od-span-sub { color: #e8e8e8 !important; opacity: 0.85; }
 .od-product-page .is-span .option-value:not(.is-active) .od-span-sub { color: #9aa0a6 !important; }
 
-/* === РЕЗЬБА компактнее === ВАЖНО: is-span и option-value на ОДНОЙ кнопке (слитно) */
 body .od-product-page form .option-value.is-span,
 body .od-product-page .option-value.is-span {
   min-width: 0 !important;
@@ -1780,7 +1716,6 @@ body .od-product-page .is-span .option-label,
 body .od-product-page .option-label {
   opacity: 0.6 !important;
 }
-/* контейнер кнопок резьбы — рядом, влево, без растягивания (путь темы для перевеса) */
 body .od-product-page .od-product__info form.product-form .is-span .option-values,
 body .od-product-page .is-span .option-values {
   display: flex !important;
@@ -1793,21 +1728,16 @@ body .od-product-page .is-span .option-values {
   width: max-content !important;
   max-width: 100% !important;
 }
-/* кнопки резьбы не растягиваются — каждая по содержимому */
 body .od-product-page .od-product__info form.product-form .option-value.is-span,
 body .od-product-page .option-value.is-span {
   flex: 0 0 auto !important;
   width: auto !important;
 }
-/* подпись «Направление резьбы» — мелкая (поменяли местами с подсказкой диаметра) */
 body .od-product-page .od-product__info form.product-form .is-span .option-label,
 body .od-product-page .is-span .option-label {
   font-size: 0.62rem !important;
   margin-bottom: 5px !important;
 }
-/* активная резьба — светло-серая с тёмным текстом. Тема (theme.css) красит
-   чёрным очень специфичным селектором .od-product__info form.product-form ...
-   — повторяем её путь + body, чтобы перевесить. */
 body .od-product-page .od-product__info form.product-form .is-span .option-value.is-active,
 body .od-product-page .od-product__info form.product-form .option-value.is-active.left,
 body .od-product-page .od-product__info form.product-form .option-value.is-active.right,
@@ -1818,7 +1748,6 @@ body .od-product-page .od-product__info form.product-form .option-value.is-span.
   outline-color: #cfcfcf !important;
   color: #555 !important;
 }
-/* текст активной кнопки — приглушённо-тёмный, не белый */
 body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active .od-span-main,
 body .od-product-page .option-value.is-span.is-active .od-span-main {
   color: #444 !important;
@@ -1827,7 +1756,6 @@ body .od-product-page .od-product__info form.product-form .option-value.is-span.
 body .od-product-page .option-value.is-span.is-active .od-span-sub {
   color: #888 !important;
 }
-/* МОБИЛА: кнопки резьбы в ряд (тема ставит column → столбик с пустотой) */
 @media (max-width: 760px) {
   body.fhg-body .od-product-page .option.is-span,
   body.fhg-body .od-product-page .option.is-span .option-values,
@@ -1860,12 +1788,9 @@ body .od-product-page .option-value.is-span.is-active .od-span-sub {
 }
 
 /* ============================================================
-   ИТЕРАЦИЯ: мобильная галерея как в прототипе —
-   большое фото + лента маленьких миниатюр под ним
+   ИТЕРАЦИЯ: мобильная галерея
    ============================================================ */
 @media (max-width: 760px) {
-  /* родной главный кадр на мобиле прячется в JS (его роль — у .od-mobile-main) */
-  /* десктопную ленту миниатюр включаем горизонтальной прокруткой */
   .od-product-page .gallery-thumbs-wrapper.hidden-sm {
     display: block !important;
   }
@@ -1875,7 +1800,6 @@ body .od-product-page .option-value.is-span.is-active .od-span-sub {
     overflow-y: hidden !important;
     -webkit-overflow-scrolling: touch;
   }
-  /* глушим swiper: wrapper — обычный flex-ряд без его transform/absolute */
   .od-product-page .gallery-thumbs-wrapper.hidden-sm .swiper-wrapper {
     display: flex !important;
     flex-wrap: nowrap !important;
@@ -1908,13 +1832,11 @@ body .od-product-page .option-value.is-span.is-active .od-span-sub {
     height: 96px !important;
     object-fit: contain !important;
   }
-  /* мобильный слайдер-дубль прячем */
   .od-product-page .gallery-thumbs-wrapper.mobile-wrapper {
     display: none !important;
   }
 }
 
-/* свой мобильный главный кадр (тема удаляет родной на телефонах) */
 .od-mobile-main { display: none; }
 @media (max-width: 760px) {
   .od-mobile-main {
@@ -1952,7 +1874,6 @@ body .od-product-page .option-value.is-span.is-active .od-span-sub {
   }
   .od-mobile-main__count:empty { display: none; }
 }
-/* добивка контраста счётчика (перебиваем возможные правила темы) */
 body .od-product-page .od-mobile-main .od-mobile-main__count,
 body .od-mobile-main .od-mobile-main__count {
   color: var(--od-black) !important;
@@ -1962,12 +1883,9 @@ body .od-mobile-main .od-mobile-main__count {
   -webkit-text-fill-color: var(--od-black) !important;
 }
 
-/* (дубль счётчика удалён — стиль в основном блоке выше) */
-
 /* ============================================================
-   Полноэкранный просмотр фото (тап-зум как у маркетплейсов)
+   Полноэкранный просмотр фото (тап-зум)
    ============================================================ */
-/* иконка-подсказка «увеличить» в углу мобильного кадра */
 .od-mobile-main__zoom { display: none; }
 @media (max-width: 760px) {
   .od-mobile-main { cursor: zoom-in; }
@@ -1986,7 +1904,6 @@ body .od-mobile-main .od-mobile-main__count {
     pointer-events: none;
   }
 }
-/* сам полноэкранный слой */
 .od-lightbox {
   position: fixed;
   inset: 0;
@@ -2053,7 +1970,6 @@ body .od-mobile-main .od-mobile-main__count {
   letter-spacing: 2px;
   clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
 }
-/* стрелки листания в лайтбоксе (фирменные, для мыши на десктопе и тапа) */
 .od-lightbox__nav {
   position: absolute;
   top: 50%;
@@ -2080,14 +1996,11 @@ body .od-mobile-main .od-mobile-main__count {
 }
 
 /* ============================================================
-   Десктопный лайтбокс Fancybox — фирменный стиль ODROVA
-   (тема открывает фото в Fancybox; красим стрелки/кнопки/фон)
+   Десктопный лайтбокс Fancybox — фирменный стиль
    ============================================================ */
-/* затемнённый фон — графит вместо чёрного */
 .fancybox-bg { background: #1e1e1e !important; }
 .fancybox-container.fancybox-is-open .fancybox-bg { opacity: 0.96 !important; }
 
-/* кнопки тулбара и стрелки — жёлтый квадрат с чёрным значком */
 .fancybox-button {
   background: var(--od-yellow) !important;
   color: var(--od-black) !important;
@@ -2098,7 +2011,6 @@ body .od-mobile-main .od-mobile-main__count {
 .fancybox-button:hover { filter: brightness(1.08) !important; }
 .fancybox-button[disabled] { opacity: 0.4 !important; }
 
-/* === ВАРИАНТ Б: только крупный контрастный крест «Закрыть» === */
 .fancybox-container .fancybox-toolbar {
   top: 88px !important;
   right: 24px !important;
@@ -2108,11 +2020,9 @@ body .od-mobile-main .od-mobile-main__count {
   box-shadow: none !important;
   z-index: 99999 !important;
 }
-/* прячем всё в тулбаре... */
 .fancybox-container .fancybox-toolbar .fancybox-button {
   display: none !important;
 }
-/* ...и возвращаем ТОЛЬКО кнопку закрытия (несколько возможных селекторов) */
 .fancybox-container .fancybox-toolbar .fancybox-button--close,
 .fancybox-container .fancybox-toolbar [data-fancybox-close],
 .fancybox-container .fancybox-button--close,
@@ -2128,7 +2038,6 @@ body .od-mobile-main .od-mobile-main__count {
   box-shadow: 0 4px 14px rgba(0,0,0,0.4) !important;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
 }
-/* возвращаем кнопку СЕТКИ (миниатюры) рядом с крестом */
 .fancybox-container .fancybox-toolbar .fancybox-button--thumbs,
 .fancybox-container .fancybox-toolbar [data-fancybox-thumbs],
 .fancybox-container .fancybox-button--thumbs,
@@ -2188,13 +2097,6 @@ body .od-mobile-main .od-mobile-main__count {
   transform: translate(-50%, -50%) rotate(-45deg) !important;
 }
 
-/* === БОКОВЫЕ СТРЕЛКИ FANCYBOX ===
-   В этой сборке кнопки имеют классы .fancybox-arrow / .fancybox-arrow--left /
-   .fancybox-arrow--right и атрибуты data-fancybox-prev / data-fancybox-next.
-   Штатная иконка рисуется через ::after с background-image (SVG в data-uri),
-   одинаковым для обеих стрелок -> поэтому обе смотрели вправо. */
-
-/* форма и фон самой кнопки */
 .fancybox-container .fancybox-navigation button,
 .fancybox-container button[data-fancybox-prev],
 .fancybox-container button[data-fancybox-next],
@@ -2224,7 +2126,6 @@ body .od-mobile-main .od-mobile-main__count {
   left: auto !important;
 }
 
-/* убиваем штатную SVG-иконку: и svg-тег, и фон в ::after */
 .fancybox-container .fancybox-arrow svg,
 .fancybox-container .fancybox-navigation button svg {
   display: none !important;
@@ -2249,39 +2150,31 @@ body .od-mobile-main .od-mobile-main__count {
   height: 22px !important;
   font-size: 0 !important;
 }
-/* левая: треугольник остриём ВЛЕВО (clip-path по абсолютным точкам) */
 .fancybox-container .fancybox-arrow--left::after,
 .fancybox-container button[data-fancybox-prev]::after {
   clip-path: polygon(0% 50%, 100% 0%, 100% 100%) !important;
 }
-/* правая: треугольник остриём ВПРАВО */
 .fancybox-container .fancybox-arrow--right::after,
 .fancybox-container button[data-fancybox-next]::after {
   clip-path: polygon(100% 50%, 0% 0%, 0% 100%) !important;
 }
 
-/* подпись снизу — фирменный моноширинный на графите */
 .fancybox-caption {
   font-family: 'PT Sans', sans-serif !important;
   background: linear-gradient(to top, rgba(30,30,30,0.85), transparent) !important;
 }
 .fancybox-caption__body { color: #fff !important; }
 
-/* счётчик «N / M», если включён в теме */
 .fancybox-infobar {
   font-family: 'Fira Mono', monospace !important;
   color: var(--od-yellow) !important;
   font-weight: 700 !important;
   letter-spacing: 1px !important;
 }
+
 /* ============================================================
-   ODROVA — РЕЗЬБА: финальный перебивающий блок (в самом конце).
-   После переименования свойства всплыли ранние чёрно-жёлтые правила
-   активной резьбы (.is-span .option-value.is-active красились в
-   var(--od-black)/var(--od-yellow)). Этот блок идёт последним и при
-   высшей специфичности гарантированно задаёт приглушённый светло-серый.
+   ODROVA — РЕЗЬБА: финальный перебивающий блок
    ============================================================ */
-/* НЕактивная резьба — светлая, тихая */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-span:not(.is-active),
 body .od-product-page .od-product__info form.product-form .option-value.is-span:not(.is-active),
 body .od-product-page .product-option .option-value.is-span:not(.is-active) {
@@ -2291,7 +2184,6 @@ body .od-product-page .product-option .option-value.is-span:not(.is-active) {
   outline-color: #ececec !important;
   color: #9aa0a6 !important;
 }
-/* АКТИВНАЯ резьба — светло-серая с тёмным текстом (НЕ чёрно-жёлтая) */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
 body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
 body .od-product-page .od-product__info form.product-form .option-value.is-active.left,
@@ -2303,7 +2195,6 @@ body .od-product-page .product-option .option-value.is-span.is-active {
   outline-color: #cfcfcf !important;
   color: #555 !important;
 }
-/* текст внутри активной — приглушённо-тёмный */
 body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active .od-span-main {
   color: #444 !important;
 }
@@ -2312,10 +2203,7 @@ body .od-product-page .od-product__info form.product-form .option-value.is-span.
 }
 
 /* ============================================================
-   ODROVA — убираем белую подложку под блоком выбора диаметра/резьбы
-   (тема ставит белый фон на контейнер опции — кнопки висят на
-   белом прямоугольнике с пустотой справа). Делаем фон прозрачным,
-   чтобы плашки лежали на сером фоне страницы, как чипы.
+   ODROVA — убираем белую подложку под блоком выбора
    ============================================================ */
 body .od-product-page .od-product__info .product-option,
 body .od-product-page .od-product__info form.product-form .product-option,
@@ -2332,8 +2220,6 @@ body .od-product-page .od-product__info form.product-form .product-option .optio
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
-/* прицельно: тема красит .option-values белым (theme.css:8561) — снимаем фон,
-   рамку и паддинги именно у него, повторяя путь .od-product-page + is-diametr/is-span */
 body .od-product-page .od-product__info .option-selector .option-values,
 body .od-product-page div.is-diametr .option-values,
 body .od-product-page .is-diametr .option-values,
@@ -2346,12 +2232,6 @@ body .od-product-page form.product-form .option-values {
   padding: 0 !important;
 }
 
-/* ============================================================
-   ODROVA — фикс: белый фон на .option-values (theme.css:8561
-   .option-values{background:#fff;border:1px solid #d3dee7;padding:.75rem})
-   Перебиваем прицельно — фон прозрачный, рамка и паддинги сняты,
-   чтобы кнопки диаметра/резьбы лежали на сером фоне страницы.
-   ============================================================ */
 body .od-product-page .option-values,
 body .od-product-page .option .option-values,
 body .od-product-page .product-option .option-values,
@@ -2362,8 +2242,6 @@ body.fhg-body .od-product-page .option-values {
   padding: 0 !important;
 }
 
-/* добивка: у .option-values есть ::after (тема) — он тоже может нести
-   белый фон/рамку поверх контейнера. Гасим псевдоэлемент полностью. */
 body .od-product-page .option-values::after,
 body .od-product-page .option-values::before,
 body.fhg-body .od-product-page .option-values::after,
@@ -2375,10 +2253,9 @@ body.fhg-body .od-product-page .option-values::before {
   content: none !important;
   display: none !important;
 }
+
 /* ============================================================
-   ODROVA — строка рейтинга под чипами: «★ 4.9 · N отзывов · читать»
-   Стиль под прототип: крупные звёзды, балл чёрный жирный, «читать» серым.
-   Средний балл и количество считаются в product.liquid по product.reviews.
+   ODROVA — строка рейтинга под чипами
    ============================================================ */
 body .od-product-page .od-rating-line,
 body.fhg-body .od-product-page .od-rating-line {
@@ -2393,19 +2270,16 @@ body.fhg-body .od-product-page .od-rating-line {
   color: var(--od-black) !important;
   white-space: nowrap;
 }
-/* все части — в одну строку, по базовой линии */
 body .od-product-page .od-rating-line > * {
   display: inline-block !important;
   vertical-align: middle !important;
 }
-/* звёзды — крупные жёлтые, с отступом справа до балла (как на эталоне) */
 body .od-product-page .od-rating-line__stars {
   font-size: 1.5rem !important;
   letter-spacing: 3px !important;
   color: var(--od-yellow) !important;
   margin-right: 12px !important;
 }
-/* балл — крупный чёрный жирный */
 body .od-product-page .od-rating-line__avg {
   font-family: 'PT Sans', sans-serif;
   font-size: 1.35rem !important;
@@ -2415,7 +2289,6 @@ body .od-product-page .od-rating-line__avg {
   line-height: 1;
   margin: 0 !important;
 }
-/* разделитель · с воздухом по бокам */
 body .od-product-page .od-rating-line__sep {
   color: #c4c4c4 !important;
   font-size: 1rem !important;
@@ -2446,9 +2319,7 @@ body .od-product-page .od-rating-line__read {
 }
 
 /* ============================================================
-   ODROVA — прячем РОДНУЮ строку рейтинга темы «★★★★★ 💬 Отзывы»
-   под ценой (дубль). Своя строка рейтинга — над чипами (od-rating-line).
-   Тема выводит её ссылкой на #product-reviews; прячем в инфо-колонке.
+   ODROVA — прячем РОДНУЮ строку рейтинга темы (дубль)
    ============================================================ */
 .od-product-page .od-product__info .reviews-link,
 .od-product-page .od-product__info .product-reviews-link,
@@ -2460,7 +2331,7 @@ body .od-product-page .od-rating-line__read {
   display: none !important;
 }
 
-/* черта-разделитель под рядом чипов характеристик (как в прототипе) */
+/* черта-разделитель под чипами */
 body .od-product-page .od-spec-tags {
   padding-bottom: 20px !important;
   border-bottom: 1px solid #e0e0e0 !important;
@@ -2468,35 +2339,27 @@ body .od-product-page .od-spec-tags {
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ПОРЯДОК БЛОКОВ В ФОРМЕ (как в прототипе): цена → варианты → кнопка.
-   В HTML темы порядок «варианты → артикул → цена → кнопка». Меняем
-   порядок ТОЛЬКО визуально через flex order, HTML не трогаем.
+   ПОРЯДОК БЛОКОВ В ФОРМЕ: цена → варианты → кнопка
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .od-product__info form.product-form {
   display: flex !important;
   flex-direction: column !important;
 }
-/* артикул + цена — наверх, к чипам */
 body .od-product-page .od-product__info form.product-form .product-sku-wrapper { order: 1 !important; }
 body .od-product-page .od-product__info form.product-form .product-prices     { order: 2 !important; }
-/* выбор вала / резьба — под ценой */
 body .od-product-page .od-product__info form.product-form .product-option-selectors { order: 3 !important; }
-/* кнопка покупки и остальное — ниже */
 body .od-product-page .od-product__info form.product-form .review-link        { order: 4 !important; }
 body .od-product-page .od-product__info form.product-form .product-control    { order: 5 !important; }
 body .od-product-page .od-product__info form.product-form .product-collections { order: 6 !important; }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ПРОПОРЦИИ блока цены под прототип: воздух + размеры.
-   Идёт последним → перебивает ранние правила. Якорь body для веса.
+   ПРОПОРЦИИ блока цены
    ╚══════════════════════════════════════════════════════════╝ */
-/* артикул — мельче, серее, с отступом снизу от цены */
 body .od-product-page .product-sku-wrapper {
   font-size: 0.8rem !important;
   color: #9a9a9a !important;
   margin-bottom: 4px !important;
 }
-/* цена — крупная, с воздухом снизу */
 body .od-product-page .product-prices {
   margin: 2px 0 14px !important;
 }
@@ -2504,12 +2367,10 @@ body .od-product-page .js-product-price {
   font-size: 2.6rem !important;
   line-height: 1 !important;
 }
-/* наличие — воздух сверху и снизу, чуть крупнее */
 body .od-product-page .od-availability {
   font-size: 0.95rem !important;
   margin: 0 0 14px !important;
 }
-/* плашка онлайн — побольше воздуха, текст чуть крупнее */
 body .od-product-page .od-online-badge {
   padding: 14px 18px !important;
   margin: 0 0 18px !important;
@@ -2521,7 +2382,7 @@ body .od-product-page .od-online-badge__note {
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   КНОПКА ПОКУПКИ — крупнее (просьба). Перебивает ранние правила.
+   КНОПКА ПОКУПКИ — крупнее
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .main-controls .product-button.is-primary {
   padding: 26px 28px !important;
@@ -2546,8 +2407,7 @@ body .od-product-page .main-controls .product-button.is-primary .fa-shopping-car
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   КНОПКИ РЕЗЬБЫ (Левая/Правая) — в размер кнопок диаметра:
-   крупные плитки в ряд, как .is-diametr.
+   КНОПКИ РЕЗЬБЫ — в размер кнопок диаметра
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .is-span .option-value.left,
 body .od-product-page .is-span .option-value.right,
@@ -2578,7 +2438,6 @@ body .od-product-page .is-span .option-value.right .od-span-sub {
   opacity: 0.7 !important;
   line-height: 1.1 !important;
 }
-/* активная резьба — чёрная с жёлтым, как диаметр */
 body .od-product-page .option-value.left.is-active,
 body .od-product-page .option-value.right.is-active {
   background: var(--od-black) !important;
@@ -2593,7 +2452,7 @@ body .od-product-page .option-value.right.is-active .od-span-sub {
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   КНОПКА ПОКУПКИ — ещё крупнее.
+   КНОПКА ПОКУПКИ — ещё крупнее
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .main-controls .product-button.is-primary {
   padding: 32px 30px !important;
@@ -2610,8 +2469,7 @@ body .od-product-page .product-button.is-primary .od-buy-line1 {
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   КНОПКИ РЕЗЬБЫ на всю ширину: две кнопки делят строку пополам.
-   Идёт последним → перебивает ранние правила ширины/выравнивания.
+   КНОПКИ РЕЗЬБЫ на всю ширину пополам
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .is-span .option-values {
   display: flex !important;
@@ -2628,11 +2486,6 @@ body .od-product-page .option-value.right {
   margin: 0 !important;
 }
 
-/* ╔══════════════════════════════════════════════════════════╗
-   КНОПКИ РЕЗЬБЫ на всю ширину — ПЕРЕБИВАЕМ тему.
-   Тема: .is-span { flex:0 0 auto !important; width:auto !important }
-   Бьём более длинным путём (form.product-form ... .is-span).
-   ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .od-product__info form.product-form .option.is-span .option-values,
 body .od-product-page .od-product__info form.product-form .is-span .option-values {
   display: flex !important;
@@ -2650,17 +2503,14 @@ body .od-product-page .od-product__info form.product-form .option.is-span .optio
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   ФИНАЛ: единая высота кнопок (диаметр = резьба = 54px),
-   единые зазоры (10px), центровка подписей. Идёт последним.
+   ФИНАЛ: единая высота кнопок, зазоры, центровка
    ╚══════════════════════════════════════════════════════════╝ */
-/* единая высота и зазоры — кнопки диаметра */
 body .od-product-page .option-value.is-diametr {
   min-height: 54px !important;
   min-width: 72px !important;
   padding: 8px 14px !important;
   margin: 0 10px 10px 0 !important;
 }
-/* кнопки резьбы — та же высота, единый зазор, на всю ширину пополам */
 body .od-product-page .od-product__info form.product-form .is-span .option-values {
   display: flex !important;
   width: 100% !important;
@@ -2676,39 +2526,33 @@ body .od-product-page .od-product__info form.product-form .option-value.is-span 
   min-height: 54px !important;
   margin: 0 !important;
 }
-/* контейнер диаметров — единый зазор */
 body .od-product-page .option-value.is-diametr {
   margin: 0 10px 10px 0 !important;
 }
 
-/* ── ЦЕНТРОВКА ПОДПИСЕЙ ── */
-/* контейнер диаметров — на всю ширину, чтобы ::after центровался по ряду */
 body .od-product-page .product-option.is-diametr,
 body .od-product-page .option.is-diametr,
 body .od-product-page div.is-diametr {
   width: 100% !important;
 }
-/* подсказка «Выберите диаметр вала…» — по центру */
 body .od-product-page div.is-diametr::after {
   display: block !important;
   width: 100% !important;
   text-align: center !important;
   margin: 12px 0 6px !important;
 }
-/* заголовок «НАПРАВЛЕНИЕ РЕЗЬБЫ» — по центру */
 body .od-product-page .is-span .option-label {
   display: block !important;
   text-align: center !important;
   width: 100% !important;
 }
-/* воздух между блоком диаметров и резьбой */
 body .od-product-page .product-option.is-span,
 body .od-product-page .option.is-span {
   margin-top: 18px !important;
-}/* ╔══════════════════════════════════════════════════════════╗
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
    FIX 21.06 — РЕЗЬБА строго пополам, выровнено по краям ряда.
-   Перебивает тему (theme.css:17037/17067 flex:1 1 0;width:auto)
-   повтором её пути + body.fhg-body и !important на контейнере.
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span .option-values,
 body.fhg-body .od-product-page .od-product__info form.product-form .is-span .option-values,
@@ -2734,10 +2578,10 @@ body .od-product-page .od-product__info form.product-form .option-value.is-span.
   min-height: 54px !important;
   margin: 0 !important;
   box-sizing: border-box !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06b — растягиваем САМ блок опции резьбы на всю ширину
-   колонки (тема ужимает .product-option.is-span по контенту,
-   потому .option-values width:100% упирался в узкого родителя).
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06b — растягиваем блок опции резьбы на всю ширину
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span,
 body.fhg-body .od-product-page .od-product__info form.product-form .option.is-span,
@@ -2747,10 +2591,10 @@ body .od-product-page .od-product__info form.product-form div.is-span {
   width: 100% !important;
   max-width: 100% !important;
   flex: 1 1 100% !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06c — диаметры ровной сеткой на всю ширину колонки,
-   края совпадают с кнопками резьбы. Grid вместо flex-wrap:
-   8 равных колонок, ряды ровные, последний ряд слева-направо.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06c — диаметры ровной сеткой на всю ширину (Grid 8)
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .is-diametr .option-values,
 body .od-product-page .od-product__info form.product-form .is-diametr .option-values,
@@ -2763,7 +2607,6 @@ body .od-product-page .is-diametr .option-values {
   justify-content: stretch !important;
   justify-items: stretch !important;
 }
-/* кнопка диаметра — заполняет ячейку грида целиком */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .option-value.is-diametr {
@@ -2779,10 +2622,10 @@ body .od-product-page .option-value.is-diametr {
     grid-template-columns: repeat(4, 1fr) !important;
     gap: 8px !important;
   }
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06d — резьба вылазит за края: обнуляем боковые
-   паддинги/маржины контейнера и форсим box-sizing, чтобы
-   ширина считалась как у грида диаметров (край в край).
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06d — резьба край в край (box-sizing + обнуление)
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span,
 body.fhg-body .od-product-page .od-product__info form.product-form .is-span .option-values,
@@ -2795,10 +2638,10 @@ body .od-product-page .od-product__info form.product-form .is-span .option-value
   margin-right: 0 !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06e — кнопка «Купить» по краям сетки диаметров/резьбы.
-   Обнуляем боковые отступы .main-controls и форсим ширину 100%
-   с box-sizing, чтобы левый/правый край совпал с блоками выше.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06e — кнопка «Купить» по краям сетки
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .main-controls,
 body .od-product-page .od-product__info form.product-form .main-controls,
@@ -2818,21 +2661,19 @@ body .od-product-page .main-controls .product-button.is-primary {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06f — убрать воздух перед блоком резьбы + центровка
-   цифр в кнопках диаметра.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06f — убрать воздух перед резьбой + центровка цифр
    ╚══════════════════════════════════════════════════════════╝ */
-/* 1. убираем большой отступ перед «НАПРАВЛЕНИЕ РЕЗЬБЫ» */
 body .od-product-page .od-product__info form.product-form .product-option.is-span,
 body .od-product-page .product-option.is-span,
 body .od-product-page .option.is-span {
   margin-top: 4px !important;
 }
-/* подсказка «Выберите диаметр вала…» — прижать к сетке */
 body .od-product-page div.is-diametr::after {
   margin: 8px 0 0 !important;
 }
-/* 2. цифры диаметра — строго по центру кнопки */
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .option-value.is-diametr {
   display: flex !important;
@@ -2844,9 +2685,10 @@ body .od-product-page .option-value.is-diametr .diametr-text {
   width: 100% !important;
   text-align: center !important;
   display: block !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06g — кнопка «без отверстия» вылазит: держим ширину
-   ячейки грида, разрешаем перенос длинного текста, мельче шрифт.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06g — «без отверстия»: ширина ячейки, перенос текста
    ╚══════════════════════════════════════════════════════════╝ */
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .option-value.is-diametr {
@@ -2855,7 +2697,6 @@ body .od-product-page .option-value.is-diametr {
   min-width: 0 !important;
   overflow: hidden !important;
 }
-/* текст внутри — переносится, мельчает на длинных значениях */
 body .od-product-page .option-value.is-diametr .diametr-text {
   width: 100% !important;
   white-space: normal !important;
@@ -2863,9 +2704,10 @@ body .od-product-page .option-value.is-diametr .diametr-text {
   hyphens: none !important;
   font-size: 0.88rem !important;
   line-height: 1.15 !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06h — цифры строго по центру во ВСЕХ кнопках диаметра,
-   включая активную (clip-path сбивал выравнивание текста).
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06h — цифры по центру во всех кнопках
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
@@ -2891,10 +2733,10 @@ body .od-product-page .option-value.is-active.is-diametr .diametr-text {
   left: auto !important;
   right: auto !important;
   transform: none !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06i — в активной кнопке диаметра тема оставляет пустой
-   <span class="line-diametr">, он сдвигает текст вбок. Убираем
-   его из потока полностью → .diametr-text центрируется ровно.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06i — убираем пустой .line-diametr из активной кнопки
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .option-value.is-diametr .line-diametr,
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr .line-diametr,
@@ -2907,8 +2749,10 @@ body .od-product-page .option-value.is-diametr .line-diametr {
   padding: 0 !important;
   flex: 0 0 0 !important;
   position: absolute !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06j — цифры по центру ПО ВЕРТИКАЛИ в кнопках диаметра.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06j — цифры по центру по вертикали
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
@@ -2926,10 +2770,11 @@ body .od-product-page .option-value.is-active.is-diametr {
 body .od-product-page .option-value.is-diametr .diametr-text {
   margin: auto !important;
   align-self: center !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06l — ПРИЧИНА: тема даёт .diametr-text position:absolute
-   top:10px left:4px w:39 h:40 → текст висит в углу. Перебиваем
-   жёстким путём: возвращаем в поток, центрируем во flex-кнопке.
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06l — тема даёт .diametr-text position:absolute —
+   возвращаем в поток, центрируем во flex-кнопке.
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr .diametr-text,
 body.fhg-body .od-product-page .option-value.is-diametr .diametr-text,
@@ -2950,7 +2795,6 @@ body .od-product-page .option-value.is-active.is-diametr .diametr-text {
   text-align: center !important;
   line-height: 1.1 !important;
 }
-/* сама кнопка — flex-центр по обеим осям */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
 body .od-product-page .option-value.is-active.is-diametr {
@@ -2958,9 +2802,10 @@ body .od-product-page .option-value.is-active.is-diametr {
   align-items: center !important;
   justify-content: center !important;
   min-height: 54px !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06m — активная кнопка резьбы: срезанный угол + свечение,
-   как у активного диаметра (clip-path + drop-shadow).
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06m — активная резьба: срез угла + свечение
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
 body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
@@ -2969,29 +2814,51 @@ body .od-product-page .od-product__info form.product-form .option-value.is-activ
 body .od-product-page .option-value.is-span.is-active {
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
   filter: drop-shadow(0 0 7px rgba(245, 200, 0, 0.65)) !important;
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06n — цена крупнее на ~15% (2.6rem → 3rem).
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06n — цена: десктоп крупная, мобила мельче.
+   Бьём путём темы (form.product-form .product-prices .price)
+   + body.fhg-body для перевеса над theme.css.
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .js-product-price,
 body .od-product-page .js-product-price {
   font-size: 3.3rem !important;
 }
 @media (max-width: 760px) {
+  body.fhg-body .od-product-page .od-product__info form.product-form .product-prices .price.js-product-price,
+  body.fhg-body .od-product-page .product-prices .js-product-price,
+  body .od-product-page .od-product__info form.product-form .js-product-price,
   body .od-product-page .js-product-price {
-    font-size: 2.5rem !important;
+    font-size: 2rem !important;
   }
-}/* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06o — H1 названия крупнее, на уровне цены (чуть больше).
+}
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06o — H1 названия крупнее
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .od-product__title,
 body .od-product-page .od-product__title,
 .od-product__title {
-  font-size: 3.2rem !important;
-  line-height: 1.1 !important;
+  font-size: 2.4rem !important;
+  line-height: 1.15 !important;
 }
 @media (max-width: 760px) {
   body .od-product-page .od-product__title,
   .od-product__title {
-    font-size: 2.2rem !important;
+    font-size: 1.5rem !important;
   }
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   ВРЕМЕННО (скриншоты мобилы) — прячем шапку и плавающий
+   телефон .float-telephone на товаре. Якорь body.od-hide-header
+   (ставит JS в product.liquid). УБРАТЬ перед публикацией.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.od-hide-header .header,
+body.od-hide-header header.header,
+body.od-hide-header .header-wrapper,
+body.od-hide-header .top-panel-wrapper,
+body.od-hide-header .sticky-header,
+body.od-hide-header .float-telephone {
+  display: none !important;
 }

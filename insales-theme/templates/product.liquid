@@ -8,6 +8,7 @@
 ============================================================ {% endcomment %}
 
 <div class="od-product-page">
+<script>document.body.classList.add('od-hide-header');</script>{%- comment -%} ВРЕМЕННО: прячем шапку для скриншотов мобилы. УБРАТЬ перед публикацией. {%- endcomment -%}
 
 {%- comment -%} Крошки рендерим сами (page_header на товаре отключён в layout) {%- endcomment -%}
 {% include "breadcrumb", home_title: 'Главная' %}
@@ -547,7 +548,7 @@
       }
       var h1 = document.querySelector('.od-product-page .od-product__title');
       if (h1) {
-        h1.style.setProperty('font-size', mob ? '2.2rem' : '3.2rem', 'important');
+        h1.style.setProperty('font-size', mob ? '1.5rem' : '2.4rem', 'important');
         h1.style.setProperty('line-height', '1.2', 'important');
       }
       var kicker = document.querySelector('.od-product-page .od-kicker');
