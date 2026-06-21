@@ -2705,4 +2705,293 @@ body .od-product-page .is-span .option-label {
 body .od-product-page .product-option.is-span,
 body .od-product-page .option.is-span {
   margin-top: 18px !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06 — РЕЗЬБА строго пополам, выровнено по краям ряда.
+   Перебивает тему (theme.css:17037/17067 flex:1 1 0;width:auto)
+   повтором её пути + body.fhg-body и !important на контейнере.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span .option-values,
+body.fhg-body .od-product-page .od-product__info form.product-form .is-span .option-values,
+body .od-product-page .od-product__info form.product-form .is-span .option-values {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  gap: 10px !important;
+  justify-content: stretch !important;
+  align-items: stretch !important;
+}
+body.fhg-body .od-product-page .od-product__info form.product-form .is-span .option-value,
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-span,
+body .od-product-page .od-product__info form.product-form .option-value.is-span.left,
+body .od-product-page .od-product__info form.product-form .option-value.is-span.right {
+  flex: 1 1 0 !important;
+  flex-basis: 0 !important;
+  width: auto !important;
+  max-width: none !important;
+  min-width: 0 !important;
+  min-height: 54px !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06b — растягиваем САМ блок опции резьбы на всю ширину
+   колонки (тема ужимает .product-option.is-span по контенту,
+   потому .option-values width:100% упирался в узкого родителя).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body.fhg-body .od-product-page .od-product__info form.product-form .option.is-span,
+body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body .od-product-page .od-product__info form.product-form div.is-span {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 1 100% !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06c — диаметры ровной сеткой на всю ширину колонки,
+   края совпадают с кнопками резьбы. Grid вместо flex-wrap:
+   8 равных колонок, ряды ровные, последний ряд слева-направо.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .is-diametr .option-values,
+body .od-product-page .od-product__info form.product-form .is-diametr .option-values,
+body .od-product-page .is-diametr .option-values {
+  display: grid !important;
+  grid-template-columns: repeat(8, 1fr) !important;
+  gap: 10px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-content: stretch !important;
+  justify-items: stretch !important;
+}
+/* кнопка диаметра — заполняет ячейку грида целиком */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .option-value.is-diametr {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 760px) {
+  body .od-product-page .od-product__info form.product-form .is-diametr .option-values,
+  body .od-product-page .is-diametr .option-values {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 8px !important;
+  }
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06d — резьба вылазит за края: обнуляем боковые
+   паддинги/маржины контейнера и форсим box-sizing, чтобы
+   ширина считалась как у грида диаметров (край в край).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body.fhg-body .od-product-page .od-product__info form.product-form .is-span .option-values,
+body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body .od-product-page .od-product__info form.product-form .is-span .option-values {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06e — кнопка «Купить» по краям сетки диаметров/резьбы.
+   Обнуляем боковые отступы .main-controls и форсим ширину 100%
+   с box-sizing, чтобы левый/правый край совпал с блоками выше.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .main-controls,
+body .od-product-page .od-product__info form.product-form .main-controls,
+body .od-product-page .main-controls {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+body.fhg-body .od-product-page .od-product__info form.product-form .main-controls .product-button.is-primary,
+body .od-product-page .od-product__info form.product-form .main-controls .product-button.is-primary,
+body .od-product-page .main-controls .product-button.is-primary {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06f — убрать воздух перед блоком резьбы + центровка
+   цифр в кнопках диаметра.
+   ╚══════════════════════════════════════════════════════════╝ */
+/* 1. убираем большой отступ перед «НАПРАВЛЕНИЕ РЕЗЬБЫ» */
+body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body .od-product-page .product-option.is-span,
+body .od-product-page .option.is-span {
+  margin-top: 4px !important;
+}
+/* подсказка «Выберите диаметр вала…» — прижать к сетке */
+body .od-product-page div.is-diametr::after {
+  margin: 8px 0 0 !important;
+}
+/* 2. цифры диаметра — строго по центру кнопки */
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .option-value.is-diametr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+}
+body .od-product-page .option-value.is-diametr .diametr-text {
+  width: 100% !important;
+  text-align: center !important;
+  display: block !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06g — кнопка «без отверстия» вылазит: держим ширину
+   ячейки грида, разрешаем перенос длинного текста, мельче шрифт.
+   ╚══════════════════════════════════════════════════════════╝ */
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .option-value.is-diametr {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+/* текст внутри — переносится, мельчает на длинных значениях */
+body .od-product-page .option-value.is-diametr .diametr-text {
+  width: 100% !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  hyphens: none !important;
+  font-size: 0.88rem !important;
+  line-height: 1.15 !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06h — цифры строго по центру во ВСЕХ кнопках диаметра,
+   включая активную (clip-path сбивал выравнивание текста).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-active.is-diametr,
+body .od-product-page .option-value.is-diametr,
+body .od-product-page .option-value.is-active.is-diametr {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+}
+body.fhg-body .od-product-page .option-value.is-diametr .diametr-text,
+body .od-product-page .option-value.is-diametr .diametr-text,
+body .od-product-page .option-value.is-active.is-diametr .diametr-text {
+  width: 100% !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  display: block !important;
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06i — в активной кнопке диаметра тема оставляет пустой
+   <span class="line-diametr">, он сдвигает текст вбок. Убираем
+   его из потока полностью → .diametr-text центрируется ровно.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .option-value.is-diametr .line-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr .line-diametr,
+body .od-product-page .option-value.is-active.is-diametr .line-diametr,
+body .od-product-page .option-value.is-diametr .line-diametr {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: 0 0 0 !important;
+  position: absolute !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06j — цифры по центру ПО ВЕРТИКАЛИ в кнопках диаметра.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .option-value.is-diametr,
+body .od-product-page .option-value.is-active.is-diametr {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-content: center !important;
+  min-height: 54px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+body .od-product-page .option-value.is-diametr .diametr-text {
+  margin: auto !important;
+  align-self: center !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06l — ПРИЧИНА: тема даёт .diametr-text position:absolute
+   top:10px left:4px w:39 h:40 → текст висит в углу. Перебиваем
+   жёстким путём: возвращаем в поток, центрируем во flex-кнопке.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr .diametr-text,
+body.fhg-body .od-product-page .option-value.is-diametr .diametr-text,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr .diametr-text,
+body .od-product-page .option-value.is-active.is-diametr .diametr-text {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: auto !important;
+  margin: 0 !important;
+  z-index: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1.1 !important;
+}
+/* сама кнопка — flex-центр по обеим осям */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .od-product__info form.product-form .option-value.is-diametr,
+body .od-product-page .option-value.is-active.is-diametr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 54px !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06m — активная кнопка резьбы: срезанный угол + свечение,
+   как у активного диаметра (clip-path + drop-shadow).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
+body .od-product-page .od-product__info form.product-form .option-value.is-span.is-active,
+body .od-product-page .od-product__info form.product-form .option-value.is-active.left,
+body .od-product-page .od-product__info form.product-form .option-value.is-active.right,
+body .od-product-page .option-value.is-span.is-active {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)) !important;
+  filter: drop-shadow(0 0 7px rgba(245, 200, 0, 0.65)) !important;
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06n — цена крупнее на ~15% (2.6rem → 3rem).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .js-product-price,
+body .od-product-page .js-product-price {
+  font-size: 3.3rem !important;
+}
+@media (max-width: 760px) {
+  body .od-product-page .js-product-price {
+    font-size: 2.5rem !important;
+  }
+}/* ╔══════════════════════════════════════════════════════════╗
+   FIX 21.06o — H1 названия крупнее, на уровне цены (чуть больше).
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__title,
+body .od-product-page .od-product__title,
+.od-product__title {
+  font-size: 3.2rem !important;
+  line-height: 1.1 !important;
+}
+@media (max-width: 760px) {
+  body .od-product-page .od-product__title,
+  .od-product__title {
+    font-size: 2.2rem !important;
+  }
 }
