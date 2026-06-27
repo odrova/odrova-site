@@ -6,7 +6,39 @@
           <div class="comment-header"></div>
 
           <div class="comment-body">
-            {{ item.content }}
+            {% assign od_comment_content = item.content %}
+            {% if od_comment_content contains '[video]' and od_comment_content contains '[/video]' %}
+              {% assign od_comment_before = od_comment_content | split: '[video]' | first %}
+              {% assign od_comment_video_part = od_comment_content | split: '[video]' | last %}
+              {% assign od_comment_video_url = od_comment_video_part | split: '[/video]' | first | strip %}
+              {% assign od_comment_after = od_comment_video_part | split: '[/video]' | last %}
+              {% assign od_comment_after = od_comment_after | replace: od_comment_video_url, '' | strip %}
+
+              {{ od_comment_before }}
+
+              {% if od_comment_video_url contains 'vkvideo.ru' or od_comment_video_url contains 'vk.com/video' %}
+                {% assign od_vkraw = od_comment_video_url | split: 'video' | last | split: '?' | first | split: '%2F' | first %}
+                {% assign od_vk_oid = od_vkraw | split: '_' | first %}
+                {% assign od_vk_id = od_vkraw | split: '_' | last %}
+                {% assign od_video_embed = 'https://vkvideo.ru/video_ext.php?oid=' | append: od_vk_oid | append: '&id=' | append: od_vk_id | append: '&hd=2' %}
+                <div class="od-review-video-card" style="display:block;width:100%;max-width:490px;height:280px;margin:16px 0 10px;background:#1f1f1f;border:1px solid #d9dde3;overflow:hidden;">
+                  <iframe src="{{ od_video_embed }}" style="display:block;width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              {% elsif od_comment_video_url contains 'youtu.be' or od_comment_video_url contains 'youtube.com' %}
+                {% assign od_youtube_id = od_comment_video_url | remove: 'https://www.youtube.com/watch?v=' | remove: 'https://youtube.com/watch?v=' | remove: 'https://youtu.be/' | split: '?' | first | split: '&' | first %}
+                <div class="od-review-video-card" style="display:block;width:100%;max-width:490px;height:280px;margin:16px 0 10px;background:#1f1f1f;border:1px solid #d9dde3;overflow:hidden;">
+                  <iframe src="https://www.youtube.com/embed/{{ od_youtube_id }}" style="display:block;width:100%;height:100%;border:0;" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+              {% else %}
+                <a class="od-review-video-link" href="{{ od_comment_video_url }}" target="_blank" rel="noopener">Смотреть видео</a>
+              {% endif %}
+
+              {% if od_comment_after != '' %}
+                {{ od_comment_after }}
+              {% endif %}
+            {% else %}
+              {{ item.content }}
+            {% endif %}
             {% if item.image %}
             <a href="{{ item.image.original_url }}" target="_blank" style="display: block; margin-top: .5em; text-decoration: none;">
               <img src="{{ item.image.medium_url }}" alt="{{ item.image.file_name }}">

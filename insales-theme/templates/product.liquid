@@ -8,6 +8,198 @@
 ============================================================ {% endcomment %}
 
 <div class="od-product-page">
+<style>
+  body .od-product-page .product-content.tab { margin-top: 18px !important; }
+
+  body .od-product-page .od-product__info form.product-form {
+    margin-bottom: 0 !important;
+  }
+
+  body .od-product-page .od-product__info form.product-form .product-control {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  body .od-product-page .main-controls {
+    margin-top: -8px !important;
+    margin-bottom: 0 !important;
+  }
+
+  body .od-product-page .main-controls .product-button.is-primary {
+    min-height: 108px !important;
+    padding: 18px 24px !important;
+  }
+
+  body .od-product-page .od-ask {
+    margin: -18px 0 8px !important;
+    padding: 12px 14px !important;
+    background: #fff !important;
+    border: 1px solid #d8dde4 !important;
+    box-shadow: 0 1px 0 rgba(17,17,17,0.03) !important;
+  }
+
+  body .od-product-page .od-ask__link {
+    display: block !important;
+    margin: 0 0 7px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #111 !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+  }
+
+  body .od-product-page .od-ask__hint {
+    display: block !important;
+    margin: 7px 0 0 !important;
+    color: #7a828d !important;
+    font-size: 12px !important;
+    line-height: 16px !important;
+    text-align: left !important;
+  }
+
+  body .od-product-page .od-messengers {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 7px !important;
+  }
+
+  body .od-product-page .od-msg {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 34px !important;
+    padding: 0 12px !important;
+    color: #fff !important;
+    font-size: 13px !important;
+    line-height: 1 !important;
+    font-weight: 800 !important;
+  }
+
+  body .od-product-page .od-delivery {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin: 8px 0 8px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  body .od-product-page .od-delivery__item {
+    min-height: 56px !important;
+    padding: 10px 12px !important;
+    background: #fff !important;
+    border: 1px solid #d8dde4 !important;
+    box-sizing: border-box !important;
+  }
+
+  body .od-product-page .od-delivery__item b {
+    display: block !important;
+    margin: 0 0 3px !important;
+    color: #111 !important;
+    font-size: 13px !important;
+    line-height: 15px !important;
+    font-weight: 800 !important;
+  }
+
+  body .od-product-page .od-delivery__item span {
+    display: block !important;
+    color: #7a828d !important;
+    font-size: 11px !important;
+    line-height: 14px !important;
+  }
+
+  body .od-product-page .od-tiles {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    margin: 6px 0 0 !important;
+  }
+
+  body .od-product-page .od-tile {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 7px !important;
+    min-height: 30px !important;
+    padding: 6px 10px !important;
+    background: #fff !important;
+    border: 1px solid #d8dde4 !important;
+    color: #111 !important;
+    box-sizing: border-box !important;
+    font-size: 11px !important;
+    line-height: 14px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+  }
+
+  body .od-product-page .od-tile span { color: #111 !important; }
+
+  body .od-product-page .od-product__info form.product-form .product-option.is-span,
+  body .od-product-page .od-product__info form.product-form .option.is-span,
+  body .od-product-page .product-option.is-span,
+  body .od-product-page .option.is-span {
+    margin-top: 8px !important;
+    margin-bottom: 18px !important;
+    padding-bottom: 0 !important;
+  }
+
+  body .od-product-page .od-product__info form.product-form .is-span .option-label,
+  body .od-product-page .is-span .option-label {
+    margin: 0 0 6px !important;
+    line-height: 12px !important;
+  }
+
+  body .od-product-page .od-product__info form.product-form .is-span .option-values,
+  body .od-product-page .is-span .option-values {
+    margin-top: -4px !important;
+    margin-bottom: 0 !important;
+    gap: 10px !important;
+  }
+
+  body .od-product-page .od-product__info form.product-form .is-span .option-value.left,
+  body .od-product-page .od-product__info form.product-form .is-span .option-value.right,
+  body .od-product-page .od-product__info form.product-form .option-value.is-span {
+    min-height: 48px !important;
+    padding: 7px 14px !important;
+  }
+
+  @media (max-width: 760px) {
+    body .od-product-page .product-content.tab { margin-top: 18px !important; }
+    body .od-product-page .od-ask { padding: 14px !important; }
+    body .od-product-page .od-delivery { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+
+  @media (min-width: 1700px) {
+    body .od-product-page .od-delivery {
+      grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+    }
+
+    body .od-product-page .od-delivery__item {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: 36px !important;
+      padding: 7px 8px !important;
+    }
+
+    body .od-product-page .od-delivery__item b {
+      margin: 0 !important;
+      font-size: 11px !important;
+      line-height: 13px !important;
+      text-align: center !important;
+      white-space: nowrap !important;
+    }
+
+    body .od-product-page .od-delivery__item span {
+      display: none !important;
+    }
+  }
+</style>
 <script>document.body.classList.add('od-hide-header');</script>{%- comment -%} ВРЕМЕННО: прячем шапку для скриншотов мобилы. УБРАТЬ перед публикацией. {%- endcomment -%}
 
 {%- comment -%} Крошки рендерим сами (page_header на товаре отключён в layout) {%- endcomment -%}
@@ -110,9 +302,9 @@
 
     {%- comment -%} Плашка «онлайн −10%»: сумму подставит JS ниже {%- endcomment -%}
     <div class="od-online-badge">
-      🔥 При онлайн-оплате — <b class="js-od-online-price"></b> (ещё −10%)
-      <span class="od-online-badge__note">Обычная цена: <b class="js-od-regular-price"></b> · При получении — без скидки</span>
+      🔥 При онлайн-оплате — <b class="js-od-online-price"></b>&nbsp;<span class="od-online-badge__off">(ещё&nbsp;&minus;10%)</span>
     </div>
+    <div class="od-online-note">Обычная цена: <b class="js-od-regular-price"></b> · При получении — без скидки</div>
 
     {%- comment -%} Вопрос + мессенджеры {%- endcomment -%}
     <div class="od-ask">
@@ -206,6 +398,21 @@
         el.style.setProperty('display', 'flex', 'important');
         el.style.setProperty('width', '100%', 'important');
         el.style.setProperty('gap', '10px', 'important');
+        el.style.setProperty('margin-top', '-4px', 'important');
+        el.style.setProperty('margin-bottom', '0', 'important');
+      });
+      document.querySelectorAll('.od-product-page .product-option.is-span, .od-product-page .option.is-span').forEach(function (el) {
+        el.style.setProperty('margin-top', '8px', 'important');
+        el.style.setProperty('margin-bottom', '18px', 'important');
+        el.style.setProperty('padding-bottom', '0', 'important');
+      });
+      document.querySelectorAll('.od-product-page .is-span .option-label').forEach(function (el) {
+        el.style.setProperty('margin', '0 0 6px', 'important');
+        el.style.setProperty('line-height', '12px', 'important');
+      });
+      document.querySelectorAll('.od-product-page .is-span .option-value.left, .od-product-page .is-span .option-value.right, .od-product-page .option-value.is-span').forEach(function (el) {
+        el.style.setProperty('min-height', '48px', 'important');
+        el.style.setProperty('padding', '7px 14px', 'important');
       });
     }
     odClearOptionBg();
@@ -360,14 +567,30 @@
         // Кладём в форму после наличия и даём flex-order между ценой и вариантами.
         var $avEl = $('.js-od-availability').first();
         if ($avEl.length) {
-          $('.od-online-badge').insertAfter($avEl);
-          $avEl.get(0).style.setProperty('order', '2', 'important');           // наличие — под ценой
-          $('.od-online-badge').get(0).style.setProperty('order', '2', 'important'); // плашка — следом
+          // DOM-порядок: цена → плашка → обычная цена → наличие.
+          // Всем order:2 (как у цены) — внутри одного order выстроятся по DOM.
+          $('.od-online-badge').insertAfter($avEl);                  // плашка после наличия...
+          $('.od-online-note').insertAfter($('.od-online-badge'));   // обычная цена за плашкой
+          $avEl.insertAfter($('.od-online-note'));                   // наличие — в самый низ ряда
+          $('.od-online-badge').get(0).style.setProperty('order', '2', 'important');
+          var $oNote = $('.od-online-note').get(0);
+          if ($oNote) $oNote.style.setProperty('order', '2', 'important');
+          $avEl.get(0).style.setProperty('order', '2', 'important');
         } else {
           // запасной путь: перед кнопкой
           var $buyRow = $btn.closest('.main-controls');
           if (!$buyRow.length) $buyRow = $btn.parent();
-          $('.od-online-badge').insertBefore($buyRow);
+          $('.od-online-note').insertBefore($buyRow);
+          $('.od-online-badge').insertBefore($('.od-online-note'));
+        }
+
+        // Категории: выносим готовый блок темы ИЗ ФОРМЫ под галерею.
+        // Двигаем существующий узел наружу формы — клонирования не будет.
+        var $cats = $('.product-collections').first();
+        var $gal  = $('.od-product__gallery').first();
+        if ($cats.length && $gal.length && !$cats.hasClass('od-cats-moved')) {
+          $cats.addClass('od-cats-moved');
+          $gal.append($cats);
         }
 
         // липкая мобильная панель покупки
@@ -579,6 +802,219 @@
       }
     });
   });
+</script>
+
+<script>
+  (function () {
+    function set(el, prop, value) {
+      if (!el) return;
+      if (el.style.getPropertyValue(prop) === String(value) && el.style.getPropertyPriority(prop) === 'important') return;
+      el.style.setProperty(prop, value, 'important');
+    }
+
+    function placeAfter(node, anchor) {
+      if (!node || !anchor || !anchor.parentNode) return;
+      if (node.parentNode === anchor.parentNode && anchor.nextSibling === node) return;
+      anchor.parentNode.insertBefore(node, anchor.nextSibling);
+    }
+
+    function odLockSupportBlocks() {
+      var info = document.querySelector('.od-product-page .od-product__info');
+      var form = document.querySelector('.od-product-page .od-product__info form.product-form');
+      var sku = form && form.querySelector('.product-sku-wrapper');
+      var prices = form && form.querySelector('.product-prices');
+      var selectors = form && form.querySelector('.product-option-selectors');
+      var reviewLink = form && form.querySelector('.review-link, .reviews-link, .js-review-link, .js-reviews-link');
+      var control = form && form.querySelector('.product-control');
+      var collections = form && form.querySelector('.product-collections');
+      var controls = document.querySelector('.od-product-page .main-controls');
+      var onlineBadge = document.querySelector('.od-product-page .od-online-badge');
+      var onlineNote = document.querySelector('.od-product-page .od-online-note');
+      var availability = document.querySelector('.od-product-page .js-od-availability');
+      var ask = document.querySelector('.od-product-page .od-ask');
+      var askLink = document.querySelector('.od-product-page .od-ask__link');
+      var askHint = document.querySelector('.od-product-page .od-ask__hint');
+      var messengers = document.querySelector('.od-product-page .od-messengers');
+      var delivery = document.querySelector('.od-product-page .od-delivery');
+      var tiles = document.querySelector('.od-product-page .od-tiles');
+      var tabBlock = document.querySelector('.od-product-page .product-content.tab');
+
+      if (form && prices) {
+        placeAfter(onlineBadge, prices);
+        placeAfter(onlineNote, onlineBadge || prices);
+        placeAfter(availability, onlineNote || onlineBadge || prices);
+      }
+
+      if (info && form) {
+        placeAfter(ask, form);
+        placeAfter(delivery, ask || form);
+        placeAfter(tiles, delivery || ask || form);
+      }
+
+      set(form, 'display', 'flex');
+      set(form, 'flex-direction', 'column');
+      set(form, 'gap', '0');
+      set(form, 'margin-bottom', '0');
+      set(sku, 'order', '1');
+      set(prices, 'order', '2');
+      set(onlineBadge, 'order', '3');
+      set(onlineNote, 'order', '4');
+      set(availability, 'order', '5');
+      set(selectors, 'order', '6');
+      set(reviewLink, 'order', '7');
+      set(control, 'order', '8');
+      set(collections, 'order', '9');
+      set(control, 'margin-top', '0');
+      set(control, 'margin-bottom', '0');
+      set(control, 'padding-bottom', '0');
+      set(controls, 'margin-top', '-8px');
+      set(controls, 'margin-bottom', '0');
+      set(tabBlock, 'margin-top', '18px');
+
+      document.querySelectorAll('.od-product-page .main-controls .product-button.is-primary').forEach(function (el) {
+        set(el, 'min-height', '108px');
+        set(el, 'padding', '18px 24px');
+      });
+
+      if (ask) {
+        set(ask, 'margin', '-18px 0 8px');
+        set(ask, 'padding', '12px 14px');
+        set(ask, 'background', '#fff');
+        set(ask, 'border', '1px solid #d8dde4');
+        set(ask, 'box-shadow', '0 1px 0 rgba(17,17,17,0.03)');
+      }
+
+      if (askLink) {
+        set(askLink, 'display', 'block');
+        set(askLink, 'margin', '0 0 7px');
+        set(askLink, 'padding', '0');
+        set(askLink, 'border', '0');
+        set(askLink, 'background', 'transparent');
+        set(askLink, 'color', '#111');
+        set(askLink, 'font-size', '16px');
+        set(askLink, 'line-height', '20px');
+        set(askLink, 'font-weight', '800');
+        set(askLink, 'text-align', 'left');
+      }
+
+      if (askHint) {
+        set(askHint, 'display', 'block');
+        set(askHint, 'margin', '7px 0 0');
+        set(askHint, 'color', '#7a828d');
+        set(askHint, 'font-size', '12px');
+        set(askHint, 'line-height', '16px');
+        set(askHint, 'text-align', 'left');
+      }
+
+      if (messengers) {
+        set(messengers, 'display', 'grid');
+        set(messengers, 'grid-template-columns', 'repeat(3, 1fr)');
+        set(messengers, 'gap', '7px');
+      }
+
+      document.querySelectorAll('.od-product-page .od-msg').forEach(function (el) {
+        set(el, 'display', 'flex');
+        set(el, 'align-items', 'center');
+        set(el, 'justify-content', 'center');
+        set(el, 'min-height', '34px');
+        set(el, 'padding', '0 12px');
+        set(el, 'color', '#fff');
+        set(el, 'font-size', '13px');
+        set(el, 'line-height', '1');
+        set(el, 'font-weight', '800');
+      });
+
+      if (delivery) {
+        set(delivery, 'display', 'grid');
+        set(delivery, 'grid-template-columns', window.matchMedia('(max-width: 760px)').matches ? 'repeat(2, 1fr)' : (window.matchMedia('(min-width: 1700px)').matches ? 'repeat(6, minmax(0, 1fr))' : 'repeat(3, 1fr)'));
+        set(delivery, 'gap', window.matchMedia('(min-width: 1700px)').matches ? '6px' : '8px');
+        set(delivery, 'margin', '8px 0 8px');
+        set(delivery, 'padding', '0');
+        set(delivery, 'background', 'transparent');
+        set(delivery, 'border', '0');
+      }
+
+      document.querySelectorAll('.od-product-page .od-delivery__item').forEach(function (el) {
+        set(el, 'display', window.matchMedia('(min-width: 1700px)').matches ? 'flex' : 'block');
+        set(el, 'align-items', window.matchMedia('(min-width: 1700px)').matches ? 'center' : 'stretch');
+        set(el, 'justify-content', window.matchMedia('(min-width: 1700px)').matches ? 'center' : 'flex-start');
+        set(el, 'min-height', window.matchMedia('(min-width: 1700px)').matches ? '36px' : '56px');
+        set(el, 'padding', window.matchMedia('(min-width: 1700px)').matches ? '7px 8px' : '10px 12px');
+        set(el, 'background', '#fff');
+        set(el, 'border', '1px solid #d8dde4');
+        set(el, 'box-sizing', 'border-box');
+      });
+
+      document.querySelectorAll('.od-product-page .od-delivery__item b').forEach(function (el) {
+        set(el, 'display', 'block');
+        set(el, 'margin', window.matchMedia('(min-width: 1700px)').matches ? '0' : '0 0 3px');
+        set(el, 'color', '#111');
+        set(el, 'font-size', window.matchMedia('(min-width: 1700px)').matches ? '11px' : '13px');
+        set(el, 'line-height', window.matchMedia('(min-width: 1700px)').matches ? '13px' : '15px');
+        set(el, 'font-weight', '800');
+        set(el, 'text-align', window.matchMedia('(min-width: 1700px)').matches ? 'center' : 'left');
+        set(el, 'white-space', window.matchMedia('(min-width: 1700px)').matches ? 'nowrap' : 'normal');
+      });
+
+      document.querySelectorAll('.od-product-page .od-delivery__item span').forEach(function (el) {
+        set(el, 'display', window.matchMedia('(min-width: 1700px)').matches ? 'none' : 'block');
+        set(el, 'color', '#7a828d');
+        set(el, 'font-size', '11px');
+        set(el, 'line-height', '14px');
+      });
+
+      if (tiles) {
+        set(tiles, 'display', 'flex');
+        set(tiles, 'flex-wrap', 'wrap');
+        set(tiles, 'gap', '6px');
+        set(tiles, 'margin', '6px 0 0');
+      }
+
+      document.querySelectorAll('.od-product-page .od-tile').forEach(function (el) {
+        set(el, 'display', 'inline-flex');
+        set(el, 'align-items', 'center');
+        set(el, 'justify-content', 'center');
+        set(el, 'gap', '7px');
+        set(el, 'min-height', '30px');
+        set(el, 'padding', '6px 10px');
+        set(el, 'background', '#fff');
+        set(el, 'border', '1px solid #d8dde4');
+        set(el, 'color', '#111');
+        set(el, 'box-sizing', 'border-box');
+        set(el, 'font-size', '11px');
+        set(el, 'line-height', '14px');
+        set(el, 'font-weight', '800');
+        set(el, 'letter-spacing', '0');
+      });
+
+      document.querySelectorAll('.od-product-page .od-tile span').forEach(function (el) {
+        set(el, 'color', '#111');
+      });
+    }
+
+    var odLockTimer = null;
+    function odScheduleLock() {
+      if (odLockTimer) return;
+      odLockTimer = setTimeout(function () {
+        odLockTimer = null;
+        odLockSupportBlocks();
+      }, 30);
+    }
+
+    odLockSupportBlocks();
+    setTimeout(odLockSupportBlocks, 50);
+    setTimeout(odLockSupportBlocks, 350);
+    setTimeout(odLockSupportBlocks, 900);
+    setTimeout(odLockSupportBlocks, 1700);
+    setTimeout(odLockSupportBlocks, 3000);
+    window.addEventListener('load', odLockSupportBlocks);
+    window.addEventListener('resize', odLockSupportBlocks);
+
+    var host = document.querySelector('.od-product-page .od-product__info');
+    if (host && window.MutationObserver) {
+      new MutationObserver(odScheduleLock).observe(host, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
+    }
+  })();
 </script>
 
 </div>{%- comment -%} /.od-product-page {%- endcomment -%}

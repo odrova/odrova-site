@@ -148,7 +148,7 @@
   
     <div class="product-collections">
       <span>Категории:</span>
-      {% for collection in product.collections %}<a href="{{ collection.url }}">{{ collection.title }}</a>{% unless forloop.last %},{% endunless %}{% endfor %}
+      {% for collection in product.collections %}<a href="{{ collection.url }}">{{ collection.title }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}
     </div>
   
   {% endif %}

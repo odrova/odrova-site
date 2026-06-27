@@ -774,6 +774,48 @@ body, body.fhg-body {
 /* --- Категории --- */
 .od-product-page .product-collections a { color: #555 !important; }
 
+/* ODROVA: categories under product gallery */
+.od-product-page .od-product__gallery .product-collections.od-cats-moved {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: 0 5px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 10px 0 0 !important;
+  padding: 0 !important;
+  clear: both !important;
+  text-align: left !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  color: #777 !important;
+}
+
+.od-product-page .od-product__gallery .product-collections.od-cats-moved span {
+  display: inline !important;
+  margin: 0 !important;
+  color: #777 !important;
+}
+
+.od-product-page .od-product__gallery .product-collections.od-cats-moved a {
+  display: inline !important;
+  margin: 0 !important;
+  color: #555 !important;
+  text-decoration: none !important;
+}
+
+.od-product-page .od-product__gallery .product-collections.od-cats-moved a:hover {
+  color: #111 !important;
+}
+
+@media (max-width: 760px) {
+  .od-product-page .od-product__gallery .product-collections.od-cats-moved {
+    margin-top: 8px !important;
+    font-size: 11px !important;
+    line-height: 16px !important;
+  }
+}
+
 /* --- Мобильная адаптация карточки --- */
 @media (max-width: 760px) {
   .od-delivery { grid-template-columns: repeat(2, 1fr); }
@@ -1360,8 +1402,8 @@ body .od-product-page .product-option .option-value.is-diametr {
 }
 
 .od-product-page .product-button.is-primary.od-buy-waiting {
-  background: #f7e27a !important;
-  color: #6b5d00 !important;
+  background: var(--od-graphite) !important;
+  color: var(--od-yellow) !important;
 }
 .od-product .od-not-chosen ~ *,
 .od-product.od-not-chosen .option-value.is-active.is-diametr {
@@ -2347,10 +2389,13 @@ body .od-product-page .od-product__info form.product-form {
 }
 body .od-product-page .od-product__info form.product-form .product-sku-wrapper { order: 1 !important; }
 body .od-product-page .od-product__info form.product-form .product-prices     { order: 2 !important; }
-body .od-product-page .od-product__info form.product-form .product-option-selectors { order: 3 !important; }
-body .od-product-page .od-product__info form.product-form .review-link        { order: 4 !important; }
-body .od-product-page .od-product__info form.product-form .product-control    { order: 5 !important; }
-body .od-product-page .od-product__info form.product-form .product-collections { order: 6 !important; }
+body .od-product-page .od-product__info form.product-form .od-online-badge { order: 3 !important; }
+body .od-product-page .od-product__info form.product-form .od-online-note { order: 4 !important; }
+body .od-product-page .od-product__info form.product-form .js-od-availability { order: 5 !important; }
+body .od-product-page .od-product__info form.product-form .product-option-selectors { order: 6 !important; }
+body .od-product-page .od-product__info form.product-form .review-link        { order: 7 !important; }
+body .od-product-page .od-product__info form.product-form .product-control    { order: 8 !important; }
+body .od-product-page .od-product__info form.product-form .product-collections { order: 9 !important; }
 
 /* ╔══════════════════════════════════════════════════════════╗
    ПРОПОРЦИИ блока цены
@@ -2817,22 +2862,18 @@ body .od-product-page .option-value.is-span.is-active {
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
-   FIX 21.06n — цена: десктоп крупная, мобила мельче.
-   Бьём путём темы (form.product-form .product-prices .price)
-   + body.fhg-body для перевеса над theme.css.
+   FIX 21.06n — цена крупнее
    ╚══════════════════════════════════════════════════════════╝ */
 body.fhg-body .od-product-page .js-product-price,
 body .od-product-page .js-product-price {
   font-size: 3.3rem !important;
 }
 @media (max-width: 760px) {
-  body.fhg-body .od-product-page .od-product__info form.product-form .product-prices .price.js-product-price,
-  body.fhg-body .od-product-page .product-prices .js-product-price,
-  body .od-product-page .od-product__info form.product-form .js-product-price,
   body .od-product-page .js-product-price {
     font-size: 2rem !important;
   }
 }
+
 /* ╔══════════════════════════════════════════════════════════╗
    FIX 21.06o — H1 названия крупнее
    ╚══════════════════════════════════════════════════════════╝ */
@@ -2850,6 +2891,141 @@ body .od-product-page .od-product__title,
 }
 
 /* ╔══════════════════════════════════════════════════════════╗
+   FIX — ЦЕНА на мобиле: мельче (2rem) + по левому краю.
+   Идёт последним → перебивает все ранние правила и тему.
+   ╚══════════════════════════════════════════════════════════╝ */
+@media (max-width: 760px) {
+  body.fhg-body .od-product-page .od-product__info form.product-form .product-prices .price.js-product-price,
+  body.fhg-body .od-product-page .product-prices .js-product-price,
+  body .od-product-page .od-product__info form.product-form .js-product-price,
+  body .od-product-page .js-product-price {
+    font-size: 2rem !important;
+  }
+  /* ряд цены — по левому краю (тема центрирует через justify-content:center) */
+  body.fhg-body .od-product-page .od-product__info form.product-form .product-prices,
+  body .od-product-page .od-product__info form.product-form .product-prices,
+  body .od-product-page .product-prices {
+    justify-content: flex-start !important;
+    -webkit-box-pack: start !important;
+    -ms-flex-pack: start !important;
+    text-align: left !important;
+  }
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX — плашка онлайн-оплаты ПО ПРОТОТИПУ: компактная (по
+   содержимому, не на всю ширину), срез угла, без зелёной точки,
+   цена-онлайн жирная. Текст в одну строку.
+   ╚══════════════════════════════════════════════════════════╝ */
+/* убираем зелёную точку ::before (была из ранних стилей) */
+body .od-product-page .od-online-badge::before {
+  content: none !important;
+  display: none !important;
+}
+/* сама плашка — по содержимому, срез правого верхнего угла */
+body .od-product-page .od-online-badge {
+  display: inline-block !important;
+  align-self: flex-start !important;
+  width: auto !important;
+  max-width: 100% !important;
+  padding: 12px 18px !important;
+  margin: 0 0 6px !important;
+  font-size: 1.05rem !important;
+  background: #fff7d6 !important;
+  border: 1px solid var(--od-yellow) !important;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%) !important;
+}
+/* цена-онлайн внутри плашки — жирная, акцент */
+body .od-product-page .od-online-badge .js-od-online-price {
+  font-weight: 700 !important;
+  font-size: 1.15rem !important;
+  color: var(--od-black) !important;
+}
+/* «(ещё −10%)» — обычный вес, рядом, не разрывается */
+body .od-product-page .od-online-badge__off {
+  white-space: nowrap !important;
+  font-weight: 400 !important;
+}
+/* нижняя строка-справка — тихая, мелкая */
+body .od-product-page .od-online-badge__note {
+  display: block !important;
+  font-size: 0.78rem !important;
+  color: var(--od-steel) !important;
+  margin-top: 4px !important;
+}
+/* строка «Обычная цена…» ВЫНЕСЕНА из плашки (как в прототипе) — серым под плашкой */
+body .od-product-page .od-online-note {
+  display: block !important;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 0.82rem !important;
+  color: var(--od-steel) !important;
+  margin: 4px 0 20px !important;
+}
+body .od-product-page .od-online-note b {
+  color: var(--od-steel) !important;
+  font-weight: 700;
+}
+@media (max-width: 760px) {
+  body .od-product-page .od-online-badge {
+    display: block !important;
+    width: 100% !important;
+    font-size: 0.92rem !important;
+    line-height: 1.3 !important;
+  }
+  body .od-product-page .od-online-badge .js-od-online-price {
+    font-size: 0.98rem !important;
+  }
+  body .od-product-page .od-online-badge__off {
+    font-size: 0.92rem !important;
+  }
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX — убираю зазор между плашкой и строкой «Обычная цена».
+   Победитель theme.css бил шоркатом margin:0 0 18px — бьём
+   тем же шоркатом + путь формы для перевеса специфичности.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .od-product__info form.product-form .od-online-badge,
+body .od-product-page .od-product__info form.product-form .od-online-badge,
+body.fhg-body .od-product-page .od-online-badge,
+body .od-product-page .od-online-badge {
+  margin: 0 0 6px !important;
+}
+body.fhg-body .od-product-page .od-product__info form.product-form .od-online-note,
+body .od-product-page .od-product__info form.product-form .od-online-note,
+body .od-product-page .od-online-note {
+  margin: 0 0 14px !important;
+  padding-top: 0 !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   FIX — кнопка «Выберите диаметр вала» (состояние ожидания):
+   графит + жёлтый текст. Читается как активная подсказка,
+   а не сломанная. После выбора станет яркой жёлтой «Купить».
+   Бьём путём темы + body для перевеса над жёлтым .is-primary.
+   ╚══════════════════════════════════════════════════════════╝ */
+body.fhg-body .od-product-page .main-controls .product-button.is-primary.od-buy-waiting,
+body .od-product-page .od-product__info form.product-form .product-button.is-primary.od-buy-waiting,
+body .od-product-page .product-button.is-primary.od-buy-waiting {
+  background: var(--od-graphite) !important;
+  background-color: var(--od-graphite) !important;
+  color: var(--od-yellow) !important;
+  border: 2px solid var(--od-yellow) !important;
+}
+/* весь текст и стрелка внутри — жёлтым */
+body .od-product-page .product-button.is-primary.od-buy-waiting .od-buy-line1,
+body .od-product-page .product-button.is-primary.od-buy-waiting .od-buy-line2,
+body .od-product-page .product-button.is-primary.od-buy-waiting .button-text,
+body .od-product-page .product-button.is-primary.od-buy-waiting .fa,
+body .od-product-page .product-button.is-primary.od-buy-waiting * {
+  color: var(--od-yellow) !important;
+}
+body .od-product-page .product-button.is-primary.od-buy-waiting:hover {
+  background: #2a2a2a !important;
+  background-color: #2a2a2a !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
    ВРЕМЕННО (скриншоты мобилы) — прячем шапку и плавающий
    телефон .float-telephone на товаре. Якорь body.od-hide-header
    (ставит JS в product.liquid). УБРАТЬ перед публикацией.
@@ -2861,4 +3037,354 @@ body.od-hide-header .top-panel-wrapper,
 body.od-hide-header .sticky-header,
 body.od-hide-header .float-telephone {
   display: none !important;
+}
+
+/* ============================================================
+   FIX 25.06 — categories under gallery alignment
+   ============================================================ */
+body .od-product-page .od-product__gallery .product-collections,
+body .od-product-page .od-product__gallery .product-collections.od-cats-moved {
+  position: relative !important;
+  left: 12px !important;
+  top: 0 !important;
+  width: calc(100% - 12px) !important;
+  margin: 9px 0 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  clear: both !important;
+  text-align: left !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  letter-spacing: 0 !important;
+  color: #69717c !important;
+}
+
+body .od-product-page .od-product__gallery .product-collections span,
+body .od-product-page .od-product__gallery .product-collections a {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+}
+
+body .od-product-page .od-product__gallery .product-collections span {
+  color: #8a929d !important;
+}
+
+body .od-product-page .od-product__gallery .product-collections a {
+  color: #4f5965 !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+}
+
+body .od-product-page .od-product__gallery .product-collections a + a {
+  margin-left: 2px !important;
+}
+
+@media (max-width: 760px) {
+  body .od-product-page .od-product__gallery .product-collections,
+  body .od-product-page .od-product__gallery .product-collections.od-cats-moved {
+    left: 8px !important;
+    top: 0 !important;
+    width: calc(100% - 8px) !important;
+    margin-top: 7px !important;
+    font-size: 13px !important;
+    line-height: 18px !important;
+  }
+}
+
+/* ============================================================
+   FIX 25.06 — video previews and review video cards
+   ============================================================ */
+body .od-product-page .slide-video .od-video-poster,
+body .od-product-page .gallery-thumbs .slide-video .od-video-poster {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  filter: saturate(0.98) contrast(1.04) brightness(0.94) !important;
+}
+
+body .od-product-page .slide-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.18));
+  pointer-events: none;
+}
+
+body .od-product-page .slide-video::before {
+  z-index: 4 !important;
+}
+
+body .od-product-page .od-review-video-card {
+  width: min(980px, 100%) !important;
+  aspect-ratio: 16 / 9 !important;
+  margin: 14px 0 8px !important;
+  background: #1f1f1f !important;
+  border: 1px solid #d9dde3 !important;
+  overflow: hidden !important;
+}
+
+body .od-product-page .od-review-video-card iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: 0 !important;
+}
+
+body .od-product-page .od-review-video-link {
+  display: inline-block !important;
+  margin: 8px 0 2px !important;
+  color: #111 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+/* Bigger review video, override narrow comment containers */
+body .od-product-page .comments-list,
+body .od-product-page .comments-item,
+body .od-product-page .comment-body {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+body .od-product-page .comment-body .od-review-video-card,
+body .od-product-page .comments-item .od-review-video-card,
+body .od-review-video-card {
+  display: block !important;
+  width: 100% !important;
+  max-width: 980px !important;
+  height: 560px !important;
+  aspect-ratio: auto !important;
+  margin: 16px 0 10px !important;
+}
+
+body .od-product-page .comment-body .od-review-video-card iframe,
+body .od-product-page .comments-item .od-review-video-card iframe,
+body .od-review-video-card iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 760px) {
+  body .od-product-page .comment-body .od-review-video-card,
+  body .od-product-page .comments-item .od-review-video-card,
+  body .od-review-video-card {
+    height: 56vw !important;
+    min-height: 220px !important;
+    max-height: 420px !important;
+  }
+}
+
+/* ============================================================
+   FIX 25.06 — calmer purchase support blocks
+   ============================================================ */
+body .od-product-page .product-content.tab {
+  margin-top: 18px !important;
+}
+
+body .od-product-page .od-product__info form.product-form {
+  margin-bottom: 0 !important;
+}
+
+body .od-product-page .od-product__info form.product-form .product-control {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+body .od-product-page .main-controls {
+  margin-top: -8px !important;
+  margin-bottom: 0 !important;
+}
+
+body .od-product-page .main-controls .product-button.is-primary {
+  min-height: 108px !important;
+  padding: 18px 24px !important;
+}
+
+body .od-product-page .od-ask {
+  margin: -18px 0 8px !important;
+  padding: 12px 14px !important;
+  background: #fff !important;
+  border: 1px solid #d8dde4 !important;
+  box-shadow: 0 1px 0 rgba(17,17,17,0.03) !important;
+}
+
+body .od-product-page .od-ask__link {
+  display: block !important;
+  margin: 0 0 7px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #111 !important;
+  font-size: 16px !important;
+  line-height: 20px !important;
+  font-weight: 800 !important;
+  text-align: left !important;
+}
+
+body .od-product-page .od-ask__hint {
+  display: block !important;
+  margin: 7px 0 0 !important;
+  color: #7a828d !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  text-align: left !important;
+}
+
+body .od-product-page .od-messengers {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 7px !important;
+}
+
+body .od-product-page .od-msg {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 34px !important;
+  padding: 0 12px !important;
+  border-radius: 0 !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  font-weight: 800 !important;
+}
+
+body .od-product-page .od-delivery {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 8px !important;
+  margin: 8px 0 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+body .od-product-page .od-delivery__item {
+  min-height: 56px !important;
+  padding: 10px 12px !important;
+  background: #fff !important;
+  border: 1px solid #d8dde4 !important;
+  box-sizing: border-box !important;
+}
+
+body .od-product-page .od-delivery__item b {
+  display: block !important;
+  margin: 0 0 3px !important;
+  color: #111 !important;
+  font-size: 13px !important;
+  line-height: 15px !important;
+  font-weight: 800 !important;
+}
+
+body .od-product-page .od-delivery__item span {
+  display: block !important;
+  color: #7a828d !important;
+  font-size: 11px !important;
+  line-height: 14px !important;
+}
+
+body .od-product-page .od-tiles {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  margin: 6px 0 0 !important;
+}
+
+body .od-product-page .od-tile {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  min-height: 30px !important;
+  padding: 6px 10px !important;
+  background: #fff !important;
+  border: 1px solid #d8dde4 !important;
+  color: #111 !important;
+  box-sizing: border-box !important;
+  font-size: 11px !important;
+  line-height: 14px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+}
+
+body .od-product-page .od-tile span {
+  color: #111 !important;
+}
+
+@media (max-width: 760px) {
+  body .od-product-page .product-content.tab {
+    margin-top: 18px !important;
+  }
+
+  body .od-product-page .od-ask {
+    padding: 14px !important;
+  }
+
+  body .od-product-page .od-delivery {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (min-width: 1700px) {
+  body .od-product-page .od-delivery {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  body .od-product-page .od-delivery__item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
+    padding: 7px 8px !important;
+  }
+
+  body .od-product-page .od-delivery__item b {
+    margin: 0 !important;
+    font-size: 11px !important;
+    line-height: 13px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  body .od-product-page .od-delivery__item span {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   FIX 26.06 — thread choice vertical rhythm
+   ============================================================ */
+body .od-product-page .od-product__info form.product-form .product-option.is-span,
+body .od-product-page .od-product__info form.product-form .option.is-span,
+body .od-product-page .product-option.is-span,
+body .od-product-page .option.is-span {
+  margin-top: 8px !important;
+  margin-bottom: 18px !important;
+  padding-bottom: 0 !important;
+}
+
+body .od-product-page .od-product__info form.product-form .is-span .option-label,
+body .od-product-page .is-span .option-label {
+  margin: 0 0 6px !important;
+  line-height: 12px !important;
+}
+
+body .od-product-page .od-product__info form.product-form .is-span .option-values,
+body .od-product-page .is-span .option-values {
+  margin-top: -4px !important;
+  margin-bottom: 0 !important;
+  gap: 10px !important;
+}
+
+body .od-product-page .od-product__info form.product-form .is-span .option-value.left,
+body .od-product-page .od-product__info form.product-form .is-span .option-value.right,
+body .od-product-page .od-product__info form.product-form .option-value.is-span {
+  min-height: 48px !important;
+  padding: 7px 14px !important;
 }

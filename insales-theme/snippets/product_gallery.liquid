@@ -300,7 +300,7 @@
             {%- endif -%}
             {%- if od_is_vk -%}
             <a class="slide-inner image-container is-square slide-video od-vk-video" data-fancybox data-type="iframe" data-src="{{ od_vk_embed }}" href="javascript:;" data-gallery-count="{{ forloop.index }}" title="{{ image_title }}">
-              <span class="od-video-thumb"></span>
+              <img src="{{ product.first_image.medium_url }}" class="slide-image od-video-poster" alt="{{ image_title }}" title="{{ image_title }}">
               <i class="fa fa-play"></i>
             </a>
             {%- else -%}
@@ -308,7 +308,7 @@
               {% if video.url contains 'youtu' %}
               <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" | split:"?" | first | split:"&" | first }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
               {% else %}
-              <span class="od-video-thumb"></span>
+              <img src="{{ product.first_image.medium_url }}" class="slide-image od-video-poster" alt="{{ image_title }}" title="{{ image_title }}">
               {% endif %}
               <i class="fa fa-play"></i>
             </a>
@@ -356,7 +356,7 @@
     {%- endif -%}
     {%- if od_is_vk2 -%}
 	<a class="slide-inner image-container slide-video od-vk-video" data-fancybox="gallery" data-type="iframe" data-src="{{ od_vk_embed2 }}" href="javascript:;" data-gallery-count="{{ forloop.index }}" title="{{ image_title }}">
-	  <span class="od-video-thumb"></span>
+	  <img src="{{ product.first_image.medium_url }}" class="slide-image od-video-poster" alt="{{ image_title }}" title="{{ image_title }}">
        <i class="fa fa-play"></i>
 	</a>
     {%- else -%}
@@ -364,7 +364,7 @@
 	  {% if video.url contains 'youtu' %}
 	  <img src="https://img.youtube.com/vi/{{ video.url | remove:"https://www.youtube.com/watch?v=" | remove:"https://youtu.be/" | split:"?" | first | split:"&" | first }}/mqdefault.jpg" class="slide-image" alt="{{ image_title }}" title="{{ image_title }}">
 	  {% else %}
-	  <span class="od-video-thumb"></span>
+	  <img src="{{ product.first_image.medium_url }}" class="slide-image od-video-poster" alt="{{ image_title }}" title="{{ image_title }}">
 	  {% endif %}
        <i class="fa fa-play"></i>
 	</a>
