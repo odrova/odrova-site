@@ -126,31 +126,4 @@
 
   </div>
   
-  {% if product.collections.size > 1 %}
-  
-  <style>
-    .product-collections span {
-    	color:gray;
-    }
-    .product-collections {
-    	font-size:12px;
-      	line-height:18px;
-    }
-    .product-collections a {
-    	text-decoration:none;
-      	color:black;
-      margin-left: 5px;
-    }
-    .product-collections {
-    	margin-bottom:10px;
-    }
-  </style>	
-  
-    <div class="product-collections">
-      <span>Категории:</span>
-      {% for collection in product.collections %}<a href="{{ collection.url }}">{{ collection.title }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}
-    </div>
-  
-  {% endif %}
-
 </form>
