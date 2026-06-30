@@ -159,15 +159,21 @@ del .price {
 }
 
 /* ============ САЙДБАР КАТАЛОГА ============ */
-/* Заголовок "КАТАЛОГ" */
+/* Заголовки групп ("КАТАЛОГ", "ФИЛЬТРЫ") — жёлтый Fira Mono с линией снизу (как в прототипе) */
 .sidebar-block-heading {
-  font-family: 'Russo One', sans-serif !important;
-  color: var(--od-black) !important;
-  border-left: 3px solid var(--od-yellow);
-  padding-left: 10px !important;
+  font-family: 'Fira Mono', monospace !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 3px !important;
+  color: var(--od-yellow-dark, #d9a800) !important;
+  border-left: none !important;
+  padding-left: 0 !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 12px !important;
+  border-bottom: 1px solid #ddd !important;
   text-transform: uppercase;
 }
-.sidebar-block-heading a { color: var(--od-black) !important; }
+.sidebar-block-heading a { color: var(--od-yellow-dark, #d9a800) !important; }
 
 /* Ссылки категорий */
 .sidebar-menu-link,
@@ -2667,4 +2673,937 @@ body .od-product-page .od-spec-tags {
   padding-bottom: 20px !important;
   border-bottom: 1px solid #e0e0e0 !important;
   margin-bottom: 20px !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════╗
+   СТРАНИЦА КАТАЛОГА — светлая гамма (как в прототипе)
+   Якорь .od-catalog-page (обёртка в collection.liquid)
+   ╚══════════════════════════════════════════════════════════╝ */
+.od-catalog-page {
+  position: relative;
+  z-index: 0;
+}
+/* светлый фон ВСЕЙ страницы каталога (заголовок + крошки + товары) */
+.od-catalog-light {
+  background: #f4f4f4 !important;
+  position: relative;
+  padding-top: 24px;
+}
+/* растягиваем светлый фон во всю ширину вьюпорта */
+.od-catalog-light::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: #f4f4f4;
+  z-index: -1;
+}
+/* текст на светлом — тёмный */
+.od-catalog-page,
+.od-catalog-page .toolbar { color: #1e1e1e; }
+
+/* ── Заголовок секции каталога (кикер + название + счётчик) ── */
+/* ── Заголовок секции каталога — тёмный текст на светлом (якорь od-catalog-light) ── */
+.od-catalog-light .page-headding,
+.od-catalog-light .page-headding .product-title,
+.od-catalog-light .page-headding .collection-title,
+body.fhg-body .od-catalog-light .page-headding {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 14px;
+  color: #1e1e1e !important;
+  position: relative;
+}
+/* кикер — жёлтый мелкий моноширинный, над названием */
+.od-catalog-light .od-cat-kicker {
+  display: block;
+  flex: 0 0 100%;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--od-yellow-dark, #d9a800) !important;
+  margin-bottom: 4px;
+}
+/* счётчик товаров — серый, отодвинут вправо */
+.od-catalog-light .od-cat-count {
+  margin-left: auto;
+  font-family: 'Fira Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: #888 !important;
+  text-transform: lowercase;
+}
+/* хлебные крошки на светлом — тёмные/жёлтые */
+.od-catalog-light .breadcrumb-link { color: var(--od-yellow-dark, #d9a800) !important; }
+.od-catalog-light .breadcrumb-page,
+.od-catalog-light .breadcrumb-item { color: #555 !important; }
+/* тонкая линия под заголовком */
+.od-catalog-light .page-headding-wrapper {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 1
+   Пропорции прототипа: боковое меню 220px + 3 карточки в ряд.
+   ============================================================ */
+.od-catalog-light .collection-wrapper {
+  display: grid !important;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.od-catalog-light .collection-wrapper > .collection,
+.od-catalog-light .collection-wrapper > .cell-3 {
+  width: auto !important;
+  max-width: none !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.od-catalog-light .collection-wrapper > .collection {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.od-catalog-light .collection-wrapper > .cell-3 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.od-catalog-page .products-list.is-collection {
+  margin-right: -8px !important;
+  margin-left: -8px !important;
+}
+
+.od-catalog-page .product-card-wrapper.in-collection {
+  padding-right: 8px !important;
+  padding-left: 8px !important;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 1024px) {
+  .od-catalog-light .collection-wrapper {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .od-catalog-light .collection-wrapper {
+    display: block !important;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 2
+   Карточка прототипа: тёмная фотография + светлая информация.
+   ============================================================ */
+.od-catalog-page .product-card {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #dedede !important;
+  background: #fff !important;
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+  box-shadow: none !important;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+
+.od-catalog-page .product-card:hover {
+  border-color: var(--od-yellow) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .12) !important;
+  transform: translateY(-2px);
+}
+
+.od-catalog-page .product-card-inner {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.od-catalog-page .product-card-photo {
+  display: flex;
+  width: 100%;
+  height: 260px;
+  min-height: 260px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--od-graphite) !important;
+}
+
+.od-catalog-page .product-card-image {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain;
+}
+
+.od-catalog-page .product-card .padded {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 14px !important;
+  color: var(--od-black) !important;
+  background: #fff !important;
+}
+
+.od-catalog-page .product-card .card-title {
+  min-height: 42px;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.od-catalog-page .product-card .card-title a,
+.od-catalog-page .product-card .product-link,
+.od-catalog-page .product-card .product-card-price .price.in-card {
+  color: var(--od-black) !important;
+}
+
+.od-catalog-page .product-card .product-cart-control {
+  margin-top: auto;
+}
+
+@media (max-width: 1024px) {
+  .od-catalog-page .product-card-photo {
+    height: 240px;
+    min-height: 240px;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 3
+   Содержимое карточки: описание, цена онлайн и компактная CTA.
+   ============================================================ */
+.od-catalog-page .od-card-title {
+  min-height: 38px !important;
+  margin: 0 0 6px !important;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.32 !important;
+}
+
+.od-catalog-page .od-card-description {
+  min-height: 34px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  color: var(--od-steel) !important;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.od-catalog-page .od-card-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.od-catalog-page .od-card-prices {
+  min-width: 0;
+}
+
+.od-catalog-page .od-card-price {
+  color: var(--od-black) !important;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.od-catalog-page .od-card-online {
+  margin-top: 4px;
+  color: var(--od-green) !important;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.od-catalog-page .od-card-action {
+  display: inline-flex;
+  min-height: 34px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 13px;
+  color: var(--od-black) !important;
+  background: var(--od-yellow);
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background .2s;
+}
+
+.od-catalog-page .od-card-action:hover {
+  color: var(--od-black) !important;
+  background: var(--od-yellow-dark);
+}
+
+.od-catalog-page .product-labels:not(.discount-mark) {
+  top: 10px;
+  left: 0;
+}
+
+.od-catalog-page .product-labels:not(.discount-mark) .label {
+  padding: 5px 10px;
+  border-radius: 0;
+  color: var(--od-black) !important;
+  background: var(--od-yellow) !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .od-catalog-page .od-card-bottom {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .od-catalog-page .od-card-action {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 4
+   Поиск и динамические вкладки категорий.
+   ============================================================ */
+.od-catalog-nav {
+  position: relative;
+  left: auto;
+  width: 100%;
+  margin: 0 0 28px;
+  padding: 12px 0 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  background: var(--od-graphite-mid);
+  box-shadow: 0 0 0 100vmax var(--od-graphite-mid);
+  clip-path: inset(0 -100vmax);
+}
+
+.od-catalog-search {
+  display: flex;
+  width: min(100%, 600px);
+  height: 50px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .12);
+  background: var(--od-graphite);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+
+.od-catalog-search input[type="text"] {
+  min-width: 0;
+  flex: 1;
+  padding: 9px 15px !important;
+  border: 0 !important;
+  outline: 0;
+  color: #fff !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-family: 'PT Sans', sans-serif;
+  font-size: 14px;
+}
+
+.od-catalog-search input::placeholder {
+  color: #7f8792;
+}
+
+.od-catalog-search button {
+  width: 64px;
+  flex: 0 0 64px;
+  padding: 0;
+  border: 0;
+  color: var(--od-black);
+  background: var(--od-yellow);
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.od-catalog-tabs {
+  display: flex;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin-top: 12px;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+
+.od-catalog-tabs a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, .12);
+  color: #a8afb8 !important;
+  background: transparent;
+  font-family: 'Fira Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .2s, background .2s, color .2s;
+}
+
+.od-catalog-tabs a:hover,
+.od-catalog-tabs a.is-active {
+  border-color: var(--od-yellow);
+  color: var(--od-black) !important;
+  background: var(--od-yellow);
+}
+
+@media (max-width: 768px) {
+  .od-catalog-nav {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .od-catalog-tabs {
+    padding-bottom: 5px;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 5
+   Компактное боковое меню в стиле прототипа.
+   ============================================================ */
+.od-catalog-light .collection-wrapper > .cell-3 {
+  position: sticky;
+  top: 82px;
+}
+
+.od-catalog-light .sidebar-block {
+  margin: 0 0 24px;
+  color: var(--od-black);
+  background: transparent;
+}
+
+.od-catalog-light .sidebar-block-heading {
+  margin: 0 0 8px;
+  padding: 0 0 8px !important;
+  border: 0 !important;
+  border-bottom: 1px solid #d9dde2 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+
+.od-catalog-light .sidebar-block-heading a {
+  color: var(--od-yellow-dark) !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.od-catalog-light .sidebar-block-content,
+.od-catalog-light .sidebar-menu,
+.od-catalog-light .sidebar-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: transparent !important;
+}
+
+.od-catalog-light .sidebar-menu-item,
+.od-catalog-light .sidebar-menu-item-controls {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent !important;
+}
+
+.od-catalog-light .sidebar-menu-link {
+  display: block;
+  padding: 7px 10px !important;
+  color: #6b7280 !important;
+  background: transparent !important;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+  font-size: 13px;
+  line-height: 1.25;
+  text-decoration: none !important;
+  transition: color .15s, background .15s;
+}
+
+.od-catalog-light .sidebar-menu-link:hover,
+.od-catalog-light .sidebar-menu-link.is-active,
+.od-catalog-light .sidebar-menu-item.is-active > .sidebar-menu-item-controls > .sidebar-menu-link,
+.od-catalog-light .sidebar-menu-item.is-current > .sidebar-menu-item-controls > .sidebar-menu-link {
+  color: var(--od-yellow) !important;
+  background: var(--od-black) !important;
+}
+
+.od-catalog-light .sidebar-menu ul .sidebar-menu-link {
+  padding-left: 18px !important;
+  font-size: 12px;
+}
+
+.od-catalog-light .sidebar-menu-marker {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .od-catalog-light .collection-wrapper > .cell-3 {
+    position: static;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 6
+   Тёмный заголовок каталога со статистикой.
+   ============================================================ */
+.od-catalog-light {
+  padding-top: 0 !important;
+}
+
+.od-catalog-light .od-catalog-hero {
+  position: relative;
+  left: 50%;
+  width: 100vw;
+  margin: 0 0 0 -50vw !important;
+  padding: 42px max(24px, calc((100vw - 1200px) / 2)) 34px !important;
+  overflow: hidden;
+  border: 0 !important;
+  border-bottom: 3px solid var(--od-yellow) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, .02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .02) 1px, transparent 1px),
+    var(--od-black) !important;
+  background-size: 40px 40px !important;
+}
+
+.od-catalog-light .od-catalog-hero::after {
+  position: absolute;
+  top: -150px;
+  right: 8%;
+  width: 420px;
+  height: 420px;
+  border: 1px solid rgba(245, 200, 0, .08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 60px rgba(245, 200, 0, .018), 0 0 0 120px rgba(245, 200, 0, .012);
+  content: '';
+}
+
+.od-catalog-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+}
+
+.od-catalog-light .od-catalog-hero .od-cat-kicker {
+  display: block;
+  margin: 0 0 10px;
+  color: var(--od-yellow) !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.od-catalog-light .od-catalog-hero .page-headding {
+  display: block !important;
+  margin: 0;
+  color: #fff !important;
+  font-family: 'Russo One', sans-serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.02em;
+}
+
+body.fhg-body .od-catalog-light .od-catalog-hero .page-headding {
+  color: #fff !important;
+}
+
+.od-catalog-hero-text {
+  max-width: 650px;
+  margin: 12px 0 0;
+  color: #9097a1 !important;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.od-catalog-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px 34px;
+  margin-top: 22px;
+}
+
+.od-catalog-stat strong,
+.od-catalog-stat span {
+  display: block;
+}
+
+.od-catalog-stat strong {
+  color: var(--od-yellow) !important;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.od-catalog-stat span {
+  margin-top: 4px;
+  color: #777f89 !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 600px) {
+  .od-catalog-light .od-catalog-hero {
+    padding: 32px 15px 28px !important;
+  }
+
+  .od-catalog-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+}
+
+/* ============================================================
+   КАТАЛОГ — ЭТАП 7
+   Полное многоуровневое меню каталога, как в прототипе.
+   ============================================================ */
+.od-catalog-light .sidebar-block-heading {
+  display: none !important;
+}
+
+.od-catalog-light ul.sidebar-menu,
+.od-catalog-light ul.sidebar-menu.is-opened,
+.od-catalog-light ul.sidebar-menu ul,
+.od-catalog-light ul.sidebar-menu ul.is-opened {
+  display: block !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item {
+  margin-bottom: 24px;
+}
+
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > .sidebar-menu-item-controls > .sidebar-menu-link {
+  padding: 0 0 8px !important;
+  border-bottom: 1px solid #d9dde2;
+  color: var(--od-yellow-dark) !important;
+  background: transparent !important;
+  clip-path: none;
+  font-family: 'Fira Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > ul.sidebar-menu {
+  margin-top: 8px;
+}
+
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > ul.sidebar-menu .sidebar-menu-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 10px !important;
+  color: #6b7280 !important;
+  background: transparent !important;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+  font-family: 'PT Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: none;
+}
+
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > ul.sidebar-menu .sidebar-menu-link:hover,
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > ul.sidebar-menu .sidebar-menu-link.is-active,
+.od-catalog-light .sidebar-menu.level-1 > .sidebar-menu-item > ul.sidebar-menu .sidebar-menu-item.is-current > .sidebar-menu-item-controls > .sidebar-menu-link {
+  color: var(--od-yellow) !important;
+  background: var(--od-black) !important;
+}
+
+.od-sidebar-count {
+  display: inline-flex;
+  min-width: 22px;
+  height: 20px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  color: #fff !important;
+  background: var(--od-graphite);
+  font-family: 'Fira Mono', monospace;
+  font-size: 10px;
+  line-height: 1;
+}
+
+/* Боковой каталог строится напрямую из категорий и их товаров. */
+.od-sidebar-catalog {
+  width: 100%;
+  color: var(--od-black);
+}
+
+.od-sidebar-section {
+  margin: 0 0 25px;
+}
+
+body.fhg-body .od-sidebar-title {
+  display: block;
+  margin: 0 0 8px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid #d9dde2;
+  color: var(--od-yellow-dark) !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  line-height: 1.25;
+  text-decoration: none !important;
+  text-transform: uppercase;
+}
+
+.od-sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+body.fhg-body .od-sidebar-link {
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px 10px;
+  color: #6b7280 !important;
+  background: transparent;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 5px 100%, 0 calc(100% - 5px));
+  font-size: 13px;
+  line-height: 1.3;
+  text-decoration: none !important;
+  transition: color .15s, background .15s;
+}
+
+body.fhg-body .od-sidebar-link:hover,
+body.fhg-body .od-sidebar-link.is-active {
+  color: var(--od-yellow) !important;
+  background: var(--od-black);
+}
+
+body.fhg-body .od-sidebar-link--all {
+  margin-bottom: 2px;
+}
+
+/* Повышенный контраст навигации каталога. */
+body.fhg-body .od-sidebar-title {
+  color: #c99f00 !important;
+}
+
+body.fhg-body .od-sidebar-link,
+body.fhg-body .od-sidebar-link > span:not(.od-sidebar-count) {
+  color: #4b5563 !important;
+}
+
+body.fhg-body .od-sidebar-link:hover,
+body.fhg-body .od-sidebar-link:hover > span:not(.od-sidebar-count),
+body.fhg-body .od-sidebar-link.is-active,
+body.fhg-body .od-sidebar-link.is-active > span:not(.od-sidebar-count) {
+  color: var(--od-yellow) !important;
+}
+
+body.fhg-body .od-sidebar-count {
+  color: #fff !important;
+}
+
+body.fhg-body .od-catalog-tabs a {
+  color: #cbd1d8 !important;
+}
+
+body.fhg-body .od-catalog-tabs a:hover,
+body.fhg-body .od-catalog-tabs a.is-active {
+  color: var(--od-black) !important;
+}
+
+.od-catalog-search input[type="text"] {
+  color: #f3f4f6 !important;
+}
+
+.od-catalog-search input::placeholder {
+  color: #9aa2ad;
+}
+
+/* ============================================================
+   КАТАЛОГ — МАСШТАБ ШРИФТОВ +15%
+   ============================================================ */
+body.fhg-body .od-catalog-hero .od-cat-kicker {
+  font-size: 13px;
+}
+
+body.fhg-body .od-catalog-hero .page-headding {
+  font-size: clamp(37px, 4.6vw, 55px);
+}
+
+body.fhg-body .od-catalog-hero-text {
+  font-size: 17px;
+}
+
+body.fhg-body .od-catalog-stat strong {
+  font-size: 33px;
+}
+
+body.fhg-body .od-catalog-stat span {
+  font-size: 10.5px;
+}
+
+body.fhg-body .od-catalog-search input[type="text"] {
+  font-size: 16px;
+}
+
+body.fhg-body .od-catalog-search button {
+  font-size: 17px;
+}
+
+body.fhg-body .od-catalog-tabs a {
+  font-size: 14px;
+}
+
+body.fhg-body .od-sidebar-title {
+  font-size: 11.5px;
+}
+
+body.fhg-body .od-sidebar-link,
+body.fhg-body .od-sidebar-link > span:not(.od-sidebar-count) {
+  font-size: 15px;
+}
+
+body.fhg-body .od-sidebar-count {
+  font-size: 11.5px;
+}
+
+body.fhg-body .od-catalog-page .od-card-title,
+body.fhg-body .od-catalog-page .od-card-title .product-link {
+  font-size: 15px;
+}
+
+body.fhg-body .od-catalog-page .od-card-description {
+  font-size: 12.5px;
+}
+
+body.fhg-body .od-catalog-page .od-card-price {
+  font-size: 28px;
+}
+
+body.fhg-body .od-catalog-page .od-card-online {
+  font-size: 11.5px;
+}
+
+body.fhg-body .od-catalog-page .od-card-action {
+  font-size: 12.5px;
+}
+
+body.fhg-body .od-catalog-page .product-labels:not(.discount-mark) .label {
+  font-size: 10.5px;
+}
+
+/* ============================================================
+   КАТАЛОГ — ПОСЛЕДОВАТЕЛЬНЫЕ ГРУППЫ ТОВАРОВ
+   После выбранной категории показываются следующие по списку.
+   ============================================================ */
+.od-catalog-group {
+  margin: 54px 0 10px;
+  scroll-margin-top: 90px;
+}
+
+.od-catalog-group:first-child {
+  margin-top: 0;
+}
+
+.od-catalog-group-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 8px 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(0, 0, 0, .08);
+}
+
+.od-catalog-group-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: #6b7280 !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+body.fhg-body .od-catalog-group-head h2 {
+  margin: 0;
+  color: var(--od-black) !important;
+  font-family: 'Russo One', sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.od-catalog-group-count {
+  flex: 0 0 auto;
+  padding-bottom: 3px;
+  color: #6b7280 !important;
+  font-family: 'Fira Mono', monospace;
+  font-size: 12px;
+}
+
+.od-catalog-group-products {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 600px) {
+  .od-catalog-group {
+    margin-top: 42px;
+  }
+
+  .od-catalog-group-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
 }

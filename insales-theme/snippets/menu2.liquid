@@ -68,7 +68,10 @@
               {% endif %}
 
               <a href="{{ link.url }}" class="{{ menu_class }}-link menu-link level-1" data-menu-link="{{ link.handle }}" data-menu-link-source="collection">
-                {{ link.title }}
+                <span>{{ link.title }}</span>
+                {% if link.title contains 'Все' and link.products_count > 0 %}
+                  <span class="od-sidebar-count">{{ link.products_count }}</span>
+                {% endif %}
               </a>
 
               {% if show_next_level %}

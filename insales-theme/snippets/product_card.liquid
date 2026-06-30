@@ -7,13 +7,24 @@
 <div class="product-card {{ card_class }}">
   <div class="product-card-inner">
 
-    <a href="{{ product.url }}" target="_blank" class="product-card-photo" title="{{ product.title }}">
-      {% if bundle_component %}
+    {% assign od_hover_image = null %}
+    {% if bundle_component %}
       {% assign image = bundle_component.variant.first_image.large_url %}
-      {% else %}
+    {% else %}
       {% assign image = product.first_image.large_url %}
+      {% if product.images.size > 1 %}
+        {% for od_product_image in product.images offset: 1 limit: 1 %}
+          {% assign od_hover_image = od_product_image.large_url %}
+        {% endfor %}
       {% endif %}
-      <img src="{{ image }}" title="{{ bundle_component.product.title }}" alt="{{ product.title }}" class="product-card-image">
+    {% endif %}
+
+    <a href="{{ product.url }}" target="_blank" class="product-card-photo{% if od_hover_image %} has-hover-image{% endif %}" title="{{ product.title }}">
+      <img src="{{ image }}" title="{{ bundle_component.product.title }}" alt="{{ product.title }}" class="product-card-image product-card-image--primary">
+
+      {% if od_hover_image %}
+        <img src="{{ od_hover_image }}" alt="{{ product.title }} — дополнительное фото" class="product-card-image product-card-image--hover" loading="lazy">
+      {% endif %}
 
     </a>
 
@@ -21,6 +32,45 @@
     {% include "product_labels", product: product, bundle_component: bundle_component %}
     {% endunless %}
     <div class="padded">
+
+      {% if template contains 'collection' %}
+
+      <div class="card-title od-card-title">
+        <a href="{{ product.url }}" class="product-link">
+          {{ product.title }}
+        </a>
+      </div>
+
+      {% if product.short_description %}
+        <div class="od-card-description">
+          {{ product.short_description | strip_html | truncate: 115 }}
+        </div>
+      {% endif %}
+
+      {% assign od_card_price = product.price %}
+      {% if product.price_varies? %}
+        {% assign od_card_price = product.price_min %}
+      {% endif %}
+      {% assign od_online_price = od_card_price | times: 0.9 %}
+
+      <div class="od-card-bottom">
+        <div class="od-card-prices">
+          <div class="od-card-price">
+            {% if product.price_varies? %}от {% endif %}{{ od_card_price | money }}
+          </div>
+          <div class="od-card-online">● онлайн {{ od_online_price | money }}</div>
+        </div>
+
+        <a class="od-card-action" href="{{ product.url }}" title="{{ product.title }}">
+          {% if product.title == 'Станки на заказ' or product.title == 'Шкив под заказ' or product.title == 'Вал под заказ' %}
+            Заказать →
+          {% else %}
+            Смотреть →
+          {% endif %}
+        </a>
+      </div>
+
+      {% else %}
 
       <div class="card-title">
         {% if bundle_component and bundle_component.product.variants.size > 1 %}
@@ -140,6 +190,8 @@
 
       </form><!-- /.product-control -->
 
+      {% endif %}
+
     </div>
   </div>
 </div>
@@ -153,9 +205,38 @@
   .preview-fast-checkout .fast-checkout input {
   	border: 1px solid #3147c3;
   }
+
+  .od-catalog-page .product-card-photo.has-hover-image {
+    position: relative;
+  }
+
+  .od-catalog-page .product-card-photo.has-hover-image .product-card-image {
+    transition: opacity .28s ease;
+  }
+
+  .od-catalog-page .product-card-image--hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .od-catalog-page .product-card-photo.has-hover-image:hover .product-card-image--primary {
+      opacity: 0;
+    }
+
+    .od-catalog-page .product-card-photo.has-hover-image:hover .product-card-image--hover {
+      opacity: 1;
+    }
+  }
 </style>
 
 
 {% assign image = null %}
 {% assign bundle_component = null %}
 {% assign card_class = null %}
+{% assign od_card_price = null %}
+{% assign od_online_price = null %}
+{% assign od_hover_image = null %}
+{% assign od_product_image = null %}

@@ -62,11 +62,38 @@
       {% endunless %}
 
       {% comment %} ODROVA: на странице товара заголовок и крошки рендерит сам product.liquid (как в прототипе) {% endcomment %}
+      {% if template contains 'collection' %}<div class="od-catalog-light">{% endif %}
       {% unless template contains 'index' or template contains 'product' %}
         {% comment %}{% include "breadcrumb", home_title: 'Главная' %}{% endcomment%}
 
         {% include "page_header" %}
       {% endunless %}
+
+      {% if template contains 'collection' %}
+        {% assign od_catalog_root = collections['all'] %}
+        <div class="od-catalog-nav">
+          <form class="od-catalog-search" action="/search" method="get">
+            <input
+              type="text"
+              name="q"
+              value="{{ search.query | escape }}"
+              placeholder="Поиск по каталогу..."
+              aria-label="Поиск по каталогу"
+            >
+            <button type="submit" aria-label="Найти">🔍</button>
+          </form>
+
+          <nav class="od-catalog-tabs" aria-label="Категории каталога">
+            <a href="{{ od_catalog_root.url }}" class="{% if collection.handle == od_catalog_root.handle %}is-active{% endif %}">Все</a>
+            {% for od_category in od_catalog_root.subcollections %}
+              <a href="{{ od_category.url }}" class="{% if collection.handle == od_category.handle %}is-active{% endif %}">
+                {{ od_category.title }}
+              </a>
+            {% endfor %}
+          </nav>
+        </div>
+        {% assign od_catalog_root = null %}
+      {% endif %}
 
       {% assign sidebar_position = 'flex-last' %}
       {% if template contains 'collection' %}
@@ -84,6 +111,7 @@
           </div>
         {% endunless %}
       </div>
+      {% if template contains 'collection' %}</div><!-- /od-catalog-light -->{% endif %}
       {% if page.url contains 'favorites' %}
       </div>
       </div>

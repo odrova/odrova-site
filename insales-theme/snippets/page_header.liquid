@@ -1,38 +1,78 @@
 {% comment %} Заголовок страницы {% endcomment %}
 
-<div class="page-headding-wrapper">
-  <h1 class="page-headding">
-    {% if template contains 'cart' %}
-      {{ messages.cart_title }}
+{% if template contains 'collection' %}
+  {% assign od_catalog_title = collection.title %}
+  {% if filter.title %}
+    {% assign od_catalog_title = filter.title %}
+  {% endif %}
+  {% assign od_catalog_root = collections['all'] %}
 
-    {% elsif template contains 'search' %}
-      {{ messages.search_title }}
+  <section class="page-headding-wrapper od-catalog-hero">
+    <div class="od-catalog-hero-inner">
+      <div class="od-cat-kicker">Каталог продукции</div>
+      <h1 class="page-headding">{{ od_catalog_title | editable }}</h1>
 
-    {% elsif template contains 'compare' %}
-      {{ messages.comparison_title }}
+      <p class="od-catalog-hero-text">
+        {% if filter.description %}
+          {{ filter.description | strip_html | truncate: 180 }}
+        {% elsif collection.description %}
+          {{ collection.description | strip_html | truncate: 180 }}
+        {% else %}
+          Дровоколы, конусы и комплектующие собственного производства. Поможем подобрать решение под вашу задачу.
+        {% endif %}
+      </p>
 
-    {% elsif template contains 'index' %}
-      {{ page.title | editable }}
+      <div class="od-catalog-stats">
+        <div class="od-catalog-stat">
+          <strong>{{ collection.products_count }}+</strong>
+          <span>позиций в разделе</span>
+        </div>
+        <div class="od-catalog-stat">
+          <strong>{{ od_catalog_root.subcollections.size }}</strong>
+          <span>групп товаров</span>
+        </div>
+        <div class="od-catalog-stat">
+          <strong>2014</strong>
+          <span>год основания</span>
+        </div>
+        <div class="od-catalog-stat">
+          <strong>−10%</strong>
+          <span>при онлайн-оплате</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    {% elsif template contains 'collection' %}
-      {% if filter.title %}
-        {{ filter.title | editable }}
-      {% else %}
-        {{ collection.title | editable }}
+  {% assign od_catalog_title = null %}
+  {% assign od_catalog_root = null %}
+{% else %}
+  <div class="page-headding-wrapper">
+    <h1 class="page-headding">
+      {% if template contains 'cart' %}
+        {{ messages.cart_title }}
+
+      {% elsif template contains 'search' %}
+        {{ messages.search_title }}
+
+      {% elsif template contains 'compare' %}
+        {{ messages.comparison_title }}
+
+      {% elsif template contains 'index' %}
+        {{ page.title | editable }}
+
+      {% elsif template contains 'product' %}
+        {{ product.title | editable }}
+
+      {% elsif template contains 'blog' %}
+        {{ blog.title | editable }}
+
+      {% elsif template contains 'article' %}
+        {{ article.title | editable }}
+
+      {% elsif template contains 'page' %}
+        {{ page.title | editable }}
       {% endif %}
-
-    {% elsif template contains 'product' %}
-      {{ product.title | editable }}
-
-    {% elsif template contains 'blog' %}
-      {{ blog.title | editable }}
-
-    {% elsif template contains 'article' %}
-      {{ article.title | editable }}
-
-    {% elsif template contains 'page' %}
-      {{ page.title | editable }}
-    {% endif %}
-  </h1>
-  {% include "breadcrumb", home_title: 'Главная' %}
-</div><!-- /.page_headding -->
+    </h1>
+    {% include "breadcrumb", home_title: 'Главная' %}
+  </div><!-- /.page_headding -->
+{% endif %}

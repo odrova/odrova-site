@@ -1,97 +1,141 @@
 {% if template contains 'collection' %}
-{% assign menu_root = collection.parent %}
-{% if collection.level == 0 %}
-{% assign menu_root = collection %}
-{% endif %}
+  {% assign od_sidebar_root = collections['all'] %}
 
+  <nav class="od-sidebar-catalog" aria-label="Разделы каталога">
+    {% for od_group in od_sidebar_root.subcollections %}
+      <section class="od-sidebar-section">
+        <a class="od-sidebar-title {% if collection.handle == od_group.handle %}is-active{% endif %}" href="{{ od_group.url }}">
+          {{ od_group.title }}
+        </a>
 
+        {% assign od_group_all_title = od_group.title | downcase %}
+        {% if od_group.title == 'Готовые станки' %}
+          {% assign od_group_all_title = 'станки' %}
+        {% endif %}
 
+        <div class="od-sidebar-links">
+          <a class="od-sidebar-link od-sidebar-link--all {% if collection.handle == od_group.handle %}is-active{% endif %}" href="{{ od_group.url }}">
+            <span>Все {{ od_group_all_title }}</span>
+            <span class="od-sidebar-count">{{ od_group.products_count }}</span>
+          </a>
 
+          {% for od_product in od_group.products limit: 12 %}
+            {% assign od_custom_title = od_product.fields.Korotkoe_nazvanie.value | strip %}
+            {% assign od_short_title = od_custom_title %}
+            {% assign od_title_down = od_product.title | downcase %}
 
+            {% if od_short_title == blank %}
+              {% assign od_short_title = od_product.title %}
 
-{% if menu_root.subcollections.size > 0 %}
-<div class="sidebar-block">
-  
+              {% if od_title_down contains 'бураво-дров' or od_title_down contains 'бурао-дров' %}
+                {% assign od_short_title = 'Бурао-Дров 220В' %}
+              {% elsif od_title_down contains 'мотоколун' %}
+                {% assign od_short_title = 'МотоКолун' %}
+              {% elsif od_title_down contains 'бензокол' %}
+                {% assign od_short_title = 'Бензокол' %}
+              {% elsif od_title_down contains 'сила мотоблока' %}
+                {% assign od_short_title = 'Сила мотоблока' %}
+              {% elsif od_title_down contains 'сдвб-1' %}
+                {% assign od_short_title = 'Бензо СДВБ-1' %}
+              {% elsif od_title_down contains 'сдвэ-1' %}
+                {% assign od_short_title = 'Электро СДВЭ-1' %}
 
-  <div class="sidebar-block-heading">
-    <a href="/collection/all" style="text-decoration: none;">Каталог</a>
-  </div>
+              {% elsif od_group.title == 'Конусы' and od_title_down contains '100' and od_title_down contains 'l300' %}
+                {% assign od_short_title = '100 мм L300' %}
+              {% elsif od_group.title == 'Конусы' and od_title_down contains '75' and od_title_down contains 'шпон' %}
+                {% assign od_short_title = '75 мм шпонка' %}
+              {% elsif od_group.title == 'Конусы' and od_title_down contains '75' and od_title_down contains 'l300' %}
+                {% assign od_short_title = '75 мм L300 ★' %}
+              {% elsif od_group.title == 'Конусы' and od_title_down contains '72' and od_title_down contains 'l230' %}
+                {% assign od_short_title = '72 мм L230' %}
+              {% elsif od_group.title == 'Конусы' and od_title_down contains '60' and od_title_down contains 'l165' %}
+                {% assign od_short_title = '60 мм L165' %}
 
-  <div class="sidebar-block-content">
-    {% include "menu2", source_type: 'collection', source_handle: 'all', menu_class: 'sidebar-menu',  %}
-  <a href="tel:+79220352887">8(922)-035-28-87</a>
-  </div>
-  
+              {% elsif od_title_down contains 'мини' and od_title_down contains '100' %}
+                {% assign od_short_title = 'Мини 100 мм' %}
+              {% elsif od_title_down contains 'мини' and od_title_down contains '75' %}
+                {% assign od_short_title = 'Мини 75 мм' %}
+              {% elsif od_title_down contains 'комплект №1' or od_title_down contains 'комплект n1' %}
+                {% assign od_short_title = 'Комплект №1' %}
+              {% elsif od_title_down contains '№2' and od_title_down contains '100' %}
+                {% assign od_short_title = 'Комплект №2 100' %}
+              {% elsif od_title_down contains '№2' and od_title_down contains '75' %}
+                {% assign od_short_title = 'Комплект №2 75' %}
+              {% elsif od_title_down contains 'поросёнок' or od_title_down contains 'поросенок' %}
+                {% assign od_short_title = 'Поросёнок 75' %}
+              {% elsif od_title_down contains 'подшипниковый узел pu' %}
+                {% assign od_short_title = 'Подшипниковый узел PU' %}
+              {% elsif od_title_down contains 'клин ограничитель' or od_title_down contains 'клин-ограничитель' %}
+                {% assign od_short_title = 'Клин-ограничитель' %}
+              {% endif %}
+            {% endif %}
 
-  
-</div>
-{% endif %}
+            <a class="od-sidebar-link" href="{{ od_product.url }}" title="{{ od_product.title }}">
+              <span>{{ od_short_title | truncate: 28 }}</span>
+            </a>
 
+            {% assign od_short_title = null %}
+            {% assign od_title_down = null %}
+            {% assign od_custom_title = null %}
+          {% endfor %}
+        </div>
 
+        {% assign od_group_all_title = null %}
+      </section>
+    {% endfor %}
+  </nav>
 
-<div class="sidebar-block">
-  {% include "collection_filter", filter_class: 'sidebar-filter' %}
-</div>
+  {% assign od_sidebar_root = null %}
 {% endif %}
 
 {% if template contains 'blog' or template contains 'article' %}
-{% for blog in blogs %}
-{% if blog.articles.size > 0 %}
-{% unless blog.title == 'Закрепленные статьи' %}
-<div class="sidebar-block" style="margin-top:1rem;">
-  <div class="sidebar-block-heading active" blog-title="{{ blog.handle }}">
-    {{ blog.title }}
-    <span><i class="fa fa-angle-down"></i></span>
-  </div>
+  {% for blog in blogs %}
+    {% if blog.articles.size > 0 %}
+      {% unless blog.title == 'Закрепленные статьи' %}
+        <div class="sidebar-block" style="margin-top:1rem;">
+          <div class="sidebar-block-heading active" blog-title="{{ blog.handle }}">
+            {{ blog.title }}
+            <span><i class="fa fa-angle-down"></i></span>
+          </div>
 
-  <div class="blog-menu-content" blog-description="{{ blog.handle }}">
-    {% include "menu", source_type: 'blog', source_handle: blog.handle menu_class: 'blog-menu', links_limit: 5 %}
+          <div class="blog-menu-content" blog-description="{{ blog.handle }}">
+            {% include "menu", source_type: 'blog', source_handle: blog.handle menu_class: 'blog-menu', links_limit: 5 %}
 
-    {% if blog.articles.size > 5 %}
-    <div class="sidebar-block-toolbar toolbar">
-      <a href="{{ blog.url }}" class="button is-secondary button-more">
-        {% comment %}{{ messages.all_blogs }}{% endcomment %}Все статьи этого раздела
-      </a>
-    </div>
+            {% if blog.articles.size > 5 %}
+              <div class="sidebar-block-toolbar toolbar">
+                <a href="{{ blog.url }}" class="button is-secondary button-more">
+                  Все статьи этого раздела
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endunless %}
     {% endif %}
-  </div>
-</div>
-{% endunless %}
-{% endif %}
-{% endfor %}
+  {% endfor %}
 
-{% if blog.tags.size > 0 %}
-<div class="sidebar-block">
-  <div class="sidebar-block-heading">
-    {{ messages.tags_title }}
-  </div>
+  {% if blog.tags.size > 0 %}
+    <div class="sidebar-block">
+      <div class="sidebar-block-heading">
+        {{ messages.tags_title }}
+      </div>
 
-  {% include "tags_cloud" %}
-</div>
+      {% include "tags_cloud" %}
+    </div>
+  {% endif %}
 {% endif %}
-{% endif %}
-
 
 <script>
-
-
   $('[blog-title]').on('click', function(){
-
     let item = $(this).attr('blog-title')
     $(this).toggleClass('')
     $(`[blog-description='${item}']`).slideToggle()
-
   })
-
 </script>
 
 <style>
-
-  .blog-menu-content {
-/*  	display: none; */
-  }
   .sidebar-block-heading {
-  	cursor: pointer;
+    cursor: pointer;
     border: 1px solid #dcdcdc;
     padding-left: 0.5rem;
     padding-bottom: 0.5rem;
@@ -103,6 +147,4 @@
   .sidebar-block-heading i {
     transition:0.4s;
   }
-
 </style>
-

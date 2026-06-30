@@ -1,6 +1,3 @@
-
-
-
 {% if settings.category_description_position == 'before_products' and current_page == null %}
   {% if filter.description %}
     <div class="collection-description at-top editor">
@@ -16,6 +13,7 @@
 {% paginate products by 96 %}
 {% include "collection_filter_check" %}
 {% assign hide_class = display_filter | default: "hidden" | replace: 'true','' %}
+<div class="od-catalog-page">
     <div class="toolbar collection-toolbar at-top">
       <div class="toolbar-inner is-between">
 
@@ -35,25 +33,122 @@
       </div>
     </div>
 
-
-  {% include "collection_products" %}
-
-  {% if products.size > 1 %}
-    <div class="toolbar collection-toolbar at-bottom">
-      <div class="toolbar-inner">
-        <div class="pagination-wrapper">
-          {% include "pagination" %}
-        </div>
-
-        <div class="collection-order-wrapper cell-6 text-right hidden-sm">
-          {% include "collection_order", hide_sort: true %}
-        </div>
-      </div>
-
-    </div>
+  {% assign od_catalog_root = collections['all'] %}
+  {% assign od_is_all = false %}
+  {% if collection.handle == od_catalog_root.handle %}
+    {% assign od_is_all = true %}
   {% endif %}
 
+  {% if od_is_all %}
+    {% for od_group in od_catalog_root.subcollections %}
+      {% if od_group.products.size > 0 %}
+        {% assign od_section_kicker = 'Каталог продукции' %}
+        {% case od_group.title %}
+          {% when 'Готовые станки' %}
+            {% assign od_section_kicker = 'Готовые к работе' %}
+          {% when 'Конусы' %}
+            {% assign od_section_kicker = 'Сталь 45 + ТВЧ · 2-заходная резьба' %}
+          {% when 'Комплекты' %}
+            {% assign od_section_kicker = 'Всё для самостоятельной сборки' %}
+          {% when 'Дровокол на трактор' %}
+            {% assign od_section_kicker = 'Для трактора и спецтехники' %}
+          {% when 'Подшипниковые узлы' %}
+            {% assign od_section_kicker = 'Надёжные узлы для сборки' %}
+          {% when 'Валы' %}
+            {% assign od_section_kicker = 'Прочная сталь · точная обработка' %}
+          {% when 'Шкивы' %}
+            {% assign od_section_kicker = 'Надёжная передача вращения' %}
+          {% when 'Ролики' %}
+            {% assign od_section_kicker = 'Износостойкие комплектующие' %}
+          {% when 'Ремни' %}
+            {% assign od_section_kicker = 'Для стабильной передачи' %}
+          {% when 'Двигатели' %}
+            {% assign od_section_kicker = 'Бензиновые и электрические' %}
+          {% when 'Крепеж и оснастка' %}
+            {% assign od_section_kicker = 'Всё необходимое для монтажа' %}
+          {% when 'Мангалы' %}
+            {% assign od_section_kicker = 'Для отдыха и хорошего огня' %}
+        {% endcase %}
+
+        <section class="od-catalog-group" id="od-group-{{ od_group.handle }}">
+          <header class="od-catalog-group-head">
+            <div>
+              <span class="od-catalog-group-kicker">{{ od_section_kicker }}</span>
+              <h2>{{ od_group.title }}</h2>
+            </div>
+            <span class="od-catalog-group-count">{{ od_group.products_count }} товаров</span>
+          </header>
+
+          <div class="products-list is-collection row od-catalog-group-products">
+            {% for product in od_group.products %}
+              <div class="product-card-wrapper in-collection cell-4 cell-6-md cell-12-xs cell-12-mc">
+                {% include 'product_card' %}
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    {% assign od_section_kicker = 'Каталог продукции' %}
+    {% case collection.title %}
+      {% when 'Готовые станки' %}
+        {% assign od_section_kicker = 'Готовые к работе' %}
+      {% when 'Конусы' %}
+        {% assign od_section_kicker = 'Сталь 45 + ТВЧ · 2-заходная резьба' %}
+      {% when 'Комплекты' %}
+        {% assign od_section_kicker = 'Всё для самостоятельной сборки' %}
+      {% when 'Дровокол на трактор' %}
+        {% assign od_section_kicker = 'Для трактора и спецтехники' %}
+      {% when 'Подшипниковые узлы' %}
+        {% assign od_section_kicker = 'Надёжные узлы для сборки' %}
+      {% when 'Валы' %}
+        {% assign od_section_kicker = 'Прочная сталь · точная обработка' %}
+      {% when 'Шкивы' %}
+        {% assign od_section_kicker = 'Надёжная передача вращения' %}
+      {% when 'Ролики' %}
+        {% assign od_section_kicker = 'Износостойкие комплектующие' %}
+      {% when 'Ремни' %}
+        {% assign od_section_kicker = 'Для стабильной передачи' %}
+      {% when 'Двигатели' %}
+        {% assign od_section_kicker = 'Бензиновые и электрические' %}
+      {% when 'Крепеж и оснастка' %}
+        {% assign od_section_kicker = 'Всё необходимое для монтажа' %}
+      {% when 'Мангалы' %}
+        {% assign od_section_kicker = 'Для отдыха и хорошего огня' %}
+    {% endcase %}
+
+    <header class="od-catalog-group-head od-catalog-current-group-head">
+      <div>
+        <span class="od-catalog-group-kicker">{{ od_section_kicker }}</span>
+        <h2>{{ collection.title }}</h2>
+      </div>
+    </header>
+
+    {% include "collection_products" %}
+  {% endif %}
+
+  {% assign od_section_kicker = null %}
+  {% assign od_catalog_root = null %}
+
+  {% unless od_is_all %}
+    {% if products.size > 1 %}
+      <div class="toolbar collection-toolbar at-bottom">
+        <div class="toolbar-inner">
+          <div class="pagination-wrapper">
+            {% include "pagination" %}
+          </div>
+
+        </div>
+      </div>
+    {% endif %}
+  {% endunless %}
+
+  {% assign od_is_all = null %}
+
 {% endpaginate %}
+</div>
+<!-- /od-catalog-page -->
 
 {% if settings.category_description_position == 'after_products' and current_page == null %}
   <div class="collection-description at-bottom editor">
